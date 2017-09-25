@@ -52,8 +52,4 @@ google-services.json
 # Freeline
 freeline.py
 freeline/
-<<<<<<< HEAD
 freeline_project_description.json
-=======
-freeline_project_description.json
->>>>>>> 3a7fe42f373189aa58ef04d1d7a445de30d714b1
