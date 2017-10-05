@@ -15,7 +15,7 @@ import java.util.List;
  * The configuration screen for the {@link DetoxiomWidget DetoxioWidget} AppWidget.
  */
 public class DetoxiomWidgetConfigureActivity extends Activity {
-    PackageManager packageManager;
+    PackageManager pm;
     List<ApplicationInfo> listOfAppInfo;
     ArrayList<String> nameOfAppsArray = new ArrayList<String>();
     ArrayList<Drawable> appLogosArray = new ArrayList<Drawable>();
@@ -42,13 +42,28 @@ public class DetoxiomWidgetConfigureActivity extends Activity {
     public void createArrayFromApps(){
         //Create two arrayList from name and logos of installed apps
 
-        packageManager = getPackageManager();
-        listOfAppInfo = packageManager.getInstalledApplications(0);
+        pm = getPackageManager();
+        listOfAppInfo = pm.getInstalledApplications(pm.GET_GIDS);
 
-        for(ApplicationInfo m : listOfAppInfo) {
+        for(ApplicationInfo app : listOfAppInfo) {
 
-                nameOfAppsArray.add((String) packageManager.getApplicationLabel(m));
-                appLogosArray.add(packageManager.getApplicationLogo(m));
+            if(pm.getLaunchIntentForPackage(app.packageName) != null) {
+                // apps with launcher intent
+                if((app.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 1) {
+                    // updated system apps
+
+                } else if ((app.flags & ApplicationInfo.FLAG_SYSTEM) == 1) {
+                    // system apps
+
+                } else {
+                    // user installed apps
+                    nameOfAppsArray.add((String) pm.getApplicationLabel(app));
+                    appLogosArray.add(app.loadIcon(pm));
+
+                }
+            }
+
+            // pm.getApplicationLogo(m)
 
         }
     }
