@@ -7,17 +7,17 @@ import android.widget.RemoteViews;
 
 /**
  * Implementation of App Widget functionality.
- * App Widget Configuration implemented in {@link DetoxioWidgetConfigureActivity DetoxioWidgetConfigureActivity}
+ * App Widget Configuration implemented in {@link DetoxiomWidgetConfigureActivity DetoxiomWidgetConfigureActivity}
  */
-public class DetoxioWidget extends AppWidgetProvider {
+public class DetoxiomWidget extends AppWidgetProvider {
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
-        CharSequence widgetText = DetoxioWidgetConfigureActivity.loadTitlePref(context, appWidgetId);
+        CharSequence widgetText = DetoxiomWidgetConfigureActivity.loadTitlePref(context, appWidgetId);
         // Construct the RemoteViews object
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.detoxio_widget);
-        views.setTextViewText(R.id.appwidget_text, widgetText);
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.detoxiom_widget);
+        views.setTextViewText(R.id.widgetText, widgetText);
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
@@ -35,7 +35,7 @@ public class DetoxioWidget extends AppWidgetProvider {
     public void onDeleted(Context context, int[] appWidgetIds) {
         // When the user deletes the widget, delete the preference associated with it.
         for (int appWidgetId : appWidgetIds) {
-            DetoxioWidgetConfigureActivity.deleteTitlePref(context, appWidgetId);
+            DetoxiomWidgetConfigureActivity.deleteTitlePref(context, appWidgetId);
         }
     }
 

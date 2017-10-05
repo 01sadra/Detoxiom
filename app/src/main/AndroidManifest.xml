@@ -23,10 +23,10 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/detoxio_widget_info" />
+                android:resource="@xml/detoxiom_widget_info" />
         </receiver>
 
-        <activity android:name=".DetoxioWidgetConfigureActivity">
+        <activity android:name=".DetoxiomWidgetConfigureActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>

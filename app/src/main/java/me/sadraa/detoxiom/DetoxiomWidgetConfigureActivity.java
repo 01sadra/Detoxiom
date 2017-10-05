@@ -12,7 +12,7 @@ import android.widget.EditText;
 /**
  * The configuration screen for the {@link DetoxioWidget DetoxioWidget} AppWidget.
  */
-public class DetoxioWidgetConfigureActivity extends Activity {
+public class DetoxiomWidgetConfigureActivity extends Activity {
 
     private static final String PREFS_NAME = "me.sadraa.detoxiom.DetoxioWidget";
     private static final String PREF_PREFIX_KEY = "appwidget_";
@@ -20,7 +20,7 @@ public class DetoxioWidgetConfigureActivity extends Activity {
     EditText mAppWidgetText;
     View.OnClickListener mOnClickListener = new View.OnClickListener() {
         public void onClick(View v) {
-            final Context context = DetoxioWidgetConfigureActivity.this;
+            final Context context = DetoxiomWidgetConfigureActivity.this;
 
             // When the button is clicked, store the string locally
             String widgetText = mAppWidgetText.getText().toString();
@@ -38,7 +38,7 @@ public class DetoxioWidgetConfigureActivity extends Activity {
         }
     };
 
-    public DetoxioWidgetConfigureActivity() {
+    public DetoxiomWidgetConfigureActivity() {
         super();
     }
 
@@ -76,7 +76,7 @@ public class DetoxioWidgetConfigureActivity extends Activity {
         // Set the result to CANCELED.  This will cause the widget host to cancel
         // out of the widget placement if the user presses the back button.
         setResult(RESULT_CANCELED);
-        setContentView(R.layout.detoxio_widget_configure);
+        setContentView(R.layout.detoxiom_widget_configure);
 
         // Find the widget id from the intent.
         Intent intent = getIntent();
@@ -92,7 +92,7 @@ public class DetoxioWidgetConfigureActivity extends Activity {
             return;
         }
 
-        mAppWidgetText.setText(loadTitlePref(DetoxioWidgetConfigureActivity.this, mAppWidgetId));
+        mAppWidgetText.setText(loadTitlePref(DetoxiomWidgetConfigureActivity.this, mAppWidgetId));
     }
 }
 
