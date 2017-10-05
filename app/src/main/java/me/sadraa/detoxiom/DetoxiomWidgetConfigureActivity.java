@@ -17,8 +17,8 @@ import java.util.List;
 public class DetoxiomWidgetConfigureActivity extends Activity {
     PackageManager packageManager;
     List<ApplicationInfo> listOfAppInfo;
-    ArrayList<String> nameOfAppsArray;
-    ArrayList<Drawable> appLogosArray;
+    ArrayList<String> nameOfAppsArray = new ArrayList<String>();
+    ArrayList<Drawable> appLogosArray = new ArrayList<Drawable>();
     ListView listView;
     public DetoxiomWidgetConfigureActivity() {
         super();
@@ -31,7 +31,7 @@ public class DetoxiomWidgetConfigureActivity extends Activity {
         setContentView(R.layout.detoxiom_widget_configure);
         createArrayFromApps();
         listView = (ListView) findViewById(R.id.list_view_conf_activity);
-
+        listView.setAdapter(new ListViewCostumAdapter(this,nameOfAppsArray,appLogosArray));
 
         // Find the widget id from the intent.
         Intent intent = getIntent();
@@ -46,8 +46,10 @@ public class DetoxiomWidgetConfigureActivity extends Activity {
         listOfAppInfo = packageManager.getInstalledApplications(0);
 
         for(ApplicationInfo m : listOfAppInfo) {
-            nameOfAppsArray.add((String)packageManager.getApplicationLabel(m));
-            appLogosArray.add(packageManager.getApplicationLogo(m));
+
+                nameOfAppsArray.add((String) packageManager.getApplicationLabel(m));
+                appLogosArray.add(packageManager.getApplicationLogo(m));
+
         }
     }
 }
