@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/widgetImage"
-        android:layout_below="@id/widgetText"
+        android:layout_below="@+id/widgetText"
         />
     <TextView
         android:layout_width="wrap_content"

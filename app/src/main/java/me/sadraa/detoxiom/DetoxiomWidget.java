@@ -13,11 +13,12 @@ public class DetoxiomWidget extends AppWidgetProvider {
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
+        //get intent and bundel from
 
-        CharSequence widgetText = DetoxiomWidgetConfigureActivity.loadTitlePref(context, appWidgetId);
+        //CharSequence widgetText = DetoxiomWidgetConfigureActivity.loadTitlePref(context, appWidgetId);
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.detoxiom_widget);
-        views.setTextViewText(R.id.widgetText, widgetText);
+        //views.setTextViewText(R.id.widgetText, widgetText);
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
@@ -34,9 +35,7 @@ public class DetoxiomWidget extends AppWidgetProvider {
     @Override
     public void onDeleted(Context context, int[] appWidgetIds) {
         // When the user deletes the widget, delete the preference associated with it.
-        for (int appWidgetId : appWidgetIds) {
-            DetoxiomWidgetConfigureActivity.deleteTitlePref(context, appWidgetId);
-        }
+
     }
 
     @Override
