@@ -3,7 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="0px">
+    <include
+        layout="@layout/widget_conf_activity_toolbar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"></include>
 
     <ListView
         android:layout_width="match_parent"
