@@ -30,10 +30,14 @@ public class DetoxiomWidgetConfigureActivity extends AppCompatActivity {
     PackageManager pm;
     List<ApplicationInfo> listOfAppInfo;
     //Always initiate arraylists
-    public ArrayList<String> nameOfAppsArray = new ArrayList<String>();
-    public ArrayList<Drawable> appLogosArray = new ArrayList<Drawable>();
+    public static ArrayList<String> nameOfAppsArray = new ArrayList<String>();
+    public static ArrayList<Drawable> appLogosArray = new ArrayList<Drawable>();
+
     ListView listView;
-    SharedPreferences mPref;
+
+    private static final String PREFS_NAME = "me.sadraa.Detoxim.DetoxiomWidget";
+    private static final String PREF_PREFIX_KEY = "appwidget_";
+
     final static String mPrefKey = "preKey";
     int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     final Context context = DetoxiomWidgetConfigureActivity.this;
@@ -49,6 +53,7 @@ public class DetoxiomWidgetConfigureActivity extends AppCompatActivity {
         super.onCreate(icicle);
         setContentView(R.layout.detoxiom_widget_configure);
         setResult(RESULT_CANCELED);
+
 
         //set Toolbar
         Toolbar confToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -71,7 +76,7 @@ public class DetoxiomWidgetConfigureActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
 
-                savePref(position);
+                savePref(context, mAppWidgetId,position);
 
                 DetoxiomWidget.updateAppWidget(context, appWidgetManager, mAppWidgetId);
                 Intent resultValue = new Intent();
@@ -118,6 +123,7 @@ public class DetoxiomWidgetConfigureActivity extends AppCompatActivity {
                 } else {
                     // user installed apps
                     nameOfAppsArray.add((String) pm.getApplicationLabel(app));
+
                     appLogosArray.add(app.loadIcon(pm));
 
                 }
@@ -127,25 +133,36 @@ public class DetoxiomWidgetConfigureActivity extends AppCompatActivity {
 
         }
     }
-    public void savePref(int position){
-        mPref = PreferenceManager.getDefaultSharedPreferences(this);
 
-        SharedPreferences.Editor editor = mPref.edit();
-        editor.putInt("position",position);
-        editor.apply();
+    public void savePref(Context context, int appWidgetId, int position) {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
+        prefs.putInt(PREF_PREFIX_KEY + appWidgetId, position);
+        prefs.apply();
     }
-    public int loadPref(){
-        SharedPreferences mPref = PreferenceManager
-                .getDefaultSharedPreferences(this);
-        int mPosition = mPref.getInt(mPrefKey,0);
-        return mPosition;
+
+    static int loadPref(Context context, int appWidgetId) {
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
+        int position = prefs.getInt(PREF_PREFIX_KEY + appWidgetId, 0);
+            return position;
+
     }
-    public Bitmap loadAppLogo(int position){
-        Drawable appLogo = appLogosArray.get(position);
-        Bitmap appLogoBitmap = ((BitmapDrawable)appLogo).getBitmap();
-        return appLogoBitmap;
+
+    static void deleteTitlePref(Context context, int appWidgetId) {
+        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
+        prefs.remove(PREF_PREFIX_KEY + appWidgetId);
+        prefs.apply();
     }
-    public String loadAppLabel(int position){
+
+    static Bitmap loadAppLogo(int position){
+
+            Drawable appLogo = appLogosArray.get(position);
+            Bitmap appLogoBitmap = ((BitmapDrawable)appLogo).getBitmap();
+            return appLogoBitmap;
+
+
+
+    }
+    static String loadAppLabel(int position){
         String appLabel = nameOfAppsArray.get(position);
         return appLabel;
     }

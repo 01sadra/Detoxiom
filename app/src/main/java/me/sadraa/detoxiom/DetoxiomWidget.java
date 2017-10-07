@@ -15,24 +15,22 @@ import android.widget.RemoteViews;
  */
 public class DetoxiomWidget extends AppWidgetProvider {
 
-
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
-        DetoxiomWidgetConfigureActivity dt = new DetoxiomWidgetConfigureActivity();
 
-        int position = dt.loadPref();
-//        Bitmap appLogoBitmap = dt.loadAppLogo(position);
-//        String appLabel = dt.loadAppLabel(position);
+       int position = DetoxiomWidgetConfigureActivity.loadPref(context,appWidgetId);
+
+       Bitmap appLogoBitmap = DetoxiomWidgetConfigureActivity.loadAppLogo(position);
+
+       String appLabel = DetoxiomWidgetConfigureActivity.loadAppLabel(position);
 
 
         RemoteViews views = new RemoteViews("me.sadraa.detoxiom", R.layout.detoxiom_widget);
- //       views.setTextViewText(R.id.widgetText, appLabel);
-        views.setTextViewText(R.id.widgetText, "salam");
+
+       views.setTextViewText(R.id.widgetText, appLabel);
 
 
-  //      views.setImageViewBitmap(R.id.widgetImage,appLogoBitmap);
-
-        views.setImageViewResource(R.id.widgetImage,R.mipmap.ic_launcher);
+        views.setImageViewBitmap(R.id.widgetImage,appLogoBitmap);
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
@@ -50,17 +48,19 @@ public class DetoxiomWidget extends AppWidgetProvider {
     @Override
     public void onDeleted(Context context, int[] appWidgetIds) {
         // When the user deletes the widget, delete the preference associated with it.
-
+        for (int appWidgetId : appWidgetIds) {
+            DetoxiomWidgetConfigureActivity.deleteTitlePref(context, appWidgetId);
+        }
     }
 
     @Override
     public void onEnabled(Context context) {
-        // Enter relevant functionality for when the first widget is created
+
     }
 
     @Override
     public void onDisabled(Context context) {
-        // Enter relevant functionality for when the last widget is disabled
+
     }
 }
 
