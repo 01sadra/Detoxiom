@@ -5,6 +5,8 @@
     android:layout_height="match_parent"
     android:minHeight="?attr/actionBarSize"
     android:background="@color/colorPrimary"
+    android:titleTextColor="@color/colorPrimaryDark"
+    android:subtitleTextColor="@color/colorPrimaryDark"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 </android.support.v7.widget.Toolbar>

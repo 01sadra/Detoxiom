@@ -1,15 +1,25 @@
 package me.sadraa.detoxiom;
 
 import android.app.Activity;
+import android.appwidget.AppWidgetManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,10 +29,17 @@ import java.util.List;
 public class DetoxiomWidgetConfigureActivity extends AppCompatActivity {
     PackageManager pm;
     List<ApplicationInfo> listOfAppInfo;
-    ArrayList<String> nameOfAppsArray = new ArrayList<String>();
-    ArrayList<Drawable> appLogosArray = new ArrayList<Drawable>();
+    //Always initiate arraylists
+    public ArrayList<String> nameOfAppsArray = new ArrayList<String>();
+    public ArrayList<Drawable> appLogosArray = new ArrayList<Drawable>();
     ListView listView;
+    SharedPreferences mPref;
+    final static String mPrefKey = "preKey";
+    int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
+    final Context context = DetoxiomWidgetConfigureActivity.this;
+
     public DetoxiomWidgetConfigureActivity() {
+
         super();
     }
 
@@ -31,24 +48,55 @@ public class DetoxiomWidgetConfigureActivity extends AppCompatActivity {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.detoxiom_widget_configure);
+        setResult(RESULT_CANCELED);
+
         //set Toolbar
         Toolbar confToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(confToolbar);
         //setting logo and title for app dynamicly
+
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
-        getSupportActionBar().setTitle("Pick app you want");
-        getSupportActionBar().setSubtitle("hello");
+        getSupportActionBar().setTitle("Detoxiom");
+        getSupportActionBar().setSubtitle("Choose the App you want");
 
         createArrayFromApps();
+
         listView = (ListView) findViewById(R.id.list_view_conf_activity);
         listView.setAdapter(new ListViewCostumAdapter(this,nameOfAppsArray,appLogosArray));
+        listView.setClickable(true);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+
+                savePref(position);
+
+                DetoxiomWidget.updateAppWidget(context, appWidgetManager, mAppWidgetId);
+                Intent resultValue = new Intent();
+                resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
+                setResult(RESULT_OK, resultValue);
+                finish();
+
+            }
+        });
+
+
 
         // Find the widget id from the intent.
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
+        if (extras != null) {
+            mAppWidgetId = extras.getInt(
+                    AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+        }
 
+        // If this activity was started with an intent without an app widget ID, finish with an error.
+        if (mAppWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
+            finish();
+            return;
+        }
     }
 
     public void createArrayFromApps(){
@@ -78,6 +126,28 @@ public class DetoxiomWidgetConfigureActivity extends AppCompatActivity {
             // pm.getApplicationLogo(m)
 
         }
+    }
+    public void savePref(int position){
+        mPref = PreferenceManager.getDefaultSharedPreferences(this);
+
+        SharedPreferences.Editor editor = mPref.edit();
+        editor.putInt("position",position);
+        editor.apply();
+    }
+    public int loadPref(){
+        SharedPreferences mPref = PreferenceManager
+                .getDefaultSharedPreferences(this);
+        int mPosition = mPref.getInt(mPrefKey,0);
+        return mPosition;
+    }
+    public Bitmap loadAppLogo(int position){
+        Drawable appLogo = appLogosArray.get(position);
+        Bitmap appLogoBitmap = ((BitmapDrawable)appLogo).getBitmap();
+        return appLogoBitmap;
+    }
+    public String loadAppLabel(int position){
+        String appLabel = nameOfAppsArray.get(position);
+        return appLabel;
     }
 }
 

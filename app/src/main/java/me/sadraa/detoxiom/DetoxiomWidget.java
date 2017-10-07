@@ -2,7 +2,11 @@ package me.sadraa.detoxiom;
 
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.widget.RemoteViews;
 
 /**
@@ -11,17 +15,28 @@ import android.widget.RemoteViews;
  */
 public class DetoxiomWidget extends AppWidgetProvider {
 
+
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
-        //get intent and bundel from
+        DetoxiomWidgetConfigureActivity dt = new DetoxiomWidgetConfigureActivity();
 
-        //CharSequence widgetText = DetoxiomWidgetConfigureActivity.loadTitlePref(context, appWidgetId);
-        // Construct the RemoteViews object
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.detoxiom_widget);
-        //views.setTextViewText(R.id.widgetText, widgetText);
+        int position = dt.loadPref();
+//        Bitmap appLogoBitmap = dt.loadAppLogo(position);
+//        String appLabel = dt.loadAppLabel(position);
+
+
+        RemoteViews views = new RemoteViews("me.sadraa.detoxiom", R.layout.detoxiom_widget);
+ //       views.setTextViewText(R.id.widgetText, appLabel);
+        views.setTextViewText(R.id.widgetText, "salam");
+
+
+  //      views.setImageViewBitmap(R.id.widgetImage,appLogoBitmap);
+
+        views.setImageViewResource(R.id.widgetImage,R.mipmap.ic_launcher);
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
+
     }
 
     @Override
