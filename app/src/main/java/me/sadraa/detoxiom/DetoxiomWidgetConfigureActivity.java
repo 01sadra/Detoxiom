@@ -48,6 +48,7 @@ public class DetoxiomWidgetConfigureActivity extends AppCompatActivity {
     }
 
 
+
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
@@ -166,5 +167,6 @@ public class DetoxiomWidgetConfigureActivity extends AppCompatActivity {
         String appLabel = nameOfAppsArray.get(position);
         return appLabel;
     }
+
 }
 
