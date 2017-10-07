@@ -35,10 +35,10 @@ public class DetoxiomWidgetConfigureActivity extends AppCompatActivity {
 
     ListView listView;
 
+    //Name and keyname for SharedPrefrences
     private static final String PREFS_NAME = "me.sadraa.Detoxim.DetoxiomWidget";
     private static final String PREF_PREFIX_KEY = "appwidget_";
-
-    final static String mPrefKey = "preKey";
+    //Set App widgetId = invalid by default
     int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     final Context context = DetoxiomWidgetConfigureActivity.this;
 
@@ -66,23 +66,27 @@ public class DetoxiomWidgetConfigureActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setTitle("Detoxiom");
         getSupportActionBar().setSubtitle("Choose the App you want");
-
+        //Call function that make Array of logo and labels of installed app
         createArrayFromApps();
-
+        //set adapter for listView
         listView = (ListView) findViewById(R.id.list_view_conf_activity);
         listView.setAdapter(new ListViewCostumAdapter(this,nameOfAppsArray,appLogosArray));
+        //set listview clackable
         listView.setClickable(true);
+        //define listener for listview
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-
+                //save posotion and app widget id in prefrence
                 savePref(context, mAppWidgetId,position);
-
+                //update app widget
                 DetoxiomWidget.updateAppWidget(context, appWidgetManager, mAppWidgetId);
+                //add app widget id to intent
                 Intent resultValue = new Intent();
                 resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
                 setResult(RESULT_OK, resultValue);
+                //finish activity
                 finish();
 
             }
@@ -134,13 +138,13 @@ public class DetoxiomWidgetConfigureActivity extends AppCompatActivity {
 
         }
     }
-
+    //saving prefrence
     public void savePref(Context context, int appWidgetId, int position) {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         prefs.putInt(PREF_PREFIX_KEY + appWidgetId, position);
         prefs.apply();
     }
-
+    //static method that can be called from other classes
     static int loadPref(Context context, int appWidgetId) {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
         int position = prefs.getInt(PREF_PREFIX_KEY + appWidgetId, 0);
@@ -153,16 +157,14 @@ public class DetoxiomWidgetConfigureActivity extends AppCompatActivity {
         prefs.remove(PREF_PREFIX_KEY + appWidgetId);
         prefs.apply();
     }
-
+    //static method for loading app logos (can be called from other classes)
     static Bitmap loadAppLogo(int position){
-
             Drawable appLogo = appLogosArray.get(position);
+        //convert Drawble to bitmap
             Bitmap appLogoBitmap = ((BitmapDrawable)appLogo).getBitmap();
             return appLogoBitmap;
-
-
-
     }
+    //static method for loading app lables
     static String loadAppLabel(int position){
         String appLabel = nameOfAppsArray.get(position);
         return appLabel;
