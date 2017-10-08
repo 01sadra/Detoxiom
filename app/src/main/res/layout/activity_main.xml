@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="me.sadraa.detoxiom.MainActivity">
+
     <include
     layout="@layout/app_bar"
     android:layout_height="match_parent"

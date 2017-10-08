@@ -7,13 +7,13 @@
     <tab
         id="@+id/tab_time"
         icon="@drawable/ic_alarm_black_24dp"
-        title="Saved Time" />
+        title="Saved time" />
     <tab
         id="@+id/tab_new"
         icon="@drawable/ic_cached_black_24dp"
-        title="new" />
+        title="New quote" />
     <tab
         id="@+id/tab_setting"
         icon="@drawable/ic_settings_black_24dp"
-        title="Friends" />
+        title="Setting" />
     </tabs>
