@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import com.roughike.bottombar.BottomBar;
+import com.roughike.bottombar.BottomBarTab;
 import com.roughike.bottombar.OnTabSelectListener;
 
 
@@ -26,31 +27,31 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setTitle("Detoxiom");
 
-
-        //define listener for bottomBar
+        //Define listener for bottomBar
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
 
-        //set click listener for bottombar tabs
+        //Set click listener for bottombar tabs
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
 
             @Override
             public void onTabSelected(@IdRes int tabId) {
+              //using switch to woke fragments
                 switch (tabId){
                     case R.id.tab_archive :
                         ft = getSupportFragmentManager().beginTransaction();
-                        ft.replace(R.id.contentContainer,new ArchiveFragment()).addToBackStack(null);
+                        ft.replace(R.id.contentContainer,new ArchiveFragment());
                         break;
                     case R.id.tab_time:
                         ft = getSupportFragmentManager().beginTransaction();
-                        ft.replace(R.id.contentContainer,new SavedTimeFragment()).addToBackStack(null);
+                        ft.replace(R.id.contentContainer,new SavedTimeFragment());
                         break;
                     case R.id.tab_new :
                         ft = getSupportFragmentManager().beginTransaction();
-                        ft.replace(R.id.contentContainer,new NewQuoteFragment()).addToBackStack(null);
+                        ft.replace(R.id.contentContainer,new NewQuoteFragment());
                         break;
                     case R.id.tab_setting :
                         ft = getSupportFragmentManager().beginTransaction();
-                        ft.replace(R.id.contentContainer,new SettingFragment()).addToBackStack(null);
+                        ft.replace(R.id.contentContainer,new SettingFragment());
                         break;
                 }
                 ft.commit();
