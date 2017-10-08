@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center_horizontal"
-        android:textColor="@color/whaite"
+        android:textColor="@color/white"
         android:id="@+id/widgetText"
         android:layout_below="@+id/widgetImage"
         />

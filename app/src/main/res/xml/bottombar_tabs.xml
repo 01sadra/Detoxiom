@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <tabs>
+        <tab
+            id="@+id/tab_archive"
+            icon="@drawable/ic_book_black_24dp"
+            title="Archive" />
+    <tab
+        id="@+id/tab_time"
+        icon="@drawable/ic_alarm_black_24dp"
+        title="Saved Time" />
+    <tab
+        id="@+id/tab_new"
+        icon="@drawable/ic_cached_black_24dp"
+        title="new" />
+    <tab
+        id="@+id/tab_setting"
+        icon="@drawable/ic_settings_black_24dp"
+        title="Friends" />
+    </tabs>

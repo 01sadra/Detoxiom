@@ -1,6 +1,5 @@
 package me.sadraa.detoxiom;
 
-import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
@@ -11,15 +10,12 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +53,7 @@ public class DetoxiomWidgetConfigureActivity extends AppCompatActivity {
 
 
         //set Toolbar
-        Toolbar confToolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar confToolbar = (Toolbar) findViewById(R.id.toolbar_widget_conf);
         setSupportActionBar(confToolbar);
         //setting logo and title for app dynamicly
 
