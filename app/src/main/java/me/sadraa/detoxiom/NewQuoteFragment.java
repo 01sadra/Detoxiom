@@ -4,15 +4,19 @@ package me.sadraa.detoxiom;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import retrofit2.Call;
@@ -46,23 +50,12 @@ public class NewQuoteFragment extends Fragment {
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // HashMap<String, String> api_token = new HashMap<>();
-               // api_token.put("api_token", "01sadra@gmail.comysarbabi@gamil.comASDF8SD7GSA3457SNAF29B1062B58");
-
-               // QuoteModel QModel = new QuoteModel();
+             //Creating object from provider class to get retrofit service
+                String api_token = ClientConfig.api_token;
                 QuoteProvider QProvider = new QuoteProvider();
                 QuoteClient QService = QProvider.getmQService();
-               // Call<QuoteModel> call = QService.getQuote(ClientConfig.api_token);
-                JSONObject josonBody = new JSONObject();
-                try {
-                    josonBody.put("api_token","01sadra@gmail.comysarbabi@gamil.comASDF8SD7GSA3457SNAF29B1062B58");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                String api_key = josonBody.toString();
-
-
-                Call<QuoteModel> call = QService.getQuote(api_key);
+            /* Call method and run it asyncornisly :) */
+                Call<QuoteModel> call = QService.getQuote(api_token);
                 call.enqueue(new Callback<QuoteModel>() {
                     @Override
                     public void onResponse(Call<QuoteModel> call, Response<QuoteModel> response) {
@@ -71,18 +64,19 @@ public class NewQuoteFragment extends Fragment {
                              Toast.makeText(getContext(),"shod",Toast.LENGTH_SHORT).show();
 
                          }else{
-                             String code = String.valueOf(response.code());
-                             Toast.makeText(getContext(),response.message() + code,Toast.LENGTH_SHORT).show();
 
-
-
+                             try {
+                                 Toast.makeText(getContext(),response.errorBody().string(),Toast.LENGTH_SHORT).show();
+                             } catch (IOException e) {
+                                 e.printStackTrace();
+                             }
                          }
 
                     }
 
                     @Override
                     public void onFailure(Call<QuoteModel> call, Throwable t) {
-                        Toast.makeText(getContext(),"aslan nashod",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),"The request failed",Toast.LENGTH_SHORT).show();
                         t.printStackTrace();
 
                     }

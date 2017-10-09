@@ -21,8 +21,10 @@ public class QuoteProvider {
                 .client(httpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+
         mQService =retrofit.create(QuoteClient.class);
     }
+    //A method for returning retrofit service
     public QuoteClient getmQService() {
         return mQService;
     }
