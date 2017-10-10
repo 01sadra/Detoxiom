@@ -8,7 +8,9 @@ import android.support.v4.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -30,6 +32,9 @@ import retrofit2.Response;
 public class NewQuoteFragment extends Fragment {
 
     Button mButton;
+    TextView quoteTV;
+    TextView authorTV;
+    ViewStub vs;
     public NewQuoteFragment() {
         // Required empty public constructor
     }
@@ -45,8 +50,10 @@ public class NewQuoteFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mButton = (Button) getView().findViewById(R.id.fetchButton);
 
+        authorTV = (TextView) getView().findViewById(R.id.authorText);
+        mButton = (Button) getView().findViewById(R.id.fetchButton);
+        quoteTV = (TextView) getView().findViewById(R.id.quoteText);
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,8 +67,10 @@ public class NewQuoteFragment extends Fragment {
                     @Override
                     public void onResponse(Call<QuoteModel> call, Response<QuoteModel> response) {
                          if(response.isSuccessful()){
+                          //   Toast.makeText(getContext(),"shod",Toast.LENGTH_SHORT).show();
 
-                             Toast.makeText(getContext(),"shod",Toast.LENGTH_SHORT).show();
+                             quoteTV.setText(response.body().getResult().getQuote());
+                             authorTV.setText(response.body().getResult().getAuthor());
 
                          }else{
 

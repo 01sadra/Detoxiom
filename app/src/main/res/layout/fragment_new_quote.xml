@@ -2,13 +2,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="me.sadraa.detoxiom.NewQuoteFragment"
-    android:background="@color/white"
-    >
+    android:background="@color/white">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
+        <android.support.v7.widget.CardView
+            android:padding="15px"
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            app:cardBackgroundColor="@color/colorPrimary"
+            app:cardElevation="10px"
+            app:contentPadding="20px"
+            >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/quoteText"
+                    android:layout_above="@+id/authorText"
+                    android:textAlignment="center"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/authorText"
+                    android:textAlignment="center"
+                    android:layout_below="@id/authorText"
+                    />
+
+        </android.support.v7.widget.CardView>
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -18,6 +42,5 @@
             android:id="@+id/fetchButton"
             />
 
-    </RelativeLayout>
 
 </FrameLayout>
