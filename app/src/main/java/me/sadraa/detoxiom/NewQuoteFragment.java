@@ -3,6 +3,7 @@ package me.sadraa.detoxiom;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
 import android.view.LayoutInflater;
@@ -34,7 +35,8 @@ public class NewQuoteFragment extends Fragment {
     Button mButton;
     TextView quoteTV;
     TextView authorTV;
-    ViewStub vs;
+    BottomSheetBehavior mBottomSheetBehavior;
+
     public NewQuoteFragment() {
         // Required empty public constructor
     }
@@ -54,6 +56,9 @@ public class NewQuoteFragment extends Fragment {
         authorTV = (TextView) getView().findViewById(R.id.authorText);
         mButton = (Button) getView().findViewById(R.id.fetchButton);
         quoteTV = (TextView) getView().findViewById(R.id.quoteText);
+        View bottomSheet = getView().findViewById(R.id.bottom_sheet);
+        mBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
+
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,6 +69,9 @@ public class NewQuoteFragment extends Fragment {
             /* Call method and run it asyncornisly :) */
                 Call<QuoteModel> call = QService.getQuote(api_token);
                 call.enqueue(new Callback<QuoteModel>() {
+
+
+
                     @Override
                     public void onResponse(Call<QuoteModel> call, Response<QuoteModel> response) {
                          if(response.isSuccessful()){
@@ -71,7 +79,7 @@ public class NewQuoteFragment extends Fragment {
 
                              quoteTV.setText(response.body().getResult().getQuote());
                              authorTV.setText(response.body().getResult().getAuthor());
-
+                             mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                          }else{
 
                              try {
