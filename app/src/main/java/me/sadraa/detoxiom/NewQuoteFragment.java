@@ -34,6 +34,8 @@ import retrofit2.Response;
 public class NewQuoteFragment extends Fragment {
 
     Button mButton;
+    Button mButtonSave;
+    Button mButtonIgonre;
     TextView quoteTV;
     TextView authorTV;
     BottomSheetBehavior mBottomSheetBehavior;
@@ -56,6 +58,8 @@ public class NewQuoteFragment extends Fragment {
 
         authorTV = (TextView) getView().findViewById(R.id.authorText);
         mButton = (Button) getView().findViewById(R.id.fetchButton);
+        mButtonSave = (Button) getView().findViewById(R.id.saveQuote);
+        mButtonIgonre= (Button) getView().findViewById(R.id.ignoreQuote);
         quoteTV = (TextView) getView().findViewById(R.id.quoteText);
         View bottomSheet = getView().findViewById(R.id.bottom_sheet);
         mBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
@@ -98,6 +102,23 @@ public class NewQuoteFragment extends Fragment {
 
                     }
                 });
+            }
+        });
+
+        //save quote in archive and minimize the bottomsheet
+        mButtonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                Toast.makeText(getContext(),"Saved!",Toast.LENGTH_SHORT);
+            }
+        });
+
+        //igonre and don't save quote in archive
+        mButtonIgonre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
             }
         });
 

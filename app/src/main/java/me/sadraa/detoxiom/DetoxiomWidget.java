@@ -44,14 +44,16 @@ public class DetoxiomWidget extends AppWidgetProvider {
         for (int appWidgetId : appWidgetIds) {
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.detoxiom_widget);
 
-            appWidgetManager.updateAppWidget(appWidgetId,views);
             //make pending intent that wake mainActivity
             Intent mIntent = new Intent(context,MainActivity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(context,0,mIntent,0);
             views.setOnClickPendingIntent(R.id.widget_layout, pendingIntent);
-            ComponentName myWidget = new ComponentName( context, DetoxiomWidget.class );
+           // ComponentName myWidget = new ComponentName( context, DetoxiomWidget.class );
 
-            appWidgetManager.updateAppWidget( myWidget, views);
+            //appWidgetManager.updateAppWidget( myWidget, views);
+
+            appWidgetManager.updateAppWidget(appWidgetId,views);
+
         }
     }
 

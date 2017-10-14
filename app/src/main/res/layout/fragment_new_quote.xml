@@ -1,15 +1,18 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="me.sadraa.detoxiom.NewQuoteFragment">
-<Button
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="fetch"
-    android:id="@+id/fetchButton"
-    />
+
     <include
         layout="@layout/bottom_sheet"></include>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="fetch"
+        android:id="@+id/fetchButton"
+        android:elevation="0dp" />
 
 </android.support.design.widget.CoordinatorLayout>
