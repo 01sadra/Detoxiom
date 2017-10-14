@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarTab;
@@ -14,6 +16,7 @@ import com.roughike.bottombar.OnTabSelectListener;
 
 public class MainActivity extends AppCompatActivity {
     FragmentTransaction ft;
+   // final static LinearLayout bottomSheetViewgroup = (LinearLayout) findViewById(R.id.bottom_sheet);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setTitle("Detoxiom");
+
 
         //Define listener for bottomBar
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);

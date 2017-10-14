@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -76,7 +77,6 @@ public class NewQuoteFragment extends Fragment {
                     public void onResponse(Call<QuoteModel> call, Response<QuoteModel> response) {
                          if(response.isSuccessful()){
                           //   Toast.makeText(getContext(),"shod",Toast.LENGTH_SHORT).show();
-
                              quoteTV.setText(response.body().getResult().getQuote());
                              authorTV.setText(response.body().getResult().getAuthor());
                              mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
