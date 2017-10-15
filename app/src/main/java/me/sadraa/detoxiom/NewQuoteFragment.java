@@ -1,6 +1,7 @@
 package me.sadraa.detoxiom;
 
 
+import android.app.Application;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
@@ -39,7 +40,7 @@ public class NewQuoteFragment extends Fragment {
     TextView quoteTV;
     TextView authorTV;
     BottomSheetBehavior mBottomSheetBehavior;
-
+    mApplication application;
     public NewQuoteFragment() {
         // Required empty public constructor
     }
@@ -110,6 +111,8 @@ public class NewQuoteFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                QuoteDb quoteDb =application.getQuoteDb();
+                quoteDb.quoteDao().insertOne();
                 Toast.makeText(getContext(),"Saved!",Toast.LENGTH_SHORT).show();
             }
         });
