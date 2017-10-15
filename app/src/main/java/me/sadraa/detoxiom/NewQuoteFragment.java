@@ -110,7 +110,7 @@ public class NewQuoteFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                Toast.makeText(getContext(),"Saved!",Toast.LENGTH_SHORT);
+                Toast.makeText(getContext(),"Saved!",Toast.LENGTH_SHORT).show();
             }
         });
 
