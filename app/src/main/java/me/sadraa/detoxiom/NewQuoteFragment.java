@@ -1,28 +1,18 @@
 package me.sadraa.detoxiom;
 
 
-import android.app.Application;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
-import android.support.v4.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewStub;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
-import java.util.HashMap;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,7 +30,8 @@ public class NewQuoteFragment extends Fragment {
     TextView quoteTV;
     TextView authorTV;
     BottomSheetBehavior mBottomSheetBehavior;
-    mApplication application;
+    MyApplication mApplication;
+    QuoteDbModel quoteDbModel;
     public NewQuoteFragment() {
         // Required empty public constructor
     }
@@ -111,9 +102,10 @@ public class NewQuoteFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                QuoteDb quoteDb =application.getQuoteDb();
-                quoteDb.quoteDao().insertOne();
                 Toast.makeText(getContext(),"Saved!",Toast.LENGTH_SHORT).show();
+                quoteDbModel.setAuthor(quoteTV.getText().toString());
+                quoteDbModel.setQuote(authorTV.getText().toString());
+                insertQuoteToDb(quoteDbModel);
             }
         });
 
@@ -125,5 +117,16 @@ public class NewQuoteFragment extends Fragment {
             }
         });
 
+    }
+
+    public void insertQuoteToDb(final QuoteDbModel quoteDbModel){
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                QuoteDb quoteDb = mApplication.getQuoteDb();
+                quoteDb.quoteDao().insertOne(quoteDbModel);
+            }
+        };
+        new Thread(runnable).start();
     }
 }

@@ -8,7 +8,7 @@ import android.content.res.Configuration;
  * Created by sadra on 10/15/17.
  */
 
-public class mApplication extends Application {
+public class MyApplication extends Application {
  QuoteDb quoteDb = null;
     @Override
     public void onCreate() {
