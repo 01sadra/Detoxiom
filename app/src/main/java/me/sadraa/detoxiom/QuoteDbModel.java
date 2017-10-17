@@ -10,6 +10,14 @@ import android.arch.persistence.room.PrimaryKey;
 @Entity
 public class QuoteDbModel {
 
+    public int getQuoteId() {
+        return quoteId;
+    }
+
+    public void setQuoteId(int quoteId) {
+        this.quoteId = quoteId;
+    }
+
     @PrimaryKey(autoGenerate = true)
     private int quoteId;
 
