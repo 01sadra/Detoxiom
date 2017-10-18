@@ -3,15 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="me.sadraa.detoxiom.ArchiveFragment"
-
     >
 
 
-    <TextView
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        android:id="@+id/author_archive"
+        android:id="@+id/archive_rv"
         />
 
 </FrameLayout>

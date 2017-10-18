@@ -21,6 +21,7 @@ public class ListViewCostumAdapter extends BaseAdapter {
     ArrayList<Drawable> appLogo;
     Context context;
     LayoutInflater inflater;
+
     public ListViewCostumAdapter(Context context, ArrayList<String> appNames , ArrayList<Drawable> logoName) {
         this.appNames=appNames;
         this.appLogo =logoName;

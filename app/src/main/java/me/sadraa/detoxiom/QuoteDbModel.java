@@ -20,6 +20,12 @@ public class QuoteDbModel {
     @ColumnInfo(name ="quote")
     private String quote;
 
+
+
+    public void setQuoteId(int quoteId) {
+        this.quoteId = quoteId;
+    }
+
     public int getQuoteId() {
         return quoteId;
     }

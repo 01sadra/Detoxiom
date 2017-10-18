@@ -101,9 +101,12 @@ public class NewQuoteFragment extends Fragment {
                 Toast.makeText(getContext(),"Saved!",Toast.LENGTH_SHORT).show();
                 //Create a model from database and set value for that
                 quoteDbModel = new QuoteDbModel();
-                quoteDbModel.setAuthor(quoteTV.getText().toString());
-                quoteDbModel.setQuote(authorTV.getText().toString());
-                insertQuoteToDb(quoteDbModel);
+                if(quoteTV!=null||authorTV!=null){
+                    quoteDbModel.setAuthor(quoteTV.getText().toString());
+                    quoteDbModel.setQuote(authorTV.getText().toString());
+                    insertQuoteToDb(quoteDbModel);
+                }
+
             }
         });
 
