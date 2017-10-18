@@ -7,7 +7,7 @@ import android.arch.persistence.room.PrimaryKey;
 /**
  * Created by sadra on 10/15/17.
  */
-@Entity
+@Entity(tableName = "QuoteDbModel")
 public class QuoteDbModel {
 
     public int getQuoteId() {

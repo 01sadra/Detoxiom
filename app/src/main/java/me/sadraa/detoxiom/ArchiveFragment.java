@@ -1,6 +1,7 @@
 package me.sadraa.detoxiom;
 
 
+import android.arch.persistence.room.Room;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,7 @@ public class ArchiveFragment extends Fragment {
     MyApplication myApplication;
     List<QuoteDbModel> quoteDbModelList;
     List<QuoteDbModel> quoteDbModelList2;
+    QuoteDb quoteDb;
     public ArchiveFragment() {
         // Required empty public constructor
     }
@@ -37,7 +39,9 @@ public class ArchiveFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         authorArchive = (TextView) getView().findViewById(R.id.author_archive);
         quoteDbModelList2 = getAllQuotes();
-        if(quoteDbModelList2.isEmpty()){
+
+
+        if(quoteDbModelList2==null){
 
         }else {
             authorArchive.setText(quoteDbModelList2.get(0).getAuthor());
@@ -50,7 +54,8 @@ public class ArchiveFragment extends Fragment {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                quoteDbModelList = myApplication.getQuoteDb().quoteDao().getAll();
+                quoteDb = QuoteDb.getQuoteDb(getContext());
+                quoteDbModelList = quoteDb.quoteDao().getAll();
             }
         };
         new Thread(runnable).start();

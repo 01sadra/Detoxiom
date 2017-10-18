@@ -9,17 +9,12 @@ import android.content.res.Configuration;
  */
 
 public class MyApplication extends Application {
- QuoteDb quoteDb = null;
+
     @Override
     public void onCreate() {
         super.onCreate();
+    }
 
-    }
-    public QuoteDb getQuoteDb(){
-        quoteDb = Room.databaseBuilder(getApplicationContext(),
-                QuoteDb.class, "QuoteDbModel").build();
-        return quoteDb;
-    }
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);

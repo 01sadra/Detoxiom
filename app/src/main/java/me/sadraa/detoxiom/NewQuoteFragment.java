@@ -103,6 +103,7 @@ public class NewQuoteFragment extends Fragment {
             public void onClick(View v) {
                 mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 Toast.makeText(getContext(),"Saved!",Toast.LENGTH_SHORT).show();
+                quoteDbModel = new QuoteDbModel();
                 quoteDbModel.setAuthor(quoteTV.getText().toString());
                 quoteDbModel.setQuote(authorTV.getText().toString());
                 insertQuoteToDb(quoteDbModel);
@@ -123,7 +124,7 @@ public class NewQuoteFragment extends Fragment {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                QuoteDb quoteDb = mApplication.getQuoteDb();
+                QuoteDb quoteDb = QuoteDb.getQuoteDb(getContext());
                 quoteDb.quoteDao().insertOne(quoteDbModel);
             }
         };
