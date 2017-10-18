@@ -30,7 +30,6 @@ public class NewQuoteFragment extends Fragment {
     TextView quoteTV;
     TextView authorTV;
     BottomSheetBehavior mBottomSheetBehavior;
-    MyApplication mApplication;
     QuoteDbModel quoteDbModel;
     public NewQuoteFragment() {
         // Required empty public constructor
@@ -47,7 +46,7 @@ public class NewQuoteFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+    //To do : rewrite this shit with butterkinfe
         authorTV = (TextView) getView().findViewById(R.id.authorText);
         mButton = (Button) getView().findViewById(R.id.fetchButton);
         mButtonSave = (Button) getView().findViewById(R.id.saveQuote);
@@ -67,12 +66,9 @@ public class NewQuoteFragment extends Fragment {
                 Call<QuoteModel> call = QService.getQuote(api_token);
                 call.enqueue(new Callback<QuoteModel>() {
 
-
-
                     @Override
                     public void onResponse(Call<QuoteModel> call, Response<QuoteModel> response) {
                          if(response.isSuccessful()){
-                          //   Toast.makeText(getContext(),"shod",Toast.LENGTH_SHORT).show();
                              quoteTV.setText(response.body().getResult().getQuote());
                              authorTV.setText(response.body().getResult().getAuthor());
                              mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
@@ -103,6 +99,7 @@ public class NewQuoteFragment extends Fragment {
             public void onClick(View v) {
                 mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 Toast.makeText(getContext(),"Saved!",Toast.LENGTH_SHORT).show();
+                //Create a model from database and set value for that
                 quoteDbModel = new QuoteDbModel();
                 quoteDbModel.setAuthor(quoteTV.getText().toString());
                 quoteDbModel.setQuote(authorTV.getText().toString());
@@ -121,6 +118,7 @@ public class NewQuoteFragment extends Fragment {
     }
 
     public void insertQuoteToDb(final QuoteDbModel quoteDbModel){
+     //Creating a new thread for Runnig Room Query.
         Runnable runnable = new Runnable() {
             @Override
             public void run() {

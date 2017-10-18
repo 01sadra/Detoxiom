@@ -10,13 +10,6 @@ import android.arch.persistence.room.PrimaryKey;
 @Entity(tableName = "QuoteDbModel")
 public class QuoteDbModel {
 
-    public int getQuoteId() {
-        return quoteId;
-    }
-
-    public void setQuoteId(int quoteId) {
-        this.quoteId = quoteId;
-    }
 
     @PrimaryKey(autoGenerate = true)
     private int quoteId;
@@ -26,6 +19,10 @@ public class QuoteDbModel {
 
     @ColumnInfo(name ="quote")
     private String quote;
+
+    public int getQuoteId() {
+        return quoteId;
+    }
 
     public String getAuthor() {
         return author;

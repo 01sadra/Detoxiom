@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class ArchiveFragment extends Fragment {
     TextView authorArchive;
-    MyApplication myApplication;
+
     List<QuoteDbModel> quoteDbModelList;
     List<QuoteDbModel> quoteDbModelList2;
     QuoteDb quoteDb;
