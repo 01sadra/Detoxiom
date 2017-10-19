@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
  */
 
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.MyViewHolder> {
-    private List<QuoteDbModel> quoteList;
+    private ArrayList<QuoteDbModel> quoteList;
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
         public TextView authorRV, quoteRV;
@@ -23,7 +24,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.MyViewHolder> {
             quoteRV = (TextView) itemView.findViewById(R.id.quote_text_rv);
         }
     }
-    public RVAdapter(List<QuoteDbModel> quoteList){
+    public RVAdapter(ArrayList<QuoteDbModel> quoteList){
         this.quoteList = quoteList;
     }
 

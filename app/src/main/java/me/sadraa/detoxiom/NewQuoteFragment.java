@@ -102,8 +102,8 @@ public class NewQuoteFragment extends Fragment {
                 //Create a model from database and set value for that
                 quoteDbModel = new QuoteDbModel();
                 if(quoteTV!=null||authorTV!=null){
-                    quoteDbModel.setAuthor(quoteTV.getText().toString());
-                    quoteDbModel.setQuote(authorTV.getText().toString());
+                    quoteDbModel.setAuthor(authorTV.getText().toString());
+                    quoteDbModel.setQuote(quoteTV.getText().toString());
                     insertQuoteToDb(quoteDbModel);
                 }
 
