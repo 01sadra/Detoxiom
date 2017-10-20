@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +20,6 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class ArchiveFragment extends Fragment {
-    TextView authorArchive;
     ArrayList<QuoteDbModel> quoteDbModelList;
     QuoteDb quoteDb;
     RecyclerView rv;
@@ -33,19 +31,13 @@ public class ArchiveFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_archive, container, false);
         rv = (RecyclerView) rootView.findViewById(R.id.archive_rv);
-        //Call mother method of this fragment
-        startQueryInAnotherThread();
+        //Call mother method of Archive fragment (more info in comments of method)
+        startQueryAndPopulate();
         return rootView;
     }
 
@@ -53,36 +45,35 @@ public class ArchiveFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
     }
 
     //This method is mother method of this fragment. first create an object from DB and then execute query in
     //background thread and then call a method on uiThread for set adapter and populate list view
-    public void startQueryInAnotherThread(){
+    public void startQueryAndPopulate(){
       //create new runnable
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
                 //Create an object from QuoteDb Class
                 quoteDb = QuoteDb.getQuoteDb(getContext());
+                //Retrieve List of saved Quotes and authors
                 final List<QuoteDbModel> mList = quoteDb.quoteDao().getAll();
+                //Convert data from list to Array
+                final ArrayList<QuoteDbModel> quoteDbModelListRV = convertListQuoteToArray(mList);
                 //Call populateRV method on ui thread.
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                            populateRVWithdata(mList);
+                        populateRV(quoteDbModelListRV);
                     }
                 });
-
             }
         };
         new Thread(runnable).start();
     }
 
-    //The method called in another onUiThead method and populate RV with data of data base
-    public void populateRVWithdata(List<QuoteDbModel> mList){
-        //Convert data from list to Array
-        ArrayList<QuoteDbModel> quoteDbModelListRV = convertListQuoteToArray(mList);
+    //The method called in startQueryAndPopulate( onUiThead )method and populate RV with data of data base
+    public void populateRV(ArrayList<QuoteDbModel> quoteDbModelListRV){
         //Create adapter object with ArrayList
         rvAdapter = new RVAdapter(quoteDbModelListRV);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
@@ -92,7 +83,7 @@ public class ArchiveFragment extends Fragment {
     }
 
     //The method get list of quotes and return an Array list to populate list view
-    //This method called from populateRVWithdata method not in OnCreate stage
+    //This method called from startQueryAndPopulate() method not in OnCreate stage
     public ArrayList<QuoteDbModel> convertListQuoteToArray(List<QuoteDbModel> mList){
         if (mList != null) {
             quoteDbModelList = new ArrayList<>(mList.size());
