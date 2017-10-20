@@ -21,7 +21,7 @@ public abstract class QuoteDb extends RoomDatabase {
         if(INSTANCE==null){
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                                             QuoteDb.class,
-                                            "QuoteDataBase").allowMainThreadQueries().build();
+                                            "QuoteDataBase").build();
         }
         return INSTANCE;
     }
