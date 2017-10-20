@@ -64,3 +64,10 @@ freeline.py
 freeline/
 freeline_project_description.json
 app/src/main/java/me/sadraa/detoxiom/ClientConfig.java
+app/libs/
+app/src/main/res/drawable-hdpi/
+app/src/main/res/drawable-mdpi/
+app/src/main/res/drawable-xhdpi/
+app/src/main/res/drawable-xxhdpi/
+app/src/main/res/drawable-xxxhdpi/
+app/src/main/res/values-v21/
