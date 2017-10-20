@@ -34,27 +34,33 @@ captures/
 
 # Intellij
 *.iml
+
+.idea/libraries/
 .idea/workspace.xml
 .idea/tasks.xml
-.idea/gradle.xml
+.idea/.name
+.idea/compiler.xml
+.idea/copyright/profiles_settings.xml
+.idea/encodings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/scopes/scope_settings.xml
 .idea/dictionaries
-.idea/libraries
-
+.idea/vcs.xml
+.idea/jsLibraryMappings.xml
+.idea/datasources.xml
+.idea/dataSources.ids
+.idea/sqlDataSources.xml
+.idea/dynamic.xml
+.idea/uiDesigner.xml
 # Keystore files
 *.jks
-
 # External native build folder generated in Android Studio 2.2 and later
 .externalNativeBuild
-
 # Google Services (e.g. APIs or Firebase)
 google-services.json
-
 # Freeline
 freeline.py
 freeline/
-<<<<<<< HEAD
 freeline_project_description.json
-=======
-freeline_project_description.json
->>>>>>> 3a7fe42f373189aa58ef04d1d7a445de30d714b1
 app/src/main/java/me/sadraa/detoxiom/ClientConfig.java
