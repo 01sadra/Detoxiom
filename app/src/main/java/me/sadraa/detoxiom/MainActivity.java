@@ -15,8 +15,9 @@ import com.roughike.bottombar.OnTabSelectListener;
 
 public class MainActivity extends AppCompatActivity {
     FragmentTransaction ft;
-
     int openedTimes;
+    //We want to use shared prefrences for counting how many time application will open by use
+    //for this goal we define 2 String. 1 for prefrence name and one as a key for prefrence
     public static final String PREFRENCE_NAME_OPENED_TIMES = "opened times";
     private static final String PREFRENCE_KEY_OPENED_TIMES = "opened times key";
 
@@ -25,8 +26,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //everyTime onCreate fire we +1 shared prefrences counter
         openedTimes = loadOpenedTimes(getApplicationContext());
-        saveOpenedTimes(getApplicationContext(),openedTimes);
+        saveOpenedTimes(getApplicationContext(),openedTimes++);
 
         //Set toolbar
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_main);
@@ -72,15 +74,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        //we +1 counter everytime onresume called by app.
         openedTimes = loadOpenedTimes(this);
-        saveOpenedTimes(getApplicationContext(),++openedTimes);
+        saveOpenedTimes(getApplicationContext(),openedTimes++);
     }
-
+    //We save prefrence in this method.
     public void saveOpenedTimes(Context context,int counter){
         SharedPreferences.Editor countOpenTimes = context.getSharedPreferences(PREFRENCE_NAME_OPENED_TIMES,0).edit();
         countOpenTimes.putInt(PREFRENCE_KEY_OPENED_TIMES,counter);
         countOpenTimes.apply();
     }
+    //we load saved prefrence by this method. It defined static because we want to call it in saved time fragment.
     static int loadOpenedTimes(Context context){
         SharedPreferences loadpreferencesOpenTime = context.getSharedPreferences(PREFRENCE_NAME_OPENED_TIMES,0);
         int openTimes = loadpreferencesOpenTime.getInt(PREFRENCE_KEY_OPENED_TIMES,0);
