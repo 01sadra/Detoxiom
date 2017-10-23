@@ -1,13 +1,79 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="me.sadraa.detoxiom.SavedTimeFragment">
 
+
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:textSize="35sp"
+        android:gravity="center_horizontal"
+        android:textAlignment="center"
         android:id="@+id/opened_times"
+        android:layout_above="@+id/image_layout"
      />
 
-</FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/image_layout"
+        android:gravity="center_vertical"
+        android:layout_centerVertical="true"
+
+        >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:id="@+id/telegramIV"
+            android:src="@drawable/ic_telegram"
+            />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:id="@+id/instagramIV"
+            android:src="@drawable/ic_instagram"
+            />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:id="@+id/twitterIV"
+            android:src="@drawable/ic_twitter"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/telegramTV"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/instagramTV"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/twitterTV"
+            />
+
+    </LinearLayout>
+
+
+</RelativeLayout>
