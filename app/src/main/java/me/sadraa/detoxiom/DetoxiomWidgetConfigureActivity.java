@@ -130,8 +130,6 @@ public class DetoxiomWidgetConfigureActivity extends AppCompatActivity {
                 }
             }
 
-            // pm.getApplicationLogo(m)
-
         }
     }
     //saving prefrence

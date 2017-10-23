@@ -1,27 +1,33 @@
 package me.sadraa.detoxiom;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.LinearLayout;
 
 import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.BottomBarTab;
 import com.roughike.bottombar.OnTabSelectListener;
 
 
 public class MainActivity extends AppCompatActivity {
     FragmentTransaction ft;
-   // final static LinearLayout bottomSheetViewgroup = (LinearLayout) findViewById(R.id.bottom_sheet);
+
+    int openedTimes;
+    public static final String PREFRENCE_NAME_OPENED_TIMES = "opened times";
+    private static final String PREFRENCE_KEY_OPENED_TIMES = "opened times key";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        openedTimes = loadOpenedTimes(getApplicationContext());
+        saveOpenedTimes(getApplicationContext(),openedTimes);
+
         //Set toolbar
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(mToolbar);
@@ -39,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTabSelected(@IdRes int tabId) {
-              //using switch to woke fragments
+              //using switch to woke fragments up
                 switch (tabId){
                     case R.id.tab_archive :
                         ft = getSupportFragmentManager().beginTransaction();
@@ -60,11 +66,25 @@ public class MainActivity extends AppCompatActivity {
                 }
                 ft.commit();
             }
-
         });
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        openedTimes = loadOpenedTimes(this);
+        saveOpenedTimes(getApplicationContext(),++openedTimes);
+    }
 
-
-
+    public void saveOpenedTimes(Context context,int counter){
+        SharedPreferences.Editor countOpenTimes = context.getSharedPreferences(PREFRENCE_NAME_OPENED_TIMES,0).edit();
+        countOpenTimes.putInt(PREFRENCE_KEY_OPENED_TIMES,counter);
+        countOpenTimes.apply();
+    }
+    static int loadOpenedTimes(Context context){
+        SharedPreferences loadpreferencesOpenTime = context.getSharedPreferences(PREFRENCE_NAME_OPENED_TIMES,0);
+        int openTimes = loadpreferencesOpenTime.getInt(PREFRENCE_KEY_OPENED_TIMES,0);
+        return openTimes;
     }
 }
+
