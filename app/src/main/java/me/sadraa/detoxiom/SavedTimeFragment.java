@@ -14,7 +14,8 @@ import android.widget.TextView;
  * A simple {@link Fragment} subclass.
  */
 public class SavedTimeFragment extends Fragment {
-    TextView openedTimesTV;
+    TextView openedTimesTV, instagramTV, twitterTV, telegramTV;
+
     int openedTimeInt;
     public SavedTimeFragment() {
         // Required empty public constructor
@@ -31,9 +32,17 @@ public class SavedTimeFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         openedTimesTV = getView().findViewById(R.id.opened_times);
+        instagramTV= getView().findViewById(R.id.instagramTV);
+        twitterTV = getView().findViewById(R.id.twitterTV);
+        telegramTV = getView().findViewById(R.id.telegramTV);
         //we call sharedprefrence for understanding how many time app was opened.
+
         openedTimeInt = MainActivity.loadOpenedTimes(getContext());
         openedTimesTV.setText("You opened Detoxiom:\n" + openedTimeInt +" Times");
+
+        instagramTV.setText(realTimeInSocialMedia(openedTimeInt,"instagram") + "\n Minutes");
+        telegramTV.setText(realTimeInSocialMedia(openedTimeInt,"telegram") + "\n Minutes");
+        twitterTV.setText(realTimeInSocialMedia(openedTimeInt,"twitter") + "\n Minutes");
 
     }
 

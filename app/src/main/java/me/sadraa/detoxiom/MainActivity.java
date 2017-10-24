@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         //everyTime onCreate fire we +1 shared prefrences counter
         openedTimes = loadOpenedTimes(getApplicationContext());
-        saveOpenedTimes(getApplicationContext(),openedTimes++);
+        saveOpenedTimes(getApplicationContext(),++openedTimes);
 
         //Set toolbar
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_main);
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         //we +1 counter everytime onresume called by app.
         openedTimes = loadOpenedTimes(this);
-        saveOpenedTimes(getApplicationContext(),openedTimes++);
+        saveOpenedTimes(getApplicationContext(),++openedTimes);
     }
     //We save prefrence in this method.
     public void saveOpenedTimes(Context context,int counter){

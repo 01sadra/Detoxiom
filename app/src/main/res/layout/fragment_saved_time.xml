@@ -13,10 +13,18 @@
         android:gravity="center_horizontal"
         android:textAlignment="center"
         android:id="@+id/opened_times"
-        android:layout_above="@+id/image_layout"
      />
-
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:id="@+id/title_text"
+        android:background="@color/bb_inActiveBottomBarItemColor"
+        android:textAlignment="center"
+        android:gravity="center_vertical"
+        android:textSize="20sp"
+        android:layout_above="@+id/image_layout"
+        android:text="میزان تقریبی زمان تلف شده شما اگر به جای دیتاکسیوم هرکدام از شبکه‌های اجتماعی زیر را باز میکردید :)"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,7 +32,6 @@
         android:id="@+id/image_layout"
         android:gravity="center_vertical"
         android:layout_centerVertical="true"
-
         >
         <ImageView
             android:layout_width="match_parent"
@@ -50,26 +57,35 @@
 
     </LinearLayout>
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/text_layout"
+        android:gravity="center_vertical"
+        android:layout_below="@id/image_layout"
         >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="20sp"
             android:layout_weight="1"
+            android:textAlignment="center"
             android:id="@+id/telegramTV"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textSize="20sp"
+            android:textAlignment="center"
             android:id="@+id/instagramTV"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textSize="20sp"
+            android:textAlignment="center"
             android:id="@+id/twitterTV"
             />
 
