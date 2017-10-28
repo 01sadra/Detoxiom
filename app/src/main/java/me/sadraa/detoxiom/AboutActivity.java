@@ -12,6 +12,9 @@ public class AboutActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.mAppTheme);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         View aboutPage = new AboutPage(this)
                 .isRTL(false)
                 .setImage(R.mipmap.ic_launcher)
@@ -22,9 +25,15 @@ public class AboutActivity extends AppCompatActivity {
                 .addGitHub("01sadra")
                 .addTwitter("01sadra")
                 .create();
+
         setContentView(aboutPage);
     }
-
+    
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 
 
 
