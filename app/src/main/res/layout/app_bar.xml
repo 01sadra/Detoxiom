@@ -28,7 +28,7 @@
                 android:layout_height="match_parent"
                 android:layout_above="@+id/bottomBar"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                android:background="@color/white" />
+                android:background="@color/icons" />
 
 
             <com.roughike.bottombar.BottomBar

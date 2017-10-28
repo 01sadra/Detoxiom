@@ -6,8 +6,8 @@
     android:layout_height="wrap_content"
     android:minHeight="?attr/actionBarSize"
     app:layout_scrollFlags="scroll|enterAlways"
-    android:background="@color/colorPrimary"
-    android:titleTextColor="@color/white"
+    android:background="@color/primary"
+    android:titleTextColor="@color/icons"
 
 
     >
