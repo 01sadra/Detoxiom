@@ -28,7 +28,7 @@ public class AboutActivity extends AppCompatActivity {
 
         setContentView(aboutPage);
     }
-    
+
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
