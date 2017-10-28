@@ -12,6 +12,8 @@ import android.support.v7.widget.Toolbar;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 
 public class MainActivity extends AppCompatActivity {
     FragmentTransaction ft;
@@ -69,6 +71,11 @@ public class MainActivity extends AppCompatActivity {
                 ft.commit();
             }
         });
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     @Override
