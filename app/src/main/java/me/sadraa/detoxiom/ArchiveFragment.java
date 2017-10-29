@@ -74,6 +74,7 @@ public class ArchiveFragment extends Fragment {
 
     //The method called in startQueryAndPopulate( onUiThead )method and populate RV with data of data base
     public void populateRV(ArrayList<QuoteDbModel> quoteDbModelListRV){
+
         //Create adapter object with ArrayList
         rvAdapter = new RVAdapter(quoteDbModelListRV);
 
@@ -92,9 +93,11 @@ public class ArchiveFragment extends Fragment {
     public ArrayList<QuoteDbModel> convertListQuoteToArray(List<QuoteDbModel> mList){
         if (mList != null) {
             quoteDbModelList = new ArrayList<>(mList.size());
-            for (QuoteDbModel q:mList) {
-                quoteDbModelList.add(q);
+            //We start adding object from list to array list, from the end to the start
+            for (int i=mList.size(); i>0 ;i--){
+                quoteDbModelList.add(mList.get(i-1));
             }
+
             return quoteDbModelList;
         }else{
             return null;
