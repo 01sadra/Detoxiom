@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/author_text_rv"
-        android:textAlignment="viewEnd"
-        android:gravity="end"
+        android:textColor="@color/colorPrimary"
+        android:textDirection="ltr"
         />
 </LinearLayout>

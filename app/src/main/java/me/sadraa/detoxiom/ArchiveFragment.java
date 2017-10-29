@@ -5,12 +5,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,8 +76,13 @@ public class ArchiveFragment extends Fragment {
     public void populateRV(ArrayList<QuoteDbModel> quoteDbModelListRV){
         //Create adapter object with ArrayList
         rvAdapter = new RVAdapter(quoteDbModelListRV);
+
+
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         rv.setLayoutManager(mLayoutManager);
+        //DividerDecoration is a new class in support library that help to draw a line between each row of recyvleview
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rv.getContext(),DividerItemDecoration.VERTICAL);
+        rv.addItemDecoration(dividerItemDecoration);
         rv.setItemAnimator(new DefaultItemAnimator());
         rv.setAdapter(rvAdapter);
     }
