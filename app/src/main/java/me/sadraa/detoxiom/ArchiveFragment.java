@@ -84,6 +84,8 @@ public class ArchiveFragment extends Fragment {
         //DividerDecoration is a new class in support library that help to draw a line between each row of recyvleview
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rv.getContext(),DividerItemDecoration.VERTICAL);
         rv.addItemDecoration(dividerItemDecoration);
+        //It makes scrolling smooth
+        rv.setNestedScrollingEnabled(false);
         rv.setItemAnimator(new DefaultItemAnimator());
         rv.setAdapter(rvAdapter);
     }
