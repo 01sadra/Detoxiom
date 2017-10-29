@@ -1,4 +1,4 @@
-<android.support.v4.widget.NestedScrollView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,7 +7,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="me.sadraa.detoxiom.ArchiveFragment">
 
-
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,4 +14,12 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         />
 
-</android.support.v4.widget.NestedScrollView>
+    <TextView
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="هنوز هیچ گفتاری ندارید!" />
+
+</RelativeLayout>

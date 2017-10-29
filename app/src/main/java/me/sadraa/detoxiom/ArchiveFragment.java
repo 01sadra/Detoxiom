@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ public class ArchiveFragment extends Fragment {
     QuoteDb quoteDb;
     RecyclerView rv;
     RVAdapter rvAdapter;
-
+    TextView tv;
 
     public ArchiveFragment() {
         // Required empty public constructor
@@ -36,6 +37,7 @@ public class ArchiveFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_archive, container, false);
         rv = (RecyclerView) rootView.findViewById(R.id.archive_rv);
+        tv = (TextView) rootView.findViewById(R.id.empty_view);
         //Call mother method of Archive fragment (more info in comments of method)
         startQueryAndPopulate();
         return rootView;
@@ -72,22 +74,31 @@ public class ArchiveFragment extends Fragment {
         new Thread(runnable).start();
     }
 
-    //The method called in startQueryAndPopulate( onUiThead )method and populate RV with data of data base
+    //The method called in startQueryAndPopulate( onUiThread )method and populate RV with data of data base
     public void populateRV(ArrayList<QuoteDbModel> quoteDbModelListRV){
 
         //Create adapter object with ArrayList
         rvAdapter = new RVAdapter(quoteDbModelListRV);
+        //Check if recycleView have data or not. if not show a message.
+        if(rvAdapter.getItemCount()==0){
+            rv.setVisibility(View.GONE);
+            tv.setVisibility(View.VISIBLE);
+        } else {
+            rv.setVisibility(View.VISIBLE);
+            tv.setVisibility(View.GONE);
+
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+            rv.setLayoutManager(mLayoutManager);
+            //DividerDecoration is a new class in support library that help to draw a line between each row of recyvleview
+            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rv.getContext(),DividerItemDecoration.VERTICAL);
+            rv.addItemDecoration(dividerItemDecoration);
+            //It makes scrolling smooth
+            rv.setNestedScrollingEnabled(false);
+            rv.setItemAnimator(new DefaultItemAnimator());
+            rv.setAdapter(rvAdapter);
+        }
 
 
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        rv.setLayoutManager(mLayoutManager);
-        //DividerDecoration is a new class in support library that help to draw a line between each row of recyvleview
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rv.getContext(),DividerItemDecoration.VERTICAL);
-        rv.addItemDecoration(dividerItemDecoration);
-        //It makes scrolling smooth
-        rv.setNestedScrollingEnabled(false);
-        rv.setItemAnimator(new DefaultItemAnimator());
-        rv.setAdapter(rvAdapter);
     }
 
     //The method get list of quotes and return an Array list to populate list view
@@ -95,7 +106,7 @@ public class ArchiveFragment extends Fragment {
     public ArrayList<QuoteDbModel> convertListQuoteToArray(List<QuoteDbModel> mList){
         if (mList != null) {
             quoteDbModelList = new ArrayList<>(mList.size());
-            //We start adding object from list to array list, from the end to the start
+            //We add object from list to arraylist, from the end to the start to put last quote in the top
             for (int i=mList.size(); i>0 ;i--){
                 quoteDbModelList.add(mList.get(i-1));
             }
