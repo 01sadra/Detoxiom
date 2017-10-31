@@ -1,7 +1,9 @@
 package me.sadraa.detoxiom;
 
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -15,8 +17,14 @@ import java.util.ArrayList;
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.MyViewHolder> {
     private ArrayList<QuoteDbModel> quoteList;
 
+    public RVAdapter(ArrayList<QuoteDbModel> quoteList){
+        this.quoteList = quoteList;
+    }
+
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView authorRV, quoteRV;
+        PopupMenu popupMenu;
+
         public MyViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
@@ -25,13 +33,47 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.MyViewHolder> {
 
         }
         @Override
-        public void onClick(View view) {
-          
+        public void onClick(final View view) {
+
+            popupMenu= new PopupMenu(view.getContext(),view);
+            popupMenu.getMenuInflater().inflate(R.menu.popup_menu,popupMenu.getMenu());
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    if(item.getItemId()== R.id.delete){
+                        Runnable runnable = new Runnable() {
+                            @Override
+                            public void run() {
+                                final QuoteDb quoteDb = QuoteDb.getQuoteDb(view.getContext());
+                                try{
+                                    quoteDb.quoteDao().deleteOne(quoteList.get(getAdapterPosition()));
+
+                                }catch (Exception e){
+
+                                }
+                            }
+                        };
+                        new Thread(runnable).start();
+                        try {
+                            quoteList.remove(getAdapterPosition());
+                            RVAdapter.this.notifyItemRemoved(getAdapterPosition());
+
+                        }catch (Exception e){
+
+                        }
+
+                        return true;
+                    }else {
+
+                        return true;
+                    }
+                }
+            });
+            popupMenu.show();
         }
     }
-    public RVAdapter(ArrayList<QuoteDbModel> quoteList){
-        this.quoteList = quoteList;
-    }
+
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

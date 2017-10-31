@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="end"
+    android:layoutDirection="rtl"
+    android:layout_gravity="right"
+    android:fitsSystemWindows="true"
+    android:textDirection="rtl"
+
+    >
+
+    <item
+        android:id="@+id/share"
+        android:title="به اشتراک بذار!"
+        />
+
+    <item
+        android:id="@+id/delete"
+
+        android:title="پاکش کن!"/>
+
+</menu>

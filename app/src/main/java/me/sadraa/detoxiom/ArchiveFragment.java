@@ -76,7 +76,6 @@ public class ArchiveFragment extends Fragment {
 
     //The method called in startQueryAndPopulate( onUiThread )method and populate RV with data of data base
     public void populateRV(ArrayList<QuoteDbModel> quoteDbModelListRV){
-
         //Create adapter object with ArrayList
         rvAdapter = new RVAdapter(quoteDbModelListRV);
         //Check if recycleView have data or not. if not show a message.
@@ -97,8 +96,6 @@ public class ArchiveFragment extends Fragment {
             rv.setItemAnimator(new DefaultItemAnimator());
             rv.setAdapter(rvAdapter);
         }
-
-
     }
 
     //The method get list of quotes and return an Array list to populate list view
