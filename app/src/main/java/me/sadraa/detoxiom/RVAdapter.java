@@ -32,6 +32,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.MyViewHolder> {
             quoteRV = (TextView) itemView.findViewById(R.id.quote_text_rv);
 
         }
+        //If your reading my code and see this i'm really sorry. It's the most shitty code i've ever write.
+        //I will fix it ASAP but keep in mind you should NEVER handle clicks in viewHolder as I do it here.
         @Override
         public void onClick(final View view) {
 
@@ -42,20 +44,11 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.MyViewHolder> {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
                     if(item.getItemId()== R.id.delete){
-                        Runnable runnable = new Runnable() {
-                            @Override
-                            public void run() {
+
                                 final QuoteDb quoteDb = QuoteDb.getQuoteDb(view.getContext());
-                                try{
-                                    quoteDb.quoteDao().deleteOne(quoteList.get(getAdapterPosition()));
 
-                                }catch (Exception e){
-
-                                }
-                            }
-                        };
-                        new Thread(runnable).start();
                         try {
+                            quoteDb.quoteDao().deleteOne(quoteList.get(getAdapterPosition()));
                             quoteList.remove(getAdapterPosition());
                             RVAdapter.this.notifyItemRemoved(getAdapterPosition());
 
