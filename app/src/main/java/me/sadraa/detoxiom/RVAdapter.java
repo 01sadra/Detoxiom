@@ -1,5 +1,6 @@
 package me.sadraa.detoxiom;
 
+import android.content.Intent;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -44,20 +45,22 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.MyViewHolder> {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
                     if(item.getItemId()== R.id.delete){
-
-                                final QuoteDb quoteDb = QuoteDb.getQuoteDb(view.getContext());
-
+                        QuoteDb quoteDb = QuoteDb.getQuoteDb(view.getContext());
                         try {
                             quoteDb.quoteDao().deleteOne(quoteList.get(getAdapterPosition()));
                             quoteList.remove(getAdapterPosition());
                             RVAdapter.this.notifyItemRemoved(getAdapterPosition());
-
                         }catch (Exception e){
 
                         }
 
                         return true;
                     }else {
+                        Intent intent = new Intent();
+                        intent.setAction(Intent.ACTION_SEND);
+                        intent.setType("text/plain");
+                        intent.putExtra(android.content.Intent.EXTRA_TEXT, quoteList.get(getAdapterPosition()).getQuote());
+                        view.getContext().startActivity(Intent.createChooser(intent," به اشتراک بگذارید "));
 
                         return true;
                     }
