@@ -24,9 +24,7 @@ import retrofit2.Response;
  */
 public class NewQuoteFragment extends Fragment {
 
-    Button mButton;
-    Button mButtonSave;
-    Button mButtonIgonre;
+    Button mButton, mButtonSave, mButtonIgonre;
     TextView quoteTV;
     TextView authorTV;
     BottomSheetBehavior mBottomSheetBehavior;
@@ -85,7 +83,7 @@ public class NewQuoteFragment extends Fragment {
 
                     @Override
                     public void onFailure(Call<QuoteModel> call, Throwable t) {
-                        Toast.makeText(getContext(),"The request failed",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),"مشکل در برقراری اتصال به اینترنت!",Toast.LENGTH_SHORT).show();
                         t.printStackTrace();
 
                     }
@@ -98,7 +96,7 @@ public class NewQuoteFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                Toast.makeText(getContext(),"Saved!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),"ذخیره شد‌",Toast.LENGTH_SHORT).show();
                 //Create a model from database and set value for that
                 quoteDbModel = new QuoteDbModel();
                 if(quoteTV!=null||authorTV!=null){

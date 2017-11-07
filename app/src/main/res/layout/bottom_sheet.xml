@@ -16,7 +16,7 @@
             android:textColor="@android:color/black"
             android:id="@+id/authorText"
             android:textAlignment="center"
-            android:textSize="50sp"
+            android:textSize="35sp"
             android:background="@android:color/holo_orange_light"
             />
         <TextView
@@ -24,27 +24,35 @@
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
             android:id="@+id/quoteText"
-            android:textSize="30sp"
+            android:textSize="25sp"
             android:textAlignment="center"
             android:background="@color/primary"
             />
 <LinearLayout
     android:layout_width="match_parent"
     android:orientation="horizontal"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
     <Button
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_weight="1"
-        android:text="Save"
+        android:textSize="20sp"
+        android:shadowColor="@color/about_twitter_color"
+        android:background="@color/colorPrimaryDark"
+        android:text="ذخیره کن"
         android:id="@+id/saveQuote"
         />
 
     <Button
-        android:text="Ignore"
+        android:text="بی خیال"
         android:layout_width="0dp"
+        android:shadowColor="@color/primary"
+        style="?android:attr/borderlessButtonStyle"
+        android:textSize="20sp"
+        android:background="@color/about_youtube_color"
         android:layout_weight="1"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:id="@+id/ignoreQuote" />
 </LinearLayout>
 
