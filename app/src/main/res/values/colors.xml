@@ -11,4 +11,11 @@
     <color name="secondary_text">#757575</color>
     <color name="icons">#FFFFFF</color>
     <color name="divider">#BDBDBD</color>
+    <color name="very_low_primary">#E0F2F1</color>
+    <color name="low_primary">#B2DFDB</color>
+    <color name="near_primary">#80CBC4</color>
+    <color name="look_like">#4DB6AC</color>
+    <color name="very_look_like">#26A69A</color>
+
+
     </resources>

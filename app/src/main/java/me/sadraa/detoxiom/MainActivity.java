@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setTitle("Detoxiom");
-
+        getSupportActionBar().setElevation(8);
 
         //Define listener for bottomBar
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
@@ -97,5 +97,6 @@ public class MainActivity extends AppCompatActivity {
         int openTimes = loadpreferencesOpenTime.getInt(PREFRENCE_KEY_OPENED_TIMES,0);
         return openTimes;
     }
+
 }
 

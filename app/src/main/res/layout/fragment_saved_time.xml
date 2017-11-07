@@ -2,15 +2,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/low_primary"
     tools:context="me.sadraa.detoxiom.SavedTimeFragment">
-
 
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textSize="35sp"
-        android:gravity="center_horizontal"
+        android:layout_height="115dp"
+        android:textSize="20sp"
+        android:background="@color/very_look_like"
+        android:gravity="center"
         android:textAlignment="center"
         android:id="@+id/opened_times"
      />
@@ -18,17 +19,18 @@
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:id="@+id/title_text"
-        android:background="@color/bb_inActiveBottomBarItemColor"
+        android:background="@color/look_like"
         android:textAlignment="center"
         android:gravity="center_vertical"
-        android:textSize="20sp"
+        android:textSize="15sp"
         android:layout_above="@+id/image_layout"
-        android:text="میزان تقریبی زمان تلف شده شما اگر به جای دیتاکسیوم هرکدام از شبکه‌های اجتماعی زیر را باز میکردید :)"
+        android:text="میزان تقریبی زمان تلف شده شما اگر به جای دیتاکسیوم هرکدام از شبکه‌های اجتماعی زیر را باز میکردید:"
         />
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="75dp"
         android:orientation="horizontal"
+        android:background="@color/near_primary"
         android:id="@+id/image_layout"
         android:gravity="center_vertical"
         android:layout_centerVertical="true"
@@ -60,6 +62,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:background="@color/low_primary"
         android:id="@+id/text_layout"
         android:gravity="center_vertical"
         android:layout_below="@id/image_layout"

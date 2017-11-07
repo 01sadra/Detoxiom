@@ -38,25 +38,22 @@ public class SavedTimeFragment extends Fragment {
         //we call sharedprefrence for understanding how many time app was opened.
 
         openedTimeInt = MainActivity.loadOpenedTimes(getContext());
-        openedTimesTV.setText("You opened Detoxiom:\n" + openedTimeInt +" Times");
+        openedTimesTV.setText("دفعاتی که دیتاکسیوم را باز کرده اید" + ":\n" + openedTimeInt +"");
 
-        instagramTV.setText(realTimeInSocialMedia(openedTimeInt,"instagram") + "\n Minutes");
-        telegramTV.setText(realTimeInSocialMedia(openedTimeInt,"telegram") + "\n Minutes");
-        twitterTV.setText(realTimeInSocialMedia(openedTimeInt,"twitter") + "\n Minutes");
+        instagramTV.setText(realTimeInSocialMedia(openedTimeInt,"instagram") + "\n دقیقه");
+        telegramTV.setText(realTimeInSocialMedia(openedTimeInt,"telegram") + "\n دقیقه");
+        twitterTV.setText(realTimeInSocialMedia(openedTimeInt,"twitter") + "\n دقیقه");
 
     }
 
     public int realTimeInSocialMedia(int openedTime, String socialMedia){
         switch (socialMedia){
             case "twitter":
-                return openedTime*11;
+                return openedTime*5;
             case "instagram":
-                return openedTime*14;
-            case "facebook":
-                return openedTime*12;
+                return openedTime*6;
             case "telegram":
-                return openedTime*9;
-
+                return openedTime*4;
         }
         return openedTime;
     }
