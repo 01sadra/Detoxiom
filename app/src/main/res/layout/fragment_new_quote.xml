@@ -4,15 +4,15 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="me.sadraa.detoxiom.NewQuoteFragment">
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/animation_refresh"
+        />
 
     <include
         layout="@layout/bottom_sheet"></include>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="fetch"
-        android:id="@+id/fetchButton"
-        android:elevation="0dp" />
 
 </android.support.design.widget.CoordinatorLayout>
