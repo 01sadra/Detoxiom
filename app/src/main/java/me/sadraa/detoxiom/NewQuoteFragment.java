@@ -64,13 +64,33 @@ public class NewQuoteFragment extends Fragment {
         lAnimation = (LottieAnimationView) getView().findViewById(R.id.animation_refresh);
          vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
 
+         //Adding an animation as a button with lottie
         lAnimation.setAnimation("refresh.json");
+        //shitty setting for bad animation
         lAnimation.setProgress(1);
+        //set onClick listener for animation. If internet be connected
+        //and bottomsheet be collapsed animation will play
+        lAnimation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isInternetConnected()){
+                    if (!lAnimation.isAnimating() && mBottomSheetBehavior.getState()==BottomSheetBehavior.STATE_COLLAPSED){
+                        lAnimation.playAnimation();
+                    }
+                }else {
+                    Toast.makeText(getContext(),"به اینترنت متصل نیستید :(",Toast.LENGTH_SHORT).show();
+
+                }
+
+            }
+        });
+        //set listener for animation states
         lAnimation.addAnimatorListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
-                RandomChance = makeChance();
-                if(RandomChance){
+                //If you have chance new quote get triggered and you will have new quote
+                //with little vibrate and a lot of green color
+                if(makeChance()){
                     view.setBackgroundColor(getResources().getColor(R.color.primary_dark));
                     vibrator.vibrate(500);
                     //Creating object from provider class to get retrofit service
@@ -102,14 +122,16 @@ public class NewQuoteFragment extends Fragment {
                             t.printStackTrace();
                         }
                     });
+                    //In case you hadn't enough chance you should try again(you can use similar approach for real life)
                 }else{
-                  view.setBackgroundColor(getResources().getColor(R.color.about_youtube_color));
-                  Toast.makeText(getContext(),"یه بار دیگه امتحان کن",Toast.LENGTH_SHORT).show();
+                    view.setBackgroundColor(getResources().getColor(R.color.about_youtube_color));
+                    Toast.makeText(getContext(),"یه بار دیگه امتحان کن",Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onAnimationEnd(Animator animation) {
+                //After animation finished set background color to white
                 view.setBackgroundColor(getResources().getColor(R.color.icons));
             }
 
@@ -123,22 +145,6 @@ public class NewQuoteFragment extends Fragment {
 
             }
         });
-
-        lAnimation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isInternetConnected()){
-                    if (!lAnimation.isAnimating() && mBottomSheetBehavior.getState()==BottomSheetBehavior.STATE_COLLAPSED){
-                        lAnimation.playAnimation();
-                    }
-                }else {
-                    Toast.makeText(getContext(),"به اینترنت متصل نیستید :(",Toast.LENGTH_SHORT).show();
-
-                }
-
-            }
-        });
-
         //save quote in archive and minimize the bottomsheet
         mButtonSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,11 +184,14 @@ public class NewQuoteFragment extends Fragment {
         new Thread(runnable).start();
     }
 
+    //this function just get a random number between  1 and 100 and if the number
+    //divisible by 3 it return true.
     public boolean makeChance(){
         Random r = new Random();
         int mRandomNumber = r.nextInt(100) + 1;
         return mRandomNumber%3==0;
     }
+    //check if internet is connected or not
      public boolean isInternetConnected(){
          ConnectivityManager connectivityManager
                  = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
