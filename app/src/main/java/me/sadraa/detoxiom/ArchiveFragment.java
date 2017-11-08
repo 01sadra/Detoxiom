@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +28,7 @@ public class ArchiveFragment extends Fragment {
     RecyclerView rv;
     RVAdapter rvAdapter;
     TextView tv;
-
+    LottieAnimationView emptyAnimation;
     public ArchiveFragment() {
         // Required empty public constructor
     }
@@ -38,6 +40,8 @@ public class ArchiveFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_archive, container, false);
         rv = (RecyclerView) rootView.findViewById(R.id.archive_rv);
         tv = (TextView) rootView.findViewById(R.id.empty_view);
+        emptyAnimation = (LottieAnimationView) rootView.findViewById(R.id.empty_status);
+
         //Call mother method of Archive fragment (more info in comments of method)
         startQueryAndPopulate();
         return rootView;
@@ -82,9 +86,11 @@ public class ArchiveFragment extends Fragment {
         if(rvAdapter.getItemCount()==0){
             rv.setVisibility(View.GONE);
             tv.setVisibility(View.VISIBLE);
+            emptyAnimation.setVisibility(View.VISIBLE);
         } else {
             rv.setVisibility(View.VISIBLE);
             tv.setVisibility(View.GONE);
+            emptyAnimation.setVisibility(View.GONE);
 
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
             rv.setLayoutManager(mLayoutManager);
