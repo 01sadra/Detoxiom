@@ -79,9 +79,7 @@ public class NewQuoteFragment extends Fragment {
                     }
                 }else {
                     Toast.makeText(getContext(),"به اینترنت متصل نیستید :(",Toast.LENGTH_SHORT).show();
-
                 }
-
             }
         });
         //set listener for animation states

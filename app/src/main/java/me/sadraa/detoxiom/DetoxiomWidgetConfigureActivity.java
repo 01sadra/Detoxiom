@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -26,9 +24,9 @@ public class DetoxiomWidgetConfigureActivity extends AppCompatActivity {
     PackageManager pm;
     List<ApplicationInfo> listOfAppInfo;
     //Always initiate arraylists
-    public static ArrayList<String> nameOfAppsArray = new ArrayList<String>();
-    public static ArrayList<Drawable> appLogosArray = new ArrayList<Drawable>();
-
+    public  ArrayList<String> nameOfAppsArray = new ArrayList<String>();
+    public  ArrayList<Drawable> appLogosArray = new ArrayList<Drawable>();
+    AppNameAndLogoProvider appNameAndLogoProvider;
     ListView listView;
 
     //Name and keyname for SharedPrefrences
@@ -39,7 +37,6 @@ public class DetoxiomWidgetConfigureActivity extends AppCompatActivity {
     final Context context = DetoxiomWidgetConfigureActivity.this;
 
     public DetoxiomWidgetConfigureActivity() {
-
         super();
     }
 
@@ -55,20 +52,25 @@ public class DetoxiomWidgetConfigureActivity extends AppCompatActivity {
         //set Toolbar
         Toolbar confToolbar = (Toolbar) findViewById(R.id.toolbar_widget_conf);
         setSupportActionBar(confToolbar);
-        //setting logo and title for app dynamicly
+        appNameAndLogoProvider = new AppNameAndLogoProvider(this);
 
+        //setting logo and title for app dynamically
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setTitle("Detoxiom");
         getSupportActionBar().setSubtitle("Choose the App you want");
         //Call function that make Array of logo and labels of installed app
-        createArrayFromApps();
+
+        nameOfAppsArray = appNameAndLogoProvider.getNameOfAppsArray();
+        appLogosArray = appNameAndLogoProvider.getAppLogosArray();
+
         //set adapter for listView
         listView = (ListView) findViewById(R.id.list_view_conf_activity);
         listView.setAdapter(new ListViewCostumAdapter(this,nameOfAppsArray,appLogosArray));
         //set listview clackable
         listView.setClickable(true);
+        final DetoxiomWidget detoxiomWidget=new DetoxiomWidget();
         //define listener for listview
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -77,14 +79,13 @@ public class DetoxiomWidgetConfigureActivity extends AppCompatActivity {
                 //save posotion and app widget id in prefrence
                 savePref(context, mAppWidgetId,position);
                 //update app widget
-                DetoxiomWidget.updateAppWidget(context, appWidgetManager, mAppWidgetId);
+                detoxiomWidget.updateAppWidget(context, appWidgetManager, mAppWidgetId);
                 //add app widget id to intent
                 Intent resultValue = new Intent();
                 resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
                 setResult(RESULT_OK, resultValue);
                 //finish activity
                 finish();
-
             }
         });
 
@@ -105,33 +106,8 @@ public class DetoxiomWidgetConfigureActivity extends AppCompatActivity {
         }
     }
 
-    public void createArrayFromApps(){
-        //Create two arrayList from name and logos of installed apps
 
-        pm = getPackageManager();
-        listOfAppInfo = pm.getInstalledApplications(pm.GET_META_DATA);
 
-        for(ApplicationInfo app : listOfAppInfo) {
-
-            if(pm.getLaunchIntentForPackage(app.packageName) != null) {
-                // apps with launcher intent
-                if((app.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 1) {
-                    // updated system apps
-
-                } else if ((app.flags & ApplicationInfo.FLAG_SYSTEM) == 1) {
-                    // system apps
-
-                } else {
-                    // user installed apps
-                    nameOfAppsArray.add((String) pm.getApplicationLabel(app));
-
-                    appLogosArray.add(app.loadIcon(pm));
-
-                }
-            }
-
-        }
-    }
     //saving prefrence
     public void savePref(Context context, int appWidgetId, int position) {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
@@ -145,24 +121,12 @@ public class DetoxiomWidgetConfigureActivity extends AppCompatActivity {
             return position;
 
     }
-
     static void deleteTitlePref(Context context, int appWidgetId) {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         prefs.remove(PREF_PREFIX_KEY + appWidgetId);
         prefs.apply();
     }
-    //static method for loading app logos (can be called from other classes)
-    static Bitmap loadAppLogo(int position){
-            Drawable appLogo = appLogosArray.get(position);
-        //convert Drawble to bitmap
-            Bitmap appLogoBitmap = ((BitmapDrawable)appLogo).getBitmap();
-            return appLogoBitmap;
-    }
-    //static method for loading app lables
-    static String loadAppLabel(int position){
-        String appLabel = nameOfAppsArray.get(position);
-        return appLabel;
-    }
+
 
 }
 

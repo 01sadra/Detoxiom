@@ -1,14 +1,10 @@
 package me.sadraa.detoxiom;
 
-import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.widget.RemoteViews;
 
 /**
@@ -16,15 +12,18 @@ import android.widget.RemoteViews;
  * App Widget Configuration implemented in {@link DetoxiomWidgetConfigureActivity DetoxiomWidgetConfigureActivity}
  */
 public class DetoxiomWidget extends AppWidgetProvider {
+        AppNameAndLogoProvider appNameAndLogoProvider;
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
+        public  void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+                                           int appWidgetId) {
+
+            appNameAndLogoProvider = new AppNameAndLogoProvider(context);
         //Load widget from prefrence that save on conf activity
        int position = DetoxiomWidgetConfigureActivity.loadPref(context,appWidgetId);
         //load app logo
-       Bitmap appLogoBitmap = DetoxiomWidgetConfigureActivity.loadAppLogo(position);
+       Bitmap appLogoBitmap = appNameAndLogoProvider.loadAppLogo(position);
         //load app label
-       String appLabel = DetoxiomWidgetConfigureActivity.loadAppLabel(position);
+       String appLabel = appNameAndLogoProvider.loadAppLabel(position);
 
         //Creating remote view from widget layout
         RemoteViews views = new RemoteViews("me.sadraa.detoxiom", R.layout.detoxiom_widget);
@@ -42,19 +41,11 @@ public class DetoxiomWidget extends AppWidgetProvider {
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
         for (int appWidgetId : appWidgetIds) {
-            RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.detoxiom_widget);
 
-            //make pending intent that wake mainActivity
-            Intent mIntent = new Intent(context,MainActivity.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(context,0,mIntent,0);
-            views.setOnClickPendingIntent(R.id.widget_layout, pendingIntent);
-           // ComponentName myWidget = new ComponentName( context, DetoxiomWidget.class );
-
-            //appWidgetManager.updateAppWidget( myWidget, views);
-
-            appWidgetManager.updateAppWidget(appWidgetId,views);
 
         }
+
+
     }
 
     @Override
@@ -72,6 +63,14 @@ public class DetoxiomWidget extends AppWidgetProvider {
 
     @Override
     public void onDisabled(Context context) {
+
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+
+        super.onReceive(context, intent);
+
 
     }
 }
