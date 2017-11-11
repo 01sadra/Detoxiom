@@ -32,12 +32,12 @@ import retrofit2.Response;
  */
 public class NewQuoteFragment extends Fragment {
     Button mButton, mButtonSave, mButtonIgonre;
-    TextView quoteTV;
-    TextView authorTV;
+    TextView quoteTV,authorTV, chanceCounter;
     BottomSheetBehavior mBottomSheetBehavior;
     QuoteDbModel quoteDbModel;
     Vibrator vibrator;
     LottieAnimationView lAnimation;
+    int chanceFromPrefrence;
     boolean RandomChance ;
     public NewQuoteFragment() {
         // Required empty public constructor
@@ -57,12 +57,22 @@ public class NewQuoteFragment extends Fragment {
     //To do : rewrite this shit with butterkinfe
         authorTV = (TextView) getView().findViewById(R.id.authorText);
         mButtonSave = (Button) getView().findViewById(R.id.saveQuote);
+        chanceCounter =(TextView) getView().findViewById(R.id.counter_show);
         mButtonIgonre= (Button) getView().findViewById(R.id.ignoreQuote);
         quoteTV = (TextView) getView().findViewById(R.id.quoteText);
         View bottomSheet = getView().findViewById(R.id.bottom_sheet);
         mBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
         lAnimation = (LottieAnimationView) getView().findViewById(R.id.animation_refresh);
          vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+        chanceFromPrefrence = MainActivity.loadBadgeCount(getContext());
+
+
+        if(chanceFromPrefrence>0){
+            chanceCounter.setText(" فرصت‌های باقی مانده: "+"\n"+chanceFromPrefrence);
+        }else {
+            chanceCounter.setText("فرصت های شما تمام شده :(");
+
+        }
 
          //Adding an animation as a button with lottie
         lAnimation.setAnimation("refresh.json");
@@ -74,14 +84,29 @@ public class NewQuoteFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(isInternetConnected()){
-                    if (!lAnimation.isAnimating() && mBottomSheetBehavior.getState()==BottomSheetBehavior.STATE_COLLAPSED){
-                        lAnimation.playAnimation();
+                    if(chanceFromPrefrence > 0){
+                        if (!lAnimation.isAnimating() && mBottomSheetBehavior.getState()==BottomSheetBehavior.STATE_COLLAPSED){
+                            lAnimation.playAnimation();
+                            MainActivity.saveBadgeCounter(getContext(),chanceFromPrefrence-1);
+                            chanceFromPrefrence = MainActivity.loadBadgeCount(getContext());
+                            if(chanceFromPrefrence>0){
+                                chanceCounter.setText(" فرصت‌های باقی مانده: "+"\n"+chanceFromPrefrence);
+                            }else {
+                                chanceCounter.setText("فرصت های شما تمام شد :(");
+
+                            }
+
+                        }
+                    } else {
+                        chanceCounter.setText("فرصت های شما تمام شد :(");
                     }
+
                 }else {
                     Toast.makeText(getContext(),"به اینترنت متصل نیستید :(",Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
         //set listener for animation states
         lAnimation.addAnimatorListener(new Animator.AnimatorListener() {
             @Override
@@ -126,6 +151,7 @@ public class NewQuoteFragment extends Fragment {
                     Toast.makeText(getContext(),"یه بار دیگه امتحان کن",Toast.LENGTH_SHORT).show();
                 }
             }
+
 
             @Override
             public void onAnimationEnd(Animator animation) {

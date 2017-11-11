@@ -10,7 +10,16 @@
         android:layout_gravity="center"
         android:id="@+id/animation_refresh"
         />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/counter_show"
+        android:layout_marginBottom="20dp"
+        android:textSize="20sp"
+        android:gravity="center_horizontal"
+        android:layout_gravity="bottom"
 
+        />
     <include
         layout="@layout/bottom_sheet"></include>
 

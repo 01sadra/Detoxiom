@@ -82,7 +82,7 @@ public class ArchiveFragment extends Fragment {
     public void populateRV(ArrayList<QuoteDbModel> quoteDbModelListRV){
         //Create adapter object with ArrayList
         rvAdapter = new RVAdapter(quoteDbModelListRV);
-        //Check if recycleView have data or not. if not show a message.
+        //Check if recycleView have data or not. if not then show a message.
         if(rvAdapter.getItemCount()==0){
             rv.setVisibility(View.GONE);
             tv.setVisibility(View.VISIBLE);
