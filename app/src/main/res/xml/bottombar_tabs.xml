@@ -7,7 +7,7 @@
     <tab
         id="@+id/tab_time"
         icon="@drawable/ic_alarm_black_24dp"
-        title="زمان" />
+        title="گاوصندوق زمان" />
     <tab
         id="@+id/tab_new"
         icon="@drawable/ic_cached_black_24dp"
