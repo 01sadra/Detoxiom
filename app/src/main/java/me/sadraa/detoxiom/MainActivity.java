@@ -3,11 +3,14 @@ package me.sadraa.detoxiom;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarTab;
@@ -30,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String PREFRENCE_KEY_BADGE_COUNT = "badge count key";
 
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,11 +53,15 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
-        getSupportActionBar().setTitle("Detoxiom");
+        getSupportActionBar().setTitle("دیتاکسیوم");
+        //make the actionbar right to left
+        getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         getSupportActionBar().setElevation(8);
 
         //Define listener for bottomBar
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
+        //force the bottomBar use left to right direction.
+        bottomBar.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         //set notification badge on new quote tab base on badge counter
         final BottomBarTab tabNew = bottomBar.getTabWithId(R.id.tab_new);
         tabNew.setBadgeCount(loadBadgeCount(this));
