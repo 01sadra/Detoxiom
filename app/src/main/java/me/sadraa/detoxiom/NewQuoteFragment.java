@@ -37,7 +37,7 @@ public class NewQuoteFragment extends Fragment {
     QuoteDbModel quoteDbModel;
     Vibrator vibrator;
     LottieAnimationView lAnimation;
-    int chanceFromPrefrence;
+    int chanceFromPrefrence,firstAttemptCounter;
     boolean RandomChance ;
     public NewQuoteFragment() {
         // Required empty public constructor
@@ -65,8 +65,8 @@ public class NewQuoteFragment extends Fragment {
         lAnimation = (LottieAnimationView) getView().findViewById(R.id.animation_refresh);
          vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
         chanceFromPrefrence = MainActivity.loadBadgeCount(getContext());
-
-
+        firstAttemptCounter = 0;
+    //check if there is any chance and show the user how many time s/he can try.
         if(chanceFromPrefrence>0){
             chanceCounter.setText(" فرصت‌های باقی مانده: "+"\n"+chanceFromPrefrence);
         }else {
@@ -79,35 +79,37 @@ public class NewQuoteFragment extends Fragment {
         //shitty setting for bad animation
         lAnimation.setProgress(1);
         //set onClick listener for animation. If internet be connected
-        //and bottomsheet be collapsed animation will play
+        //and bottomsheet be collapsed  and we have chance to try animation will play
         lAnimation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isInternetConnected()){
-                    if(chanceFromPrefrence > 0){
-                        if (!lAnimation.isAnimating() && mBottomSheetBehavior.getState()==BottomSheetBehavior.STATE_COLLAPSED){
-                            lAnimation.playAnimation();
-                            MainActivity.saveBadgeCounter(getContext(),chanceFromPrefrence-1);
-                            chanceFromPrefrence = MainActivity.loadBadgeCount(getContext());
-                            if(chanceFromPrefrence>0){
-                                chanceCounter.setText(" فرصت‌های باقی مانده: "+"\n"+chanceFromPrefrence);
-                            }else {
-                                chanceCounter.setText("فرصت های شما تمام شد :(");
-
-                            }
-
-                        }
-                    } else {
-                        chanceCounter.setText("فرصت های شما تمام شد :(");
-                    }
-
-                }else {
-                    Toast.makeText(getContext(),"به اینترنت متصل نیستید :(",Toast.LENGTH_SHORT).show();
+                if(!isInternetConnected()) {
+                    Toast.makeText(getContext(), "به اینترنت متصل نیستید :(", Toast.LENGTH_SHORT).show();
+                    return;
                 }
+                if (lAnimation.isAnimating() || mBottomSheetBehavior.getState()==BottomSheetBehavior.STATE_EXPANDED){
+                    return;
+                }
+                if(chanceFromPrefrence > 0) {
+                        lAnimation.playAnimation();
+                        // minus 1 from badge counter and save it in prefrence
+                        MainActivity.saveBadgeCounter(getContext(), chanceFromPrefrence - 1);
+                        //Load chances from prefrence again
+                        chanceFromPrefrence = MainActivity.loadBadgeCount(getContext());
+
+                        //if chances is more than 0 show how many chance remain
+                        if (chanceFromPrefrence > 0) {
+                            chanceCounter.setText(" فرصت‌های باقی مانده: " + "\n" + chanceFromPrefrence);
+                            //If there is no chance then tell the user the truth:)
+                        } else {
+                            chanceCounter.setText("فرصت های شما تمام شده :(");
+                        }
+
+                    }
             }
         });
 
-        //set listener for animation states
+        //set listener for animation states. this methods call when animatin palys
         lAnimation.addAnimatorListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
@@ -213,6 +215,11 @@ public class NewQuoteFragment extends Fragment {
     public boolean makeChance(){
         Random r = new Random();
         int mRandomNumber = r.nextInt(100) + 1;
+        //Just make sure the first attempt is successful. it is necessary for gamifation
+        if(MainActivity.loadOpenedTimes(getContext())==1 && firstAttemptCounter==0){
+            firstAttemptCounter = 1;
+            return true;
+        }
         return mRandomNumber%3==0;
     }
     //check if internet is connected or not

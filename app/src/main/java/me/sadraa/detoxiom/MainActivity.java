@@ -35,9 +35,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //everyTime onCreate fire we +1 shared prefrences counter
-        badgeCount=getMeRandomNumber();
         openedTimes = loadOpenedTimes(getApplicationContext());
         saveOpenedTimes(getApplicationContext(),++openedTimes);
+        //Get a random number between 1 and 5 for letting user try they chance
+        //save it as a prefrence to new quote fragment can use it
+        badgeCount=getMeRandomNumber();
         saveBadgeCounter(this,badgeCount);
 
 
@@ -52,10 +54,10 @@ public class MainActivity extends AppCompatActivity {
 
         //Define listener for bottomBar
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
+        //set notification badge on new quote tab base on badge counter
         final BottomBarTab tabNew = bottomBar.getTabWithId(R.id.tab_new);
-
-
         tabNew.setBadgeCount(loadBadgeCount(this));
+
         //Set click listener for bottombar tabs
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
 
@@ -73,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.tab_new :
                         ft = getSupportFragmentManager().beginTransaction();
+                        //if user click on tab new remove the badges
                         tabNew.removeBadge();
                         ft.replace(R.id.contentContainer,new NewQuoteFragment());
                         break;
