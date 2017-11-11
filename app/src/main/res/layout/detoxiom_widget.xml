@@ -2,14 +2,17 @@
     android:id="@+id/widget_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/widget_margin"
+    android:padding="0dp"
     android:clickable="true"
+    android:focusable="true"
     >
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/widgetImage"
+        android:id="@+id/ImageButton"
+        android:clickable="true"
+        android:focusable="true"
         />
 
     <TextView
@@ -19,6 +22,6 @@
         android:gravity="center_horizontal"
         android:textColor="@color/icons"
         android:id="@+id/widgetText"
-        android:layout_below="@+id/widgetImage"
+        android:layout_below="@+id/ImageButton"
         />
 </RelativeLayout>

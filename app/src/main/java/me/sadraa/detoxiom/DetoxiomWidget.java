@@ -1,5 +1,6 @@
 package me.sadraa.detoxiom;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
@@ -14,7 +15,7 @@ import android.widget.RemoteViews;
 public class DetoxiomWidget extends AppWidgetProvider {
         AppNameAndLogoProvider appNameAndLogoProvider;
 
-        public  void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+        public void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                            int appWidgetId) {
 
             appNameAndLogoProvider = new AppNameAndLogoProvider(context);
@@ -30,8 +31,18 @@ public class DetoxiomWidget extends AppWidgetProvider {
         //set text view
         views.setTextViewText(R.id.widgetText, appLabel);
         //set image view
-        views.setImageViewBitmap(R.id.widgetImage,appLogoBitmap);
 
+            //Ok, ladies and Gentlemen there is a wired thing. All toturial across the Internet says we should write
+            //below codes in onUpdate method. I did it but it didn't work. It bother me badly because I just struggle with
+            //It for 2 days. finally I understand the problem. apparently If you use conf activity for creating a widget
+            // you should update it here not in onUpdate method.
+        views.setImageViewBitmap(R.id.ImageButton,appLogoBitmap);
+
+        Intent mIntent = new Intent(context,MainActivity.class);
+
+        PendingIntent pIntent = PendingIntent.getActivity(context,1, mIntent,0);
+
+        views.setOnClickPendingIntent(R.id.ImageButton,pIntent);
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
 
@@ -39,9 +50,9 @@ public class DetoxiomWidget extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+
         // There may be multiple widgets active, so update all of them
         for (int appWidgetId : appWidgetIds) {
-
 
         }
 
@@ -68,9 +79,7 @@ public class DetoxiomWidget extends AppWidgetProvider {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
-        super.onReceive(context, intent);
-
+            super.onReceive(context, intent);
 
     }
 }

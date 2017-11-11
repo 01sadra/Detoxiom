@@ -21,7 +21,7 @@ public class AppNameAndLogoProvider {
     //Always initiate arraylists
     private ArrayList<String> nameOfAppsArray = new ArrayList<>();
     private ArrayList<Drawable> appLogosArray = new ArrayList<>();
-
+    //Constructor
     public AppNameAndLogoProvider(Context context) {
         this.context = context;
     }

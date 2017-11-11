@@ -48,11 +48,9 @@ public class DetoxiomWidgetConfigureActivity extends AppCompatActivity {
         setContentView(R.layout.detoxiom_widget_configure);
         setResult(RESULT_CANCELED);
 
-
         //set Toolbar
         Toolbar confToolbar = (Toolbar) findViewById(R.id.toolbar_widget_conf);
         setSupportActionBar(confToolbar);
-        appNameAndLogoProvider = new AppNameAndLogoProvider(this);
 
         //setting logo and title for app dynamically
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -61,6 +59,8 @@ public class DetoxiomWidgetConfigureActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Detoxiom");
         getSupportActionBar().setSubtitle("Choose the App you want");
         //Call function that make Array of logo and labels of installed app
+
+        appNameAndLogoProvider = new AppNameAndLogoProvider(this);
 
         nameOfAppsArray = appNameAndLogoProvider.getNameOfAppsArray();
         appLogosArray = appNameAndLogoProvider.getAppLogosArray();
