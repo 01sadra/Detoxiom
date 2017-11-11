@@ -9,6 +9,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/about_call"
+        style="?android:attr/borderlessButtonStyle"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@color/very_look_like"
         android:text="درباره ی سازنده"
         />
 

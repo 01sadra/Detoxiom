@@ -20,10 +20,10 @@ public class AboutActivity extends AppCompatActivity {
         View aboutPage = new AboutPage(this)
                 .isRTL(false)
                 .setImage(R.mipmap.ic_launcher)
-                .setDescription("این یک اپ زیباست و خب تست")
+                .setDescription("دیتاکسیوم: ترک شبکه‌های اجتماعی به کمک بزرگان تاریخ")
                 .addItem(new Element().setTitle("Version 1.2"))
                 .addEmail("01sadra@gmail.com")
-                .addWebsite("Https://sadraa.me")
+                .addWebsite("https://sadraa.me")
                 .addGitHub("01sadra")
                 .addTwitter("01sadra")
                 .create();

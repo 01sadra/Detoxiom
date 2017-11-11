@@ -216,7 +216,7 @@ public class NewQuoteFragment extends Fragment {
         Random r = new Random();
         int mRandomNumber = r.nextInt(100) + 1;
         //Just make sure the first attempt is successful. it is necessary for gamifation
-        if(MainActivity.loadOpenedTimes(getContext())==1 && firstAttemptCounter==0){
+        if(MainActivity.loadOpenedTimes(getContext())<3 && firstAttemptCounter==0){
             firstAttemptCounter = 1;
             return true;
         }
