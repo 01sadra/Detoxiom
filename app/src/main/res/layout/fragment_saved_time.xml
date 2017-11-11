@@ -8,13 +8,12 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="115dp"
+        android:layout_height="250dp"
         android:textSize="20sp"
         android:background="@color/very_look_like"
-        android:gravity="center"
-        android:textAlignment="center"
-        android:id="@+id/opened_times"
-     />
+        android:gravity="center_horizontal"
+        android:paddingTop="30dp"
+        android:id="@+id/opened_times" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="75dp"
