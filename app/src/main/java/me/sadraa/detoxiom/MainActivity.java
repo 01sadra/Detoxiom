@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
         int badgeCoounter = loadpreferencesOpenTime.getInt(PREFRENCE_KEY_BADGE_COUNT,0);
         return badgeCoounter;
     }
-    
+
     public int getMeRandomNumber(){
         Random r = new Random();
         return r.nextInt(5)+1;

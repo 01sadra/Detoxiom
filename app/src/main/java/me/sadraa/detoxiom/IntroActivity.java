@@ -20,12 +20,14 @@ public class IntroActivity extends AppIntro {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Adding custom fragments to activity with custom atrributes.
         addSlide(new IntroFragment(getString(R.string.Intero1), getResources().getDrawable(R.drawable.one_intro)));
         addSlide(new IntroFragment(getString(R.string.Intero2), getResources().getDrawable(R.drawable.two_intro)));
         addSlide(new IntroFragment(getString(R.string.Intero3), getResources().getDrawable(R.drawable.three_intro)));
         addSlide(new IntroFragment(getString(R.string.Intero4), getResources().getDrawable(R.drawable.four_intro)));
 
-        // setFadeAnimation();
+        setFadeAnimation();
+        //set bottom bar color
         setBarColor(Color.parseColor("#00796B"));
         setProgressButtonEnabled(true);
         setVibrate(true);
@@ -33,18 +35,20 @@ public class IntroActivity extends AppIntro {
         setSkipText("بلدم اینارو!");
     }
 
+    //disable on back pressed default behaviour
     @Override
     public void onBackPressed() {
      //   super.onBackPressed();
     }
 
+    //open the main activity if skip pressed
     @Override
     public void onSkipPressed(Fragment currentFragment) {
         super.onSkipPressed(currentFragment);
         Intent mIntent = new Intent(IntroActivity.this,MainActivity.class);
         startActivity(mIntent);
     }
-
+    //open the main activity if done pressed
     @Override
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
