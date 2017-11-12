@@ -22,7 +22,6 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-
             android:layout_weight="1.5"
             android:src="@drawable/teach_app_1"
             android:id="@+id/iv_setting_1"
@@ -32,7 +31,6 @@
             android:layout_height="0dp"
             android:background="@color/very_low_primary"
             android:textSize="15sp"
-
             android:padding="5dp"
             android:layout_weight="1"
             android:text="۲) از لیست ویجت‌ها دیتاکسیوم رو پیدا کنید و اون رو به صفحه اصلی‌تون اضافه کنید."
@@ -52,7 +50,6 @@
             android:layout_weight="1"
             android:background="@color/very_low_primary"
             android:textSize="15sp"
-
             android:text="۳) در لیستی که باز میشه، اپلیکیشن وقت گیر مورد نظر رو انتخاب کنید تا یه ویجت دقیقا شبیه به آیکون اون اپ ساخته باشه."
             android:id="@+id/tv_setting_3"
             />

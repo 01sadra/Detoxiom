@@ -5,18 +5,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class SettingFragment extends Fragment {
-
-
+    ImageView iv1 ,iv2 , iv3;
+    boolean isImageFitToScreen;
+    Button callAbout, callIntro;
     public SettingFragment() {
         // Required empty public constructor
     }
@@ -32,8 +36,61 @@ public class SettingFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Button callAbout =getView().findViewById(R.id.about_call);
-        Button callIntro =getView().findViewById(R.id.intro_call);
+        callAbout =getView().findViewById(R.id.about_call);
+        callIntro =getView().findViewById(R.id.intro_call);
+        iv1 = view.findViewById(R.id.iv_setting_1);
+        iv2 = view.findViewById(R.id.iv_setting_2);
+        iv3 = view.findViewById(R.id.iv_setting_3);
+
+        iv1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isImageFitToScreen) {
+                    isImageFitToScreen=false;
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(300,210);
+                    layoutParams.gravity= Gravity.CENTER;
+                    iv1.setLayoutParams(layoutParams);
+                    iv1.setAdjustViewBounds(true);
+
+                }else{
+                    isImageFitToScreen=true;
+                    iv1.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                    iv1.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                }
+            }
+        });
+        iv2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isImageFitToScreen) {
+                    isImageFitToScreen=false;
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(300,210);
+                    layoutParams.gravity= Gravity.CENTER;
+                    iv2.setLayoutParams(layoutParams);
+                    iv2.setAdjustViewBounds(true);
+                }else{
+                    isImageFitToScreen=true;
+                    iv2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                    iv2.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                }
+            }
+        });
+        iv3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isImageFitToScreen) {
+                    isImageFitToScreen=false;
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(300,210);
+                    layoutParams.gravity= Gravity.CENTER;
+                    iv3.setLayoutParams(layoutParams);
+                    iv3.setAdjustViewBounds(true);
+                }else{
+                    isImageFitToScreen=true;
+                    iv3.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                    iv3.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                }
+            }
+        });
 
         callAbout.setOnClickListener(new View.OnClickListener() {
             @Override
