@@ -146,5 +146,10 @@ public class MainActivity extends AppCompatActivity {
         Random r = new Random();
         return r.nextInt(5)+1;
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }
 

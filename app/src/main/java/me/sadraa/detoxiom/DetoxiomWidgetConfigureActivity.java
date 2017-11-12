@@ -7,7 +7,9 @@ import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -42,6 +44,7 @@ public class DetoxiomWidgetConfigureActivity extends AppCompatActivity {
 
 
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
@@ -56,9 +59,9 @@ public class DetoxiomWidgetConfigureActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
-        getSupportActionBar().setTitle("Detoxiom");
-        getSupportActionBar().setSubtitle("Choose the App you want");
+        getSupportActionBar().setSubtitle("اپلیکیشن مورد نظر خودتون رو انتخاب کنید");
         //Call function that make Array of logo and labels of installed app
+        getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
 
         appNameAndLogoProvider = new AppNameAndLogoProvider(this);
 
