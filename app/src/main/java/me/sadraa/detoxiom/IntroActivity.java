@@ -31,6 +31,7 @@ public class IntroActivity extends AppIntro {
         addSlide(new IntroFragment(getString(R.string.Intero2), getResources().getDrawable(R.drawable.two_intro)));
         addSlide(new IntroFragment(getString(R.string.Intero3), getResources().getDrawable(R.drawable.three_intro)));
         addSlide(new IntroFragment(getString(R.string.Intero4), getResources().getDrawable(R.drawable.four_intro)));
+        addSlide(new IntroFragment(getString(R.string.Intero5), getResources().getDrawable(R.drawable.five_intro)));
 
         setFadeAnimation();
         //set bottom bar color
