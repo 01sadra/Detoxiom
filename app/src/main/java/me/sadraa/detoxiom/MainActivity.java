@@ -2,6 +2,7 @@ package me.sadraa.detoxiom;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -46,6 +47,11 @@ public class MainActivity extends AppCompatActivity {
         badgeCount=getMeRandomNumber();
         saveBadgeCounter(this,badgeCount);
 
+        //If it's the first time user open the app, show him the intro.
+        if(openedTimes<2){
+            Intent nIntent = new Intent(MainActivity.this,IntroActivity.class);
+            startActivity(nIntent);
+        }
 
         //Set toolbar
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_main);

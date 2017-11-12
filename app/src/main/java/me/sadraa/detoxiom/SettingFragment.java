@@ -33,12 +33,22 @@ public class SettingFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Button callAbout =getView().findViewById(R.id.about_call);
+        Button callIntro =getView().findViewById(R.id.intro_call);
+
         callAbout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), AboutActivity.class);
                 startActivity(intent);
 
+            }
+        });
+
+        callIntro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), IntroActivity.class);
+                startActivity(intent);
             }
         });
     }
