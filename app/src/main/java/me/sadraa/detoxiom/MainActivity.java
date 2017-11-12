@@ -70,7 +70,13 @@ public class MainActivity extends AppCompatActivity {
         bottomBar.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         //set notification badge on new quote tab base on badge counter
         final BottomBarTab tabNew = bottomBar.getTabWithId(R.id.tab_new);
+        final BottomBarTab tabSetting = bottomBar.getTabWithId(R.id.tab_setting);
         tabNew.setBadgeCount(loadBadgeCount(this));
+        //if It's the first time user open the app show a notification on setting tab
+        if(openedTimes<3){
+            tabSetting.setBadgeCount(1);
+        }
+
 
         //Set click listener for bottombar tabs
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
@@ -89,13 +95,14 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.tab_new :
                         ft = getSupportFragmentManager().beginTransaction();
-                        //if user click on tab new remove the badges
+                        //if user click on tabnew remove the badges
                         tabNew.removeBadge();
                         ft.replace(R.id.contentContainer,new NewQuoteFragment());
                         break;
                     case R.id.tab_setting :
                         ft = getSupportFragmentManager().beginTransaction();
                         ft.replace(R.id.contentContainer,new SettingFragment());
+                        tabSetting.removeBadge();
                         break;
                 }
                 ft.commit();
@@ -128,11 +135,13 @@ public class MainActivity extends AppCompatActivity {
         int openTimes = loadpreferencesOpenTime.getInt(PREFRENCE_KEY_OPENED_TIMES,0);
         return openTimes;
     }
+
     static int loadBadgeCount(Context context){
         SharedPreferences loadpreferencesOpenTime = context.getSharedPreferences(PREFRENCE_NAME,0);
         int badgeCoounter = loadpreferencesOpenTime.getInt(PREFRENCE_KEY_BADGE_COUNT,0);
         return badgeCoounter;
     }
+    
     public int getMeRandomNumber(){
         Random r = new Random();
         return r.nextInt(5)+1;
