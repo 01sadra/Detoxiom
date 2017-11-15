@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +22,8 @@ import com.roughike.bottombar.OnTabSelectListener;
 
 import java.util.Random;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
@@ -28,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
     FragmentTransaction ft;
     int openedTimes;
     int badgeCount;
+    @Nullable @BindView(R.id.toolbar_main) Toolbar mToolbar;
+    @Nullable @BindView(R.id.bottomBar) BottomBar bottomBar;
+    @Nullable @BindView(R.id.tab_new) BottomBarTab tabNew;
 
     //We want to use shared prefrences for counting how many time application will open by use
     //for this goal we define 2 String. 1 for prefrence name and one as a key for prefrence
@@ -40,7 +46,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ButterKnife.bind(this);
         setContentView(R.layout.activity_main);
+
+        //binding the butterknife
+        ButterKnife.bind(this);
+
         //everyTime onCreate fire we +1 shared prefrences counter
         openedTimes = loadOpenedTimes(getApplicationContext());
         saveOpenedTimes(getApplicationContext(),++openedTimes);
@@ -56,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //Set toolbar
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
@@ -66,13 +76,10 @@ public class MainActivity extends AppCompatActivity {
         getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         getSupportActionBar().setElevation(8);
 
-        //Define listener for bottomBar
-        BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
+
         //force the bottomBar use left to right direction.
         bottomBar.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         //set notification badge on new quote tab base on badge counter
-        final BottomBarTab tabNew = bottomBar.getTabWithId(R.id.tab_new);
-        final BottomBarTab tabSetting = bottomBar.getTabWithId(R.id.tab_setting);
         tabNew.setBadgeCount(loadBadgeCount(this));
         //if It's the first time user open the app show tap target view for teaching the user how use the app
         if(openedTimes<3){
@@ -88,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
                     .transparentTarget(false)           // Specify whether the target is transparent (displays the content underneath)
                     .targetRadius(60));
         }
-
         //Set click listener for bottombar tabs
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
 
@@ -146,18 +152,15 @@ public class MainActivity extends AppCompatActivity {
         int openTimes = loadpreferencesOpenTime.getInt(PREFRENCE_KEY_OPENED_TIMES,0);
         return openTimes;
     }
-
     static int loadBadgeCount(Context context){
         SharedPreferences loadpreferencesOpenTime = context.getSharedPreferences(PREFRENCE_NAME,0);
         int badgeCoounter = loadpreferencesOpenTime.getInt(PREFRENCE_KEY_BADGE_COUNT,0);
         return badgeCoounter;
     }
-
     public int getMeRandomNumber(){
         Random r = new Random();
         return r.nextInt(5)+1;
     }
-
     @Override
     public void onBackPressed() {
         finish();
