@@ -13,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarTab;
 import com.roughike.bottombar.OnTabSelectListener;
@@ -72,9 +74,19 @@ public class MainActivity extends AppCompatActivity {
         final BottomBarTab tabNew = bottomBar.getTabWithId(R.id.tab_new);
         final BottomBarTab tabSetting = bottomBar.getTabWithId(R.id.tab_setting);
         tabNew.setBadgeCount(loadBadgeCount(this));
-        //if It's the first time user open the app show a notification on setting tab
+        //if It's the first time user open the app show tap target view for teaching the user how use the app
         if(openedTimes<3){
-            tabSetting.setBadgeCount(1);
+            TapTargetView.showFor(this, TapTarget.forView(findViewById(R.id.tab_setting) , "آموزش", "روی این تب کلیک کنید تا نحوه‌ی اضافه کردن ویجت به صفحه رو ببینید")  // All options below are optional
+                    .outerCircleColor(R.color.primary_dark)      // Specify a color for the outer circle
+                    .outerCircleAlpha(0.96f)            // Specify the alpha amount for the outer circle
+                    .targetCircleColor(R.color.low_primary)   // Specify a color for the target circle
+                    .titleTextSize(40)                  // Specify the size (in sp) of the title text
+                    .descriptionTextSize(30)            // Specify the size (in sp) of the description text
+                    .dimColor(R.color.bb_tabletRightBorderDark)            // If set, will dim behind the view with 30% opacity of the given color
+                    .drawShadow(true)                   // Whether to draw a drop shadow or not
+                    .tintTarget(true)                   // Whether to tint the target view's color
+                    .transparentTarget(false)           // Specify whether the target is transparent (displays the content underneath)
+                    .targetRadius(60));
         }
 
 
@@ -102,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.tab_setting :
                         ft = getSupportFragmentManager().beginTransaction();
                         ft.replace(R.id.contentContainer,new SettingFragment());
-                        tabSetting.removeBadge();
+                   //     tabSetting.removeBadge();
                         break;
                 }
                 ft.commit();
