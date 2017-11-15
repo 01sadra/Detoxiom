@@ -11,6 +11,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by sadra on 10/18/17.
  */
@@ -23,17 +26,17 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.MyViewHolder> {
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        public TextView authorRV, quoteRV;
+        @BindView(R.id.author_text_rv) TextView authorRV;
+        @BindView(R.id.quote_text_rv) TextView quoteRV;
         PopupMenu popupMenu;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
-            authorRV = (TextView) itemView.findViewById(R.id.author_text_rv);
-            quoteRV = (TextView) itemView.findViewById(R.id.quote_text_rv);
-
+            //binding the butterknife
+            ButterKnife.bind(this,itemView);
         }
-        //If you are reading my code and see this i'm really sorry. It's the most shitty code i've ever write.
+        //If you are reading my code and see this i'm really sorry. It's the most shitty code i've ever written.
         //I will fix it ASAP but keep in mind you should NEVER handle clicks in viewHolder as I do it here.
         @Override
         public void onClick(final View view) {

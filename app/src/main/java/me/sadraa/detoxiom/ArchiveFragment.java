@@ -18,6 +18,10 @@ import com.airbnb.lottie.LottieAnimationView;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,10 +29,12 @@ import java.util.List;
 public class ArchiveFragment extends Fragment {
     ArrayList<QuoteDbModel> quoteDbModelList;
     QuoteDb quoteDb;
-    RecyclerView rv;
+
+    @BindView(R.id.archive_rv) RecyclerView rv;
     RVAdapter rvAdapter;
-    TextView tv;
-    LottieAnimationView emptyAnimation;
+    @BindView(R.id.empty_view) TextView tv;
+    @BindView(R.id.empty_status) LottieAnimationView emptyAnimation;
+    private Unbinder unbinder;
     public ArchiveFragment() {
         // Required empty public constructor
     }
@@ -38,10 +44,8 @@ public class ArchiveFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_archive, container, false);
-        rv = (RecyclerView) rootView.findViewById(R.id.archive_rv);
-        tv = (TextView) rootView.findViewById(R.id.empty_view);
-        emptyAnimation = (LottieAnimationView) rootView.findViewById(R.id.empty_status);
-
+        //binding the Butterknife
+        unbinder = ButterKnife.bind(this,rootView);
         //Call mother method of Archive fragment (more info in comments of method)
         startQueryAndPopulate();
         return rootView;
@@ -50,7 +54,12 @@ public class ArchiveFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     //This method is mother method of this fragment. first create an object from DB and then execute query in
