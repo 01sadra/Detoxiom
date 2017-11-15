@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +19,9 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * The configuration screen for the {@link DetoxiomWidget DetoxioWidget} AppWidget.
@@ -29,7 +33,9 @@ public class DetoxiomWidgetConfigureActivity extends AppCompatActivity {
     public  ArrayList<String> nameOfAppsArray = new ArrayList<String>();
     public  ArrayList<Drawable> appLogosArray = new ArrayList<Drawable>();
     AppNameAndLogoProvider appNameAndLogoProvider;
-    ListView listView;
+
+    @BindView(R.id.list_view_conf_activity) ListView listView;
+    @Nullable @BindView(R.id.toolbar_widget_conf) Toolbar confToolbar;
 
     //Name and keyname for SharedPrefrences
     private static final String PREFS_NAME = "me.sadraa.Detoxim.DetoxiomWidget";
@@ -49,10 +55,10 @@ public class DetoxiomWidgetConfigureActivity extends AppCompatActivity {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.detoxiom_widget_configure);
+        ButterKnife.bind(this);
         setResult(RESULT_CANCELED);
 
         //set Toolbar
-        Toolbar confToolbar = (Toolbar) findViewById(R.id.toolbar_widget_conf);
         setSupportActionBar(confToolbar);
 
         //setting logo and title for app dynamically
@@ -69,7 +75,6 @@ public class DetoxiomWidgetConfigureActivity extends AppCompatActivity {
         appLogosArray = appNameAndLogoProvider.getAppLogosArray();
 
         //set adapter for listView
-        listView = (ListView) findViewById(R.id.list_view_conf_activity);
         listView.setAdapter(new ListViewCostumAdapter(this,nameOfAppsArray,appLogosArray));
         //set listview clackable
         listView.setClickable(true);
