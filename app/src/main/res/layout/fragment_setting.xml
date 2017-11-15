@@ -2,99 +2,122 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="me.sadraa.detoxiom.SettingFragment">
+    tools:context="me.sadraa.detoxiom.SettingFragment"
+    android:orientation="vertical"
+    >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/Linear_top"
+            android:layout_alignParentTop="true"
+            >
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:textSize="15sp"
+                android:layout_marginTop="5dp"
+                android:background="@color/very_low_primary"
+                android:text="۱) صفحه‌ی اصلی گوشی‌تون رو برای چند ثانیه به شکل ممتد لمس کنید. بعد گزینه‌ی ابزارک/widget رو انتخاب کنید."
+                android:id="@+id/tv_setting_1"
+                />
+
+            <ImageView
+                android:id="@+id/iv_setting_1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/teach_app_1" />
+
+        </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginBottom="45dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/Linear_second"
+        android:layout_below="@id/Linear_top"
         >
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
             android:textSize="15sp"
-            android:background="@color/very_low_primary"
-            android:text="۱) صفحه‌ی اصلی گوشی‌تون رو برای چند ثانیه به شکل ممتد لمس کنید. بعد گزینه‌ی ابزارک/widget رو انتخاب کنید."
-            android:id="@+id/tv_setting_1"
-            />
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1.5"
-            android:src="@drawable/teach_app_1"
-            android:id="@+id/iv_setting_1"
-            />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@color/very_low_primary"
-            android:textSize="15sp"
-            android:padding="5dp"
-            android:layout_weight="1"
+            android:layout_marginTop="5dp"
             android:text="۲) از لیست ویجت‌ها دیتاکسیوم رو پیدا کنید و اون رو به صفحه اصلی‌تون اضافه کنید."
             android:id="@+id/tv_setting_2"
             />
+
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1.5"
-            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
             android:src="@drawable/teach_app_2"
             android:id="@+id/iv_setting_2"
             />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/Linear_third"
+        android:layout_below="@id/Linear_second"
+        >
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@color/very_low_primary"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
             android:textSize="15sp"
+            android:layout_marginTop="5dp"
             android:text="۳) در لیستی که باز میشه، اپلیکیشن وقت گیر مورد نظر رو انتخاب کنید تا یه ویجت دقیقا شبیه به آیکون اون اپ ساخته باشه."
             android:id="@+id/tv_setting_3"
             />
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1.5"
-            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
             android:src="@drawable/teach_app_3"
             android:id="@+id/iv_setting_3"
             />
 
     </LinearLayout>
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="45dp"
-    android:orientation="horizontal"
-    android:layout_alignParentBottom="true"
-    >
-    <Button
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:id="@+id/about_call"
-        style="?android:attr/borderlessButtonStyle"
-        android:gravity="center"
-        android:clickable="true"
-        android:focusable="true"
-        android:background="@color/very_look_like"
-        android:text="درباره ی سازنده"
-        />
-    <Button
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:id="@+id/intro_call"
-        style="?android:attr/borderlessButtonStyle"
-        android:gravity="center"
-        android:clickable="true"
-        android:focusable="true"
-        android:background="@color/look_like"
-        android:text="مشاهده‌ی مقدمه"
-        />
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        >
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/about_call"
+            style="?android:attr/borderlessButtonStyle"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@color/very_look_like"
+            android:text="درباره ی سازنده"
+            />
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/intro_call"
+            style="?android:attr/borderlessButtonStyle"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@color/look_like"
+            android:text="مشاهده‌ی مقدمه"
+            />
+    </LinearLayout>
+x
 
 
 </RelativeLayout>

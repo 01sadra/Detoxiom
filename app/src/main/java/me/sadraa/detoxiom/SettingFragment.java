@@ -54,7 +54,9 @@ public class SettingFragment extends Fragment {
 
                 }else{
                     isImageFitToScreen=true;
-                    iv1.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(500,400);
+
+                    iv1.setLayoutParams(layoutParams);
                     iv1.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 }
             }
@@ -68,9 +70,12 @@ public class SettingFragment extends Fragment {
                     layoutParams.gravity= Gravity.CENTER;
                     iv2.setLayoutParams(layoutParams);
                     iv2.setAdjustViewBounds(true);
+
                 }else{
                     isImageFitToScreen=true;
-                    iv2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(500,400);
+
+                    iv2.setLayoutParams(layoutParams);
                     iv2.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 }
             }
@@ -84,9 +89,12 @@ public class SettingFragment extends Fragment {
                     layoutParams.gravity= Gravity.CENTER;
                     iv3.setLayoutParams(layoutParams);
                     iv3.setAdjustViewBounds(true);
+
                 }else{
                     isImageFitToScreen=true;
-                    iv3.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(500,400);
+
+                    iv3.setLayoutParams(layoutParams);
                     iv3.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 }
             }
