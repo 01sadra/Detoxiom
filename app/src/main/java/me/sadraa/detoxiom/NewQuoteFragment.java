@@ -22,6 +22,10 @@ import com.airbnb.lottie.LottieAnimationView;
 import java.io.IOException;
 import java.util.Random;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,14 +35,21 @@ import retrofit2.Response;
  * A simple {@link Fragment} subclass.
  */
 public class NewQuoteFragment extends Fragment {
-    Button mButton, mButtonSave, mButtonIgonre;
-    TextView quoteTV,authorTV, chanceCounter;
+    int chanceFromPrefrence,firstAttemptCounter;
     BottomSheetBehavior mBottomSheetBehavior;
     QuoteDbModel quoteDbModel;
     Vibrator vibrator;
-    LottieAnimationView lAnimation;
-    int chanceFromPrefrence,firstAttemptCounter;
+    private Unbinder unbinder;
+    @BindView(R.id.saveQuote) Button mButtonSave;
+    @BindView(R.id.ignoreQuote) Button mButtonIgonre;
+    @BindView(R.id.quoteText) TextView quoteTV;
+    @BindView(R.id.authorText) TextView authorTV;
+    @BindView(R.id.counter_show) TextView chanceCounter;
+    @BindView(R.id.bottom_sheet) View bottomSheet;
+    @BindView(R.id.animation_refresh) LottieAnimationView lAnimation;
+
     boolean RandomChance ;
+
     public NewQuoteFragment() {
         // Required empty public constructor
     }
@@ -48,22 +59,16 @@ public class NewQuoteFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_new_quote, container, false);
+        View view= inflater.inflate(R.layout.fragment_new_quote, container, false);
+        unbinder = ButterKnife.bind(this,view);
+        return view;
     }
 
     @Override
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-    //To do : rewrite this shit with butterkinfe
-        authorTV = (TextView) getView().findViewById(R.id.authorText);
-        mButtonSave = (Button) getView().findViewById(R.id.saveQuote);
-        chanceCounter =(TextView) getView().findViewById(R.id.counter_show);
-        mButtonIgonre= (Button) getView().findViewById(R.id.ignoreQuote);
-        quoteTV = (TextView) getView().findViewById(R.id.quoteText);
-        View bottomSheet = getView().findViewById(R.id.bottom_sheet);
         mBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
-        lAnimation = (LottieAnimationView) getView().findViewById(R.id.animation_refresh);
-         vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
         chanceFromPrefrence = MainActivity.loadBadgeCount(getContext());
         firstAttemptCounter = 0;
     //check if there is any chance and show the user how many time s/he can try.
@@ -71,44 +76,11 @@ public class NewQuoteFragment extends Fragment {
             chanceCounter.setText(" فرصت‌های باقی مانده: "+"\n"+chanceFromPrefrence);
         }else {
             chanceCounter.setText("فرصت های شما تمام شده :(");
-
         }
-
          //Adding an animation as a button with lottie
         lAnimation.setAnimation("refresh.json");
         //shitty setting for bad animation
         lAnimation.setProgress(1);
-        //set onClick listener for animation. If internet be connected
-        //and bottomsheet be collapsed  and we have chance to try animation will play
-        lAnimation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!isInternetConnected()) {
-                    Toast.makeText(getContext(), "به اینترنت متصل نیستید :(", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (lAnimation.isAnimating() || mBottomSheetBehavior.getState()==BottomSheetBehavior.STATE_EXPANDED){
-                    return;
-                }
-                if(chanceFromPrefrence > 0) {
-                        lAnimation.playAnimation();
-                        // minus 1 from badge counter and save it in prefrence
-                        MainActivity.saveBadgeCounter(getContext(), chanceFromPrefrence - 1);
-                        //Load chances from prefrence again
-                        chanceFromPrefrence = MainActivity.loadBadgeCount(getContext());
-
-                        //if chances is more than 0 show how many chance remain
-                        if (chanceFromPrefrence > 0) {
-                            chanceCounter.setText(" فرصت‌های باقی مانده: " + "\n" + chanceFromPrefrence);
-                            //If there is no chance then tell the user the truth:)
-                        } else {
-                            chanceCounter.setText("فرصت های شما تمام شده :(");
-                        }
-
-                    }
-            }
-        });
-
         //set listener for animation states. this methods call when animatin palys
         lAnimation.addAnimatorListener(new Animator.AnimatorListener() {
             @Override
@@ -128,9 +100,14 @@ public class NewQuoteFragment extends Fragment {
                         @Override
                         public void onResponse(Call<QuoteModel> call, Response<QuoteModel> response) {
                             if(response.isSuccessful()){
-                                quoteTV.setText(response.body().getResult().getQuote());
-                                authorTV.setText(response.body().getResult().getAuthor());
-                                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                              try{
+                                  quoteTV.setText(response.body().getResult().getQuote());
+                                  authorTV.setText(response.body().getResult().getAuthor());
+                                  mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                              }catch (Exception e){
+
+                              }
+
                             }else{
 
                                 try {
@@ -171,32 +148,61 @@ public class NewQuoteFragment extends Fragment {
 
             }
         });
-        //save quote in archive and minimize the bottomsheet
-        mButtonSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                Toast.makeText(getContext(),"ذخیره شد‌",Toast.LENGTH_SHORT).show();
-                //Create a model from database and set value for that
-                quoteDbModel = new QuoteDbModel();
-                if(quoteTV!=null||authorTV!=null){
-                    quoteDbModel.setAuthor(authorTV.getText().toString());
-                    quoteDbModel.setQuote(quoteTV.getText().toString());
-                    insertQuoteToDb(quoteDbModel);
-                }
-
-            }
-        });
-
-        //igonre and don't save quote in archive
-        mButtonIgonre.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-            }
-        });
 
     }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    //set onClick listener for animation. If internet be connected
+    //and bottomsheet be collapsed  and we have chance to try animation will play
+    @OnClick(R.id.animation_refresh)
+    public void getRefresh(){
+        if(!isInternetConnected()) {
+            Toast.makeText(getContext(), "به اینترنت متصل نیستید :(", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (lAnimation.isAnimating() || mBottomSheetBehavior.getState()==BottomSheetBehavior.STATE_EXPANDED){
+            return;
+        }
+
+        if(chanceFromPrefrence > 0) {
+            lAnimation.playAnimation();
+            // minus 1 from badge counter and save it in prefrence
+            MainActivity.saveBadgeCounter(getContext(), chanceFromPrefrence - 1);
+            //Load chances from prefrence again
+            chanceFromPrefrence = MainActivity.loadBadgeCount(getContext());
+
+            //if chances is more than 0 show how many chance remain
+            if (chanceFromPrefrence > 0) {
+                chanceCounter.setText(" فرصت‌های باقی مانده: " + "\n" + chanceFromPrefrence);
+                //If there is no chance then tell the user the truth:)
+            } else {
+                chanceCounter.setText("فرصت های شما تمام شده :(");
+            }
+
+        }
+    }
+    //save quote in archive and minimize the bottomsheet
+    @OnClick(R.id.saveQuote)
+    public void saveQuote(){
+        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        Toast.makeText(getContext(),"ذخیره شد‌",Toast.LENGTH_SHORT).show();
+        //Create a model from database and set value for that
+        quoteDbModel = new QuoteDbModel();
+        if(quoteTV!=null||authorTV!=null){
+            quoteDbModel.setAuthor(authorTV.getText().toString());
+            quoteDbModel.setQuote(quoteTV.getText().toString());
+            insertQuoteToDb(quoteDbModel);
+        }
+    }
+   //just ignore the quote and minimize the bottomsheet
+    @OnClick(R.id.ignoreQuote)
+    public void ignoreQuote(){
+       mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+   }
 
     public void insertQuoteToDb(final QuoteDbModel quoteDbModel){
      //Creating a new thread for Runnig Room Query.
