@@ -89,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
                     .targetRadius(60));
         }
 
-
         //Set click listener for bottombar tabs
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
 
