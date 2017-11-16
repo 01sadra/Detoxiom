@@ -1,4 +1,4 @@
-package me.sadraa.detoxiom;
+package me.sadraa.detoxiom.utils;
 
 /**
  * Created by sadra on 10/13/17.

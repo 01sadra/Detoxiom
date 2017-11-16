@@ -1,8 +1,6 @@
 package me.sadraa.detoxiom;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
+import me.sadraa.detoxiom.utils.ClientConfig;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

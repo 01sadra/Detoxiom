@@ -26,6 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import me.sadraa.detoxiom.utils.ClientConfig;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
