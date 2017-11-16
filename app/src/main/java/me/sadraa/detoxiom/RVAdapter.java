@@ -13,6 +13,8 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.sadraa.detoxiom.db.Models.QuoteDbModel;
+import me.sadraa.detoxiom.db.QuoteDb;
 
 /**
  * Created by sadra on 10/18/17.

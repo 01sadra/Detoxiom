@@ -1,13 +1,7 @@
-package me.sadraa.detoxiom;
+package me.sadraa.detoxiom.db;
 
-import android.support.v4.util.Pair;
-
-import org.json.JSONObject;
-
-import java.util.HashMap;
-
+import me.sadraa.detoxiom.QuoteModel;
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;

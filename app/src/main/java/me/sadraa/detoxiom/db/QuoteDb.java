@@ -1,9 +1,11 @@
-package me.sadraa.detoxiom;
+package me.sadraa.detoxiom.db;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
+
+import me.sadraa.detoxiom.db.Models.QuoteDbModel;
 
 /**
  * Created by sadra on 10/15/17.

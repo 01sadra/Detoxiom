@@ -21,6 +21,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import me.sadraa.detoxiom.db.Models.QuoteDbModel;
+import me.sadraa.detoxiom.db.QuoteDb;
 
 
 /**

@@ -1,5 +1,6 @@
 package me.sadraa.detoxiom;
 
+import me.sadraa.detoxiom.db.QuoteClient;
 import me.sadraa.detoxiom.utils.ClientConfig;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
