@@ -1,4 +1,4 @@
-package me.sadraa.detoxiom.ui.fragments;
+package me.sadraa.detoxiom;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -8,8 +8,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.widget.RemoteViews;
 
-import me.sadraa.detoxiom.AppNameAndLogoProvider;
-import me.sadraa.detoxiom.R;
 import me.sadraa.detoxiom.ui.acitivities.DetoxiomWidgetConfigureActivity;
 import me.sadraa.detoxiom.ui.acitivities.MainActivity;
 

@@ -23,7 +23,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.sadraa.detoxiom.AppNameAndLogoProvider;
-import me.sadraa.detoxiom.ui.fragments.DetoxiomWidget;
+import me.sadraa.detoxiom.DetoxiomWidget;
 import me.sadraa.detoxiom.ui.adapters.ListViewCostumAdapter;
 import me.sadraa.detoxiom.R;
 

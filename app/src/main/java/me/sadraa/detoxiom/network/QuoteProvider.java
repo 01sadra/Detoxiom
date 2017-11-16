@@ -1,4 +1,4 @@
-package me.sadraa.detoxiom;
+package me.sadraa.detoxiom.network;
 
 import me.sadraa.detoxiom.utils.ClientConfig;
 import okhttp3.OkHttpClient;
