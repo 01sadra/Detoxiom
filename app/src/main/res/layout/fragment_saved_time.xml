@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/low_primary"
-    tools:context="me.sadraa.detoxiom.SavedTimeFragment">
+    tools:context="me.sadraa.detoxiom.ui.fragments.SavedTimeFragment">
 
 
     <TextView

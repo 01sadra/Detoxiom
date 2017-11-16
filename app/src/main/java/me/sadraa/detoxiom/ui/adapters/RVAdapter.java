@@ -1,4 +1,4 @@
-package me.sadraa.detoxiom;
+package me.sadraa.detoxiom.ui.adapters;
 
 import android.content.Intent;
 import android.support.v7.widget.PopupMenu;
@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.sadraa.detoxiom.R;
 import me.sadraa.detoxiom.db.Models.QuoteDbModel;
 import me.sadraa.detoxiom.db.QuoteDb;
 

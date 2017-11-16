@@ -1,4 +1,4 @@
-package me.sadraa.detoxiom;
+package me.sadraa.detoxiom.ui.adapters;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.sadraa.detoxiom.R;
 
 /**
  * Created by sadra on 10/5/17.

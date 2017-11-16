@@ -1,4 +1,4 @@
-package me.sadraa.detoxiom;
+package me.sadraa.detoxiom.ui.acitivities;
 
 
 import android.content.Context;
@@ -24,6 +24,11 @@ import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.sadraa.detoxiom.ui.fragments.ArchiveFragment;
+import me.sadraa.detoxiom.ui.fragments.NewQuoteFragment;
+import me.sadraa.detoxiom.R;
+import me.sadraa.detoxiom.ui.fragments.SavedTimeFragment;
+import me.sadraa.detoxiom.ui.fragments.SettingFragment;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
@@ -147,12 +152,12 @@ public class MainActivity extends AppCompatActivity {
         mPrefrences.apply();
     }
     //we load saved prefrence by this method. It defined static because we want to call it in saved time fragment.
-    static int loadOpenedTimes(Context context){
+    public static int loadOpenedTimes(Context context){
         SharedPreferences loadpreferencesOpenTime = context.getSharedPreferences(PREFRENCE_NAME,0);
         int openTimes = loadpreferencesOpenTime.getInt(PREFRENCE_KEY_OPENED_TIMES,0);
         return openTimes;
     }
-    static int loadBadgeCount(Context context){
+    public static int loadBadgeCount(Context context){
         SharedPreferences loadpreferencesOpenTime = context.getSharedPreferences(PREFRENCE_NAME,0);
         int badgeCoounter = loadpreferencesOpenTime.getInt(PREFRENCE_KEY_BADGE_COUNT,0);
         return badgeCoounter;

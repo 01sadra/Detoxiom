@@ -1,4 +1,4 @@
-package me.sadraa.detoxiom;
+package me.sadraa.detoxiom.ui.acitivities;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
@@ -22,6 +22,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.sadraa.detoxiom.AppNameAndLogoProvider;
+import me.sadraa.detoxiom.ui.fragments.DetoxiomWidget;
+import me.sadraa.detoxiom.ui.adapters.ListViewCostumAdapter;
+import me.sadraa.detoxiom.R;
 
 /**
  * The configuration screen for the {@link DetoxiomWidget DetoxioWidget} AppWidget.
@@ -123,13 +127,13 @@ public class DetoxiomWidgetConfigureActivity extends AppCompatActivity {
         prefs.apply();
     }
     //static method that can be called from other classes
-    static int loadPref(Context context, int appWidgetId) {
+    public static int loadPref(Context context, int appWidgetId) {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
         int position = prefs.getInt(PREF_PREFIX_KEY + appWidgetId, 0);
             return position;
 
     }
-    static void deleteTitlePref(Context context, int appWidgetId) {
+    public static void deleteTitlePref(Context context, int appWidgetId) {
         SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
         prefs.remove(PREF_PREFIX_KEY + appWidgetId);
         prefs.apply();

@@ -1,4 +1,4 @@
-package me.sadraa.detoxiom;
+package me.sadraa.detoxiom.ui.fragments;
 
 
 import android.annotation.SuppressLint;
@@ -15,6 +15,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import me.sadraa.detoxiom.R;
 
 
 /**

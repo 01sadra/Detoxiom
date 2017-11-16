@@ -1,10 +1,11 @@
-package me.sadraa.detoxiom;
+package me.sadraa.detoxiom.ui.acitivities;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import me.sadraa.detoxiom.R;
 import mehdi.sakout.aboutpage.AboutPage;
 import mehdi.sakout.aboutpage.Element;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;

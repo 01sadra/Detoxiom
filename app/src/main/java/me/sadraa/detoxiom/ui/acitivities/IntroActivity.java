@@ -1,4 +1,4 @@
-package me.sadraa.detoxiom;
+package me.sadraa.detoxiom.ui.acitivities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,8 @@ import android.view.View;
 
 import com.github.paolorotolo.appintro.AppIntro;
 
+import me.sadraa.detoxiom.ui.fragments.IntroFragment;
+import me.sadraa.detoxiom.R;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class IntroActivity extends AppIntro {

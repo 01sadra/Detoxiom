@@ -1,6 +1,5 @@
-package me.sadraa.detoxiom.db;
+package me.sadraa.detoxiom;
 
-import me.sadraa.detoxiom.QuoteModel;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -16,6 +15,6 @@ public interface QuoteClient {
     //and It doesn't work with hashMap or any key value object. Fortunately retrofit has a @Field method that do the job for us
     @FormUrlEncoded
     @POST("random_quote")
-    Call<QuoteModel> getQuote(@Field("api_token") String api_token);
+    public Call<QuoteModel> getQuote(@Field("api_token") String api_token);
 
 }

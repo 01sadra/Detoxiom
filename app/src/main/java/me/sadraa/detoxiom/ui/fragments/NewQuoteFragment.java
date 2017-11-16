@@ -1,4 +1,4 @@
-package me.sadraa.detoxiom;
+package me.sadraa.detoxiom.ui.fragments;
 
 
 import android.animation.Animator;
@@ -26,9 +26,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import me.sadraa.detoxiom.QuoteModel;
+import me.sadraa.detoxiom.QuoteProvider;
+import me.sadraa.detoxiom.R;
 import me.sadraa.detoxiom.db.Models.QuoteDbModel;
-import me.sadraa.detoxiom.db.QuoteClient;
+import me.sadraa.detoxiom.QuoteClient;
 import me.sadraa.detoxiom.db.QuoteDb;
+import me.sadraa.detoxiom.ui.acitivities.MainActivity;
 import me.sadraa.detoxiom.utils.ClientConfig;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -104,13 +108,10 @@ public class NewQuoteFragment extends Fragment {
                         @Override
                         public void onResponse(Call<QuoteModel> call, Response<QuoteModel> response) {
                             if(response.isSuccessful()){
-                              try{
+
                                   quoteTV.setText(response.body().getResult().getQuote());
                                   authorTV.setText(response.body().getResult().getAuthor());
                                   mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                              }catch (Exception e){
-
-                              }
 
                             }else{
 

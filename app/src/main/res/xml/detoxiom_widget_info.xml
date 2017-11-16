@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:configure="me.sadraa.detoxiom.DetoxiomWidgetConfigureActivity"
+    android:configure="me.sadraa.detoxiom.ui.acitivities.DetoxiomWidgetConfigureActivity"
     android:initialKeyguardLayout="@layout/detoxiom_widget"
     android:initialLayout="@layout/detoxiom_widget"
     android:minHeight="70dp"

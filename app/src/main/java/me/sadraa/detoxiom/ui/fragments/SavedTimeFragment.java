@@ -1,4 +1,4 @@
-package me.sadraa.detoxiom;
+package me.sadraa.detoxiom.ui.fragments;
 
 
 import android.os.Bundle;
@@ -12,6 +12,8 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import me.sadraa.detoxiom.R;
+import me.sadraa.detoxiom.ui.acitivities.MainActivity;
 
 
 /**

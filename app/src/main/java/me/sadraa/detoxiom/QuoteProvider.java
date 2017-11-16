@@ -1,6 +1,5 @@
 package me.sadraa.detoxiom;
 
-import me.sadraa.detoxiom.db.QuoteClient;
 import me.sadraa.detoxiom.utils.ClientConfig;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -12,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class QuoteProvider {
 
-    private QuoteClient mQService;
+    public QuoteClient mQService;
     public QuoteProvider(){
         OkHttpClient httpClient = new OkHttpClient();
         Retrofit retrofit = new Retrofit.Builder()
