@@ -5,107 +5,13 @@
     tools:context="me.sadraa.detoxiom.SettingFragment"
     android:orientation="vertical"
     >
-    <RelativeLayout
+    <pl.droidsonroids.gif.GifImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginBottom="45dp"
-        >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp"
-            android:id="@+id/Linear_top"
-            android:layout_alignParentTop="true"
-            >
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@color/very_low_primary"
-                android:layout_weight="3"
-                android:textSize="15sp"
-                android:layout_marginTop="5dp"
-                android:text="۱) صفحه‌ی اصلی گوشی‌تون رو برای چند ثانیه به شکل ممتد لمس کنید. بعد گزینه‌ی ابزارک/widget رو انتخاب کنید."
-                android:id="@+id/tv_setting_1"
-                />
-
-            <ImageView
-                android:id="@+id/iv_setting_1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:padding="0dp"
-                android:layout_margin="0dp"
-                android:src="@drawable/teach_app_1" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            android:id="@+id/Linear_second"
-            android:layout_below="@id/Linear_top"
-            >
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@color/very_low_primary"
-
-                android:layout_weight="3"
-                android:textSize="15sp"
-                android:layout_marginTop="5dp"
-                android:text="۲) از لیست ویجت‌ها دیتاکسیوم رو پیدا کنید و اون رو به صفحه اصلی‌تون اضافه کنید."
-                android:id="@+id/tv_setting_2"
-                />
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:padding="0dp"
-                android:layout_margin="0dp"
-                android:src="@drawable/teach_app_2"
-                android:id="@+id/iv_setting_2"
-                />
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp"
-            android:id="@+id/Linear_third"
-            android:layout_below="@id/Linear_second"
-            >
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@color/very_low_primary"
-                android:layout_weight="3"
-                android:textSize="15sp"
-                android:layout_marginTop="5dp"
-                android:text="۳) در لیستی که باز میشه، اپلیکیشن وقت گیر مورد نظر رو انتخاب کنید تا یه ویجت دقیقا شبیه به آیکون اون اپ ساخته باشه."
-                android:id="@+id/tv_setting_3"
-                />
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:padding="0dp"
-                android:layout_margin="0dp"
-                android:src="@drawable/teach_app_3"
-                android:id="@+id/iv_setting_3"
-                />
-
-        </LinearLayout>
-    </RelativeLayout>
-
+        android:layout_marginBottom="50dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/teaching_app"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
