@@ -1,4 +1,4 @@
-package me.sadraa.detoxiom;
+package me.sadraa.detoxiom.features.widget;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -8,8 +8,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.widget.RemoteViews;
 
-import me.sadraa.detoxiom.ui.acitivities.DetoxiomWidgetConfigureActivity;
-import me.sadraa.detoxiom.ui.acitivities.MainActivity;
+import me.sadraa.detoxiom.R;
+import me.sadraa.detoxiom.features.MainActivity;
 
 /**
  * Implementation of App Widget functionality.

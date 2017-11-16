@@ -1,4 +1,4 @@
-package me.sadraa.detoxiom.ui.adapters;
+package me.sadraa.detoxiom.features.widget.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

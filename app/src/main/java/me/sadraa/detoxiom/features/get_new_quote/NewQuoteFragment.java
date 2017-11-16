@@ -1,4 +1,4 @@
-package me.sadraa.detoxiom.ui.fragments;
+package me.sadraa.detoxiom.features.get_new_quote;
 
 
 import android.animation.Animator;
@@ -26,13 +26,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import me.sadraa.detoxiom.network.QuoteModel;
-import me.sadraa.detoxiom.network.QuoteProvider;
 import me.sadraa.detoxiom.R;
+import me.sadraa.detoxiom.features.MainActivity;
+import me.sadraa.detoxiom.network.models.QuoteModel;
+import me.sadraa.detoxiom.network.QuoteProvider;
 import me.sadraa.detoxiom.db.Models.QuoteDbModel;
 import me.sadraa.detoxiom.network.QuoteClient;
 import me.sadraa.detoxiom.db.QuoteDb;
-import me.sadraa.detoxiom.ui.acitivities.MainActivity;
 import me.sadraa.detoxiom.utils.ClientConfig;
 import retrofit2.Call;
 import retrofit2.Callback;

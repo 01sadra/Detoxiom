@@ -1,4 +1,4 @@
-package me.sadraa.detoxiom.ui.fragments;
+package me.sadraa.detoxiom.features.about_app;
 
 
 import android.content.Intent;
@@ -15,21 +15,19 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import me.sadraa.detoxiom.R;
-import me.sadraa.detoxiom.ui.acitivities.AboutActivity;
-import me.sadraa.detoxiom.ui.acitivities.IntroActivity;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SettingFragment extends Fragment {
+public class TeachingFragment extends Fragment {
     boolean isImageFitToScreen;
     private Unbinder unbinder;
 
     @BindView(R.id.about_call) Button callAbout;
     @BindView(R.id.intro_call) Button callIntro;
 
-    public SettingFragment() {
+    public TeachingFragment() {
         // Required empty public constructor
     }
 

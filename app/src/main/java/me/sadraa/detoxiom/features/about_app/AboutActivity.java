@@ -1,4 +1,4 @@
-package me.sadraa.detoxiom.ui.acitivities;
+package me.sadraa.detoxiom.features.about_app;
 
 import android.content.Context;
 import android.os.Bundle;

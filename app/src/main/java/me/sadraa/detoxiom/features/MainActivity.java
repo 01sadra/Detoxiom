@@ -1,4 +1,4 @@
-package me.sadraa.detoxiom.ui.acitivities;
+package me.sadraa.detoxiom.features;
 
 
 import android.content.Context;
@@ -24,11 +24,12 @@ import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.sadraa.detoxiom.ui.fragments.ArchiveFragment;
-import me.sadraa.detoxiom.ui.fragments.NewQuoteFragment;
+import me.sadraa.detoxiom.features.about_app.TeachingFragment;
+import me.sadraa.detoxiom.features.archive_quotes.ArchiveFragment;
+import me.sadraa.detoxiom.features.about_app.IntroActivity;
+import me.sadraa.detoxiom.features.get_new_quote.NewQuoteFragment;
 import me.sadraa.detoxiom.R;
-import me.sadraa.detoxiom.ui.fragments.SavedTimeFragment;
-import me.sadraa.detoxiom.ui.fragments.SettingFragment;
+import me.sadraa.detoxiom.features.time_save.SavedTimeFragment;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
@@ -123,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.tab_setting :
                         ft = getSupportFragmentManager().beginTransaction();
-                        ft.replace(R.id.contentContainer,new SettingFragment());
+                        ft.replace(R.id.contentContainer,new TeachingFragment());
                    //     tabSetting.removeBadge();
                         break;
                 }

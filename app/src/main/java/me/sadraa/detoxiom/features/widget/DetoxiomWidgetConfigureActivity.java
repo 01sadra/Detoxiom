@@ -1,4 +1,4 @@
-package me.sadraa.detoxiom.ui.acitivities;
+package me.sadraa.detoxiom.features.widget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
@@ -22,9 +22,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.sadraa.detoxiom.AppNameAndLogoProvider;
-import me.sadraa.detoxiom.DetoxiomWidget;
-import me.sadraa.detoxiom.ui.adapters.ListViewCostumAdapter;
+import me.sadraa.detoxiom.features.widget.adapter.ListViewCostumAdapter;
 import me.sadraa.detoxiom.R;
 
 /**

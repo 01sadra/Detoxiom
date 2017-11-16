@@ -1,4 +1,4 @@
-package me.sadraa.detoxiom;
+package me.sadraa.detoxiom.features.widget;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;

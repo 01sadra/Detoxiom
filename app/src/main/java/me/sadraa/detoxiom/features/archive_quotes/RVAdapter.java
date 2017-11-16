@@ -1,4 +1,4 @@
-package me.sadraa.detoxiom.ui.adapters;
+package me.sadraa.detoxiom.features.archive_quotes;
 
 import android.content.Intent;
 import android.support.v7.widget.PopupMenu;

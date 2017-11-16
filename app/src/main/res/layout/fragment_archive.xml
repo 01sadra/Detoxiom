@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:scrollbars="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="me.sadraa.detoxiom.ui.fragments.ArchiveFragment">
+    tools:context="me.sadraa.detoxiom.features.archive_quotes.ArchiveFragment">
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package me.sadraa.detoxiom.ui.fragments;
+package me.sadraa.detoxiom.features.time_save;
 
 
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.sadraa.detoxiom.R;
-import me.sadraa.detoxiom.ui.acitivities.MainActivity;
+import me.sadraa.detoxiom.features.MainActivity;
 
 
 /**

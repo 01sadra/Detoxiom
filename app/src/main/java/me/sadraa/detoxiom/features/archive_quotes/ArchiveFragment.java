@@ -1,4 +1,4 @@
-package me.sadraa.detoxiom.ui.fragments;
+package me.sadraa.detoxiom.features.archive_quotes;
 
 
 import android.os.Bundle;
@@ -22,7 +22,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.sadraa.detoxiom.R;
-import me.sadraa.detoxiom.ui.adapters.RVAdapter;
 import me.sadraa.detoxiom.db.Models.QuoteDbModel;
 import me.sadraa.detoxiom.db.QuoteDb;
 

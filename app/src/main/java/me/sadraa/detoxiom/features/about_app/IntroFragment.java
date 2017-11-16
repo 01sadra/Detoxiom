@@ -1,4 +1,4 @@
-package me.sadraa.detoxiom.ui.fragments;
+package me.sadraa.detoxiom.features.about_app;
 
 
 import android.annotation.SuppressLint;

@@ -1,4 +1,4 @@
-package me.sadraa.detoxiom.network;
+package me.sadraa.detoxiom.network.models;
 
 /**
  * Created by sadra on 10/8/17.
