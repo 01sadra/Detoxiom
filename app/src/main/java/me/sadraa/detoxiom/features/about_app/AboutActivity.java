@@ -19,6 +19,7 @@ public class AboutActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         View aboutPage = new AboutPage(this)
+                .isRTL(true)
                 .setImage(R.drawable.about)
                 .setDescription("دیتاکسیوم:  \nترک شبکه‌های اجتماعی به کمک بزرگان تاریخ")
                 .addWebsite("https://sadraa.me")

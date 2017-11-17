@@ -43,7 +43,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.MyViewHolder> {
         //I will fix it ASAP but keep in mind you should NEVER handle clicks in viewHolder as I do it here.
         @Override
         public void onClick(final View view) {
-
             popupMenu= new PopupMenu(view.getContext(),view);
             popupMenu.getMenuInflater().inflate(R.menu.popup_menu,popupMenu.getMenu());
             popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {

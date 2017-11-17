@@ -44,7 +44,6 @@ public class SavedTimeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //we call sharedprefrence for understanding how many time app was opened.
-
         openedTimeInt = MainActivity.loadOpenedTimes(getContext());
         openedTimesTV.setText("دفعاتی که دیتاکسیوم را باز کرده اید" + ":\n" + openedTimeInt +"");
         instagramTV.setText(realTimeInSocialMedia(openedTimeInt,"instagram") + "\n دقیقه");
