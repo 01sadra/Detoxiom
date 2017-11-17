@@ -1,6 +1,5 @@
 package me.sadraa.detoxiom.features.get_new_quote;
 
-
 import android.animation.Animator;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -19,44 +18,42 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 
-import java.io.IOException;
 import java.util.Random;
+import java.util.concurrent.Callable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import me.sadraa.detoxiom.R;
-import me.sadraa.detoxiom.features.MainActivity;
-import me.sadraa.detoxiom.network.models.QuoteModel;
-import me.sadraa.detoxiom.network.QuoteProvider;
 import me.sadraa.detoxiom.db.Models.QuoteDbModel;
-import me.sadraa.detoxiom.network.QuoteClient;
 import me.sadraa.detoxiom.db.QuoteDb;
+import me.sadraa.detoxiom.features.MainActivity;
+import me.sadraa.detoxiom.network.QuoteClient;
+import me.sadraa.detoxiom.network.QuoteProvider;
+import me.sadraa.detoxiom.network.models.QuoteModel;
 import me.sadraa.detoxiom.utils.ClientConfig;
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class NewQuoteFragment extends Fragment {
     int chanceFromPrefrence,firstAttemptCounter;
     BottomSheetBehavior mBottomSheetBehavior;
     QuoteDbModel quoteDbModel;
     Vibrator vibrator;
     private Unbinder unbinder;
+
     @BindView(R.id.saveQuote) Button mButtonSave;
     @BindView(R.id.ignoreQuote) Button mButtonIgonre;
     @BindView(R.id.quoteText) TextView quoteTV;
     @BindView(R.id.authorText) TextView authorTV;
-    @BindView(R.id.counter_show) TextView chanceCounter;
+    @BindView(R.id.counter_show) TextView chanceCounterTV;
     @BindView(R.id.bottom_sheet) View bottomSheet;
     @BindView(R.id.animation_refresh) LottieAnimationView lAnimation;
-
-    boolean RandomChance ;
 
     public NewQuoteFragment() {
         // Required empty public constructor
@@ -79,12 +76,13 @@ public class NewQuoteFragment extends Fragment {
         vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
         chanceFromPrefrence = MainActivity.loadBadgeCount(getContext());
         firstAttemptCounter = 0;
-    //check if there is any chance and show the user how many time s/he can try.
+        //check if there is any chance and show the user how many time s/he can try.
         if(chanceFromPrefrence>0){
-            chanceCounter.setText(" فرصت‌های باقی مانده: "+"\n"+chanceFromPrefrence);
+            chanceCounterTV.setText(" فرصت‌های باقی مانده: "+"\n"+chanceFromPrefrence);
         }else {
-            chanceCounter.setText("فرصت های شما تمام شده :(");
+            chanceCounterTV.setText("فرصت های شما تمام شده :(");
         }
+
          //Adding an animation as a button with lottie
         lAnimation.setAnimation("refresh.json");
         //shitty setting for bad animation
@@ -98,38 +96,14 @@ public class NewQuoteFragment extends Fragment {
                 if(makeChance()){
                     view.setBackgroundColor(getResources().getColor(R.color.primary_dark));
                     vibrator.vibrate(500);
-                    //Creating object from provider class to get retrofit service
-                    String api_token = ClientConfig.api_token;
-                    QuoteProvider QProvider = new QuoteProvider();
-                    QuoteClient QService = QProvider.getmQService();
-            /* Call method and run it asynchronously :) */
-                    Call<QuoteModel> call = QService.getQuote(api_token);
-                    call.enqueue(new Callback<QuoteModel>() {
-                        @Override
-                        public void onResponse(Call<QuoteModel> call, Response<QuoteModel> response) {
-                            if(response.isSuccessful()){
+                //using rx java for calling the server async
+                    //rxJava is a comprehensive topic and I can't explain what happened here
+                    //but for more info you can watch this quick video tutorial: https://www.youtube.com/watch?v=7IEPrihz1-E
+                  getQuoteObservable()
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribeOn(Schedulers.io())
+                            .subscribe(getQuoteObserver());
 
-                                  quoteTV.setText(response.body().getResult().getQuote());
-                                  authorTV.setText(response.body().getResult().getAuthor());
-                                  mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-
-                            }else{
-
-                                try {
-                                    Toast.makeText(getContext(),response.errorBody().string(),Toast.LENGTH_SHORT).show();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-
-                        }
-                        @Override
-                        public void onFailure(Call<QuoteModel> call, Throwable t) {
-                            Toast.makeText(getContext(),"مشکل در برقراری اتصال به اینترنت!",Toast.LENGTH_SHORT).show();
-                            t.printStackTrace();
-                        }
-                    });
-                    //In case you hadn't enough chance you should try again(you can use similar approach for real life)
                 }else{
                     view.setBackgroundColor(getResources().getColor(R.color.about_youtube_color));
                     Toast.makeText(getContext(),"یه بار دیگه امتحان کن",Toast.LENGTH_SHORT).show();
@@ -182,10 +156,10 @@ public class NewQuoteFragment extends Fragment {
 
             //if chances is more than 0 show how many chance remain
             if (chanceFromPrefrence > 0) {
-                chanceCounter.setText(" فرصت‌های باقی مانده: " + "\n" + chanceFromPrefrence);
+                chanceCounterTV.setText(" فرصت‌های باقی مانده: " + "\n" + chanceFromPrefrence);
                 //If there is no chance then tell the user the truth:)
             } else {
-                chanceCounter.setText("فرصت های شما تمام شده :(");
+                chanceCounterTV.setText("فرصت های شما تمام شده :(");
             }
 
         }
@@ -240,5 +214,47 @@ public class NewQuoteFragment extends Fragment {
          NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
          return activeNetworkInfo != null && activeNetworkInfo.isConnected();
      }
+//make call to the server with retrofit interface and return an observer object
+    public Observable<QuoteModel> getQuoteObservable(){
+        //Creating object from provider class to get retrofit service
+        String api_token = ClientConfig.api_token;
+        QuoteProvider QProvider = new QuoteProvider();
+        QuoteClient QService = QProvider.getmQService();
+                    /* Call method and run it asynchronously :) */
+        final Call<QuoteModel> call = QService.getQuote(api_token);
 
+        return Observable.fromCallable(new Callable<QuoteModel>() {
+            @Override
+            public QuoteModel call() throws Exception {
+                return call.execute().body();
+            }
+        });
+    }
+    //return an ovserver on quote and set the views in on next
+    public Observer<QuoteModel> getQuoteObserver(){
+        return new Observer<QuoteModel>() {
+
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(QuoteModel quoteModel) {
+                quoteTV.setText(quoteModel.getResult().getQuote());
+                authorTV.setText(quoteModel.getResult().getAuthor());
+                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        };
+    }
 }
