@@ -21,6 +21,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import me.sadraa.detoxiom.R;
 import me.sadraa.detoxiom.db.Models.QuoteDbModel;
 import me.sadraa.detoxiom.db.QuoteDb;
@@ -32,7 +38,7 @@ import me.sadraa.detoxiom.db.QuoteDb;
 public class ArchiveFragment extends Fragment {
     ArrayList<QuoteDbModel> quoteDbModelList;
     QuoteDb quoteDb;
-
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
     @BindView(R.id.archive_rv) RecyclerView rv;
     RVAdapter rvAdapter;
     @BindView(R.id.empty_view) TextView tv;
@@ -63,33 +69,40 @@ public class ArchiveFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        compositeDisposable.dispose();
     }
-
     //This method is mother method of this fragment. first create an object from DB and then execute query in
-    //background thread and then call a method on uiThread for set adapter and populate list view
+    //rxJava and then populate RV
     public void startQueryAndPopulate(){
-      //create new runnable
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                //Create an object from QuoteDb Class
-                quoteDb = QuoteDb.getQuoteDb(getContext());
-                //Retrieve List of saved Quotes and authors
-                final List<QuoteDbModel> mList = quoteDb.quoteDao().getAll();
-                //Convert data from list to Array
-                final ArrayList<QuoteDbModel> quoteDbModelListRV = convertListQuoteToArray(mList);
-                //Call populateRV method on ui thread.
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        populateRV(quoteDbModelListRV);
-                    }
-                });
-            }
-        };
-        new Thread(runnable).start();
-    }
+        //Create an object from QuoteDb Class
+        quoteDb = QuoteDb.getQuoteDb(getContext());
+        //make an Observer from arrays of QuoteDbModel Objects async
+        Observable.fromArray(convertListQuoteToArray(quoteDb.quoteDao().getAll()))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Observer<ArrayList<QuoteDbModel>>() {
+                               @Override
+                               public void onSubscribe(Disposable d) {
+                                   compositeDisposable.add(d);
+                               }
 
+                               @Override
+                               public void onNext(ArrayList<QuoteDbModel> quoteDbModels) {
+                                   populateRV(quoteDbModels);
+                               }
+
+                               @Override
+                               public void onError(Throwable e) {
+
+                               }
+
+                               @Override
+                               public void onComplete() {
+
+                               }
+                           });
+
+    }
     //The method called in startQueryAndPopulate( onUiThread )method and populate RV with data of data base
     public void populateRV(ArrayList<QuoteDbModel> quoteDbModelListRV){
         //Create adapter object with ArrayList
@@ -115,7 +128,6 @@ public class ArchiveFragment extends Fragment {
             rv.setAdapter(rvAdapter);
         }
     }
-
     //The method get list of quotes and return an Array list to populate list view
     //This method called from startQueryAndPopulate() method not in OnCreate stage
     public ArrayList<QuoteDbModel> convertListQuoteToArray(List<QuoteDbModel> mList){
