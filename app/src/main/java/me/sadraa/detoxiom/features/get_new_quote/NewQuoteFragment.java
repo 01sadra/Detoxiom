@@ -28,6 +28,7 @@ import butterknife.Unbinder;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import me.sadraa.detoxiom.R;
@@ -46,7 +47,7 @@ public class NewQuoteFragment extends Fragment {
     QuoteDbModel quoteDbModel;
     Vibrator vibrator;
     private Unbinder unbinder;
-
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
     @BindView(R.id.saveQuote) Button mButtonSave;
     @BindView(R.id.ignoreQuote) Button mButtonIgonre;
     @BindView(R.id.quoteText) TextView quoteTV;
@@ -77,11 +78,9 @@ public class NewQuoteFragment extends Fragment {
         chanceFromPrefrence = MainActivity.loadBadgeCount(getContext());
         firstAttemptCounter = 0;
         //check if there is any chance and show the user how many time s/he can try.
-        if(chanceFromPrefrence>0){
-            chanceCounterTV.setText(" فرصت‌های باقی مانده: "+"\n"+chanceFromPrefrence);
-        }else {
-            chanceCounterTV.setText("فرصت های شما تمام شده :(");
-        }
+        if(chanceFromPrefrence>0) chanceCounterTV.setText(" فرصت‌های باقی مانده: "+"\n"+chanceFromPrefrence);
+        if(chanceFromPrefrence<=0) chanceCounterTV.setText("فرصت های شما تمام شده :(");
+
 
          //Adding an animation as a button with lottie
         lAnimation.setAnimation("refresh.json");
@@ -97,13 +96,12 @@ public class NewQuoteFragment extends Fragment {
                     view.setBackgroundColor(getResources().getColor(R.color.primary_dark));
                     vibrator.vibrate(500);
                 //using rx java for calling the server async
-                    //rxJava is a comprehensive topic and I can't explain what happened here
+                    // rxJava is a comprehensive topic and I can't explain what happened here
                     //but for more info you can watch this quick video tutorial: https://www.youtube.com/watch?v=7IEPrihz1-E
                   getQuoteObservable()
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribeOn(Schedulers.io())
                             .subscribe(getQuoteObserver());
-
                 }else{
                     view.setBackgroundColor(getResources().getColor(R.color.about_youtube_color));
                     Toast.makeText(getContext(),"یه بار دیگه امتحان کن",Toast.LENGTH_SHORT).show();
@@ -127,12 +125,12 @@ public class NewQuoteFragment extends Fragment {
 
             }
         });
-
     }
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        compositeDisposable.dispose();
     }
 
     //set onClick listener for animation. If internet be connected
@@ -182,7 +180,6 @@ public class NewQuoteFragment extends Fragment {
     public void ignoreQuote(){
        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
    }
-
     public void insertQuoteToDb(final QuoteDbModel quoteDbModel){
      //Creating a new thread for Runnig Room Query.
         Runnable runnable = new Runnable() {
@@ -194,7 +191,6 @@ public class NewQuoteFragment extends Fragment {
         };
         new Thread(runnable).start();
     }
-
     //this function just get a random number between  1 and 100 and if the number
     //divisible by 3 it return true.
     public boolean makeChance(){
@@ -236,11 +232,13 @@ public class NewQuoteFragment extends Fragment {
 
             @Override
             public void onSubscribe(Disposable d) {
-
+               //using Composite disposable for dispose subscription in onDestoy method
+                compositeDisposable.add(d);
             }
 
             @Override
             public void onNext(QuoteModel quoteModel) {
+             //just set the views
                 quoteTV.setText(quoteModel.getResult().getQuote());
                 authorTV.setText(quoteModel.getResult().getAuthor());
                 mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
@@ -248,12 +246,10 @@ public class NewQuoteFragment extends Fragment {
 
             @Override
             public void onError(Throwable e) {
-
             }
 
             @Override
             public void onComplete() {
-
             }
         };
     }
