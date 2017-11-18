@@ -34,10 +34,6 @@ import me.sadraa.detoxiom.R;
 import me.sadraa.detoxiom.db.Models.QuoteDbModel;
 import me.sadraa.detoxiom.db.QuoteDb;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class ArchiveFragment extends Fragment {
     ArrayList<QuoteDbModel> quoteDbModelList;
     QuoteDb quoteDb;
@@ -48,11 +44,9 @@ public class ArchiveFragment extends Fragment {
     @BindView(R.id.empty_status) LottieAnimationView emptyAnimation;
     private Unbinder unbinder;
     PopupMenu popupMenu;
-
     public ArchiveFragment() {
         // Required empty public constructor
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -64,12 +58,10 @@ public class ArchiveFragment extends Fragment {
         startQueryAndPopulate();
         return rootView;
     }
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -117,7 +109,9 @@ public class ArchiveFragment extends Fragment {
             rv.setVisibility(View.GONE);
             tv.setVisibility(View.VISIBLE);
             emptyAnimation.setVisibility(View.VISIBLE);
-        } else {
+        }
+
+        if(rvAdapter.getItemCount()!=0){
             rv.setVisibility(View.VISIBLE);
             tv.setVisibility(View.GONE);
             emptyAnimation.setVisibility(View.GONE);
@@ -129,41 +123,10 @@ public class ArchiveFragment extends Fragment {
             //It makes scrolling smooth
             rv.setNestedScrollingEnabled(false);
             rv.setItemAnimator(new DefaultItemAnimator());
-
-            rvAdapter.setOnItemClickListener(new OnItemClickListener() {
-                @Override
-                public void onItemClick(final View view, final int position, Object data) {
-                    popupMenu= new PopupMenu(view.getContext(),view);
-            popupMenu.getMenuInflater().inflate(R.menu.popup_menu,popupMenu.getMenu());
-            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-
-                    if(item.getItemId()== R.id.delete){
-                        QuoteDb quoteDb = QuoteDb.getQuoteDb(getContext());
-                        try {
-                            quoteDb.quoteDao().deleteOne(rvAdapter.quoteList.get(position));
-                            rvAdapter.quoteList.remove(position);
-                            rvAdapter.notifyItemRemoved(position);
-                        }catch (Exception e){
-                        }
-                        return true;
-                    }else {
-                        Intent intent = new Intent();
-                        intent.setAction(Intent.ACTION_SEND);
-                        intent.setType("text/plain");
-                        intent.putExtra(android.content.Intent.EXTRA_TEXT, rvAdapter.quoteList.get(position).getQuote());
-                        view.getContext().startActivity(Intent.createChooser(intent," به اشتراک بگذارید "));
-
-                        return true;
-                    }
-                }
-            });
-            popupMenu.show();
-                }
-            });
+            //using a seprate method for set On Item click listener
+            setOnItemClickListenerToAdapter();
+            rv.setAdapter(rvAdapter);
         }
-        rv.setAdapter(rvAdapter);
     }
     //The method get list of quotes and return an Array list to populate list view
     //This method called from startQueryAndPopulate() method not in OnCreate stage
@@ -180,5 +143,54 @@ public class ArchiveFragment extends Fragment {
         }
 
     }
-
+   //we Just set On item click listener for adapter with RxJava/
+    public void setOnItemClickListenerToAdapter(){
+        rvAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(final View view, final int position, Object data) {
+                popupMenu= new PopupMenu(view.getContext(),view);
+                popupMenu.getMenuInflater().inflate(R.menu.popup_menu,popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        if (item.getItemId() == R.id.delete) {
+                            final QuoteDb quoteDb = QuoteDb.getQuoteDb(getContext());
+                            Observable.just(position)
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribeOn(Schedulers.io())
+                                    .subscribe(new Observer<Integer>() {
+                                        @Override
+                                        public void onSubscribe(Disposable d) {
+                                            compositeDisposable.add(d);
+                                        }
+                                        @Override
+                                        public void onNext(Integer integer) {
+                                            quoteDb.quoteDao().deleteOne(rvAdapter.quoteList.get(integer));
+                                            rvAdapter.quoteList.remove(integer);
+                                            rvAdapter.notifyItemRemoved(integer);
+                                        }
+                                        @Override
+                                        public void onError(Throwable e) {
+                                        }
+                                        @Override
+                                        public void onComplete() {
+                                        }
+                                    });
+                            return true;
+                        }
+                        if (item.getItemId() == R.id.share) {
+                            Intent intent = new Intent();
+                            intent.setAction(Intent.ACTION_SEND);
+                            intent.setType("text/plain");
+                            intent.putExtra(android.content.Intent.EXTRA_TEXT, rvAdapter.quoteList.get(position).getQuote());
+                            view.getContext().startActivity(Intent.createChooser(intent, " به اشتراک بگذارید "));
+                            return true;
+                        }
+                        return true;
+                    }
+                });
+                popupMenu.show();
+            }
+        });
+    }
 }
