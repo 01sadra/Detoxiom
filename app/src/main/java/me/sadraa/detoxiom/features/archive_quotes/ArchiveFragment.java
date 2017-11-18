@@ -1,14 +1,17 @@
 package me.sadraa.detoxiom.features.archive_quotes;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -44,6 +47,8 @@ public class ArchiveFragment extends Fragment {
     @BindView(R.id.empty_view) TextView tv;
     @BindView(R.id.empty_status) LottieAnimationView emptyAnimation;
     private Unbinder unbinder;
+    PopupMenu popupMenu;
+
     public ArchiveFragment() {
         // Required empty public constructor
     }
@@ -116,7 +121,6 @@ public class ArchiveFragment extends Fragment {
             rv.setVisibility(View.VISIBLE);
             tv.setVisibility(View.GONE);
             emptyAnimation.setVisibility(View.GONE);
-
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
             rv.setLayoutManager(mLayoutManager);
             //DividerDecoration is a new class in support library that help to draw a line between each row of recyvleview
@@ -125,8 +129,41 @@ public class ArchiveFragment extends Fragment {
             //It makes scrolling smooth
             rv.setNestedScrollingEnabled(false);
             rv.setItemAnimator(new DefaultItemAnimator());
-            rv.setAdapter(rvAdapter);
+
+            rvAdapter.setOnItemClickListener(new OnItemClickListener() {
+                @Override
+                public void onItemClick(final View view, final int position, Object data) {
+                    popupMenu= new PopupMenu(view.getContext(),view);
+            popupMenu.getMenuInflater().inflate(R.menu.popup_menu,popupMenu.getMenu());
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+
+                    if(item.getItemId()== R.id.delete){
+                        QuoteDb quoteDb = QuoteDb.getQuoteDb(getContext());
+                        try {
+                            quoteDb.quoteDao().deleteOne(rvAdapter.quoteList.get(position));
+                            rvAdapter.quoteList.remove(position);
+                            rvAdapter.notifyItemRemoved(position);
+                        }catch (Exception e){
+                        }
+                        return true;
+                    }else {
+                        Intent intent = new Intent();
+                        intent.setAction(Intent.ACTION_SEND);
+                        intent.setType("text/plain");
+                        intent.putExtra(android.content.Intent.EXTRA_TEXT, rvAdapter.quoteList.get(position).getQuote());
+                        view.getContext().startActivity(Intent.createChooser(intent," به اشتراک بگذارید "));
+
+                        return true;
+                    }
+                }
+            });
+            popupMenu.show();
+                }
+            });
         }
+        rv.setAdapter(rvAdapter);
     }
     //The method get list of quotes and return an Array list to populate list view
     //This method called from startQueryAndPopulate() method not in OnCreate stage
@@ -137,7 +174,6 @@ public class ArchiveFragment extends Fragment {
             for (int i=mList.size(); i>0 ;i--){
                 quoteDbModelList.add(mList.get(i-1));
             }
-
             return quoteDbModelList;
         }else{
             return null;

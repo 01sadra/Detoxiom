@@ -1,10 +1,8 @@
 package me.sadraa.detoxiom.features.archive_quotes;
 
-import android.content.Intent;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -15,17 +13,20 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.sadraa.detoxiom.R;
 import me.sadraa.detoxiom.db.Models.QuoteDbModel;
-import me.sadraa.detoxiom.db.QuoteDb;
 
 /**
  * Created by sadra on 10/18/17.
  */
 
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.MyViewHolder> {
-    private ArrayList<QuoteDbModel> quoteList;
-
+    ArrayList<QuoteDbModel> quoteList;
+    private OnItemClickListener mItemClickListener;
     public RVAdapter(ArrayList<QuoteDbModel> quoteList){
         this.quoteList = quoteList;
+    }
+
+    public void setOnItemClickListener(final OnItemClickListener itemClickListener) {
+        this.mItemClickListener = itemClickListener;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -39,42 +40,15 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.MyViewHolder> {
             //binding the butterknife
             ButterKnife.bind(this,itemView);
         }
-        //If you are reading my code and see this i'm really sorry. It's the most shitty code i've ever written.
-        //I will fix it ASAP but keep in mind you should NEVER handle clicks in viewHolder as I do it here.
+     //defining an interface that pass the posiotion of item get clicked to the fragment.
         @Override
-        public void onClick(final View view) {
-            popupMenu= new PopupMenu(view.getContext(),view);
-            popupMenu.getMenuInflater().inflate(R.menu.popup_menu,popupMenu.getMenu());
-            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+        public void onClick(final View v) {
+            if (mItemClickListener != null) {
+                int adapterPosition = getAdapterPosition();
+                mItemClickListener.onItemClick(v, adapterPosition, quoteList.get(adapterPosition));
+            }
 
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-
-                    if(item.getItemId()== R.id.delete){
-                        QuoteDb quoteDb = QuoteDb.getQuoteDb(view.getContext());
-                        try {
-                            quoteDb.quoteDao().deleteOne(quoteList.get(getAdapterPosition()));
-                            quoteList.remove(getAdapterPosition());
-                            RVAdapter.this.notifyItemRemoved(getAdapterPosition());
-                        }catch (Exception e){
-
-                        }
-
-                        return true;
-                    }else {
-                        Intent intent = new Intent();
-                        intent.setAction(Intent.ACTION_SEND);
-                        intent.setType("text/plain");
-                        intent.putExtra(android.content.Intent.EXTRA_TEXT, quoteList.get(getAdapterPosition()).getQuote());
-                        view.getContext().startActivity(Intent.createChooser(intent," به اشتراک بگذارید "));
-
-                        return true;
-                    }
-                }
-            });
-            popupMenu.show();
-        }
-    }
+    }}
 
 
     @Override
