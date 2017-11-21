@@ -75,8 +75,8 @@ public class ArchiveFragment extends Fragment {
         quoteDb = QuoteDb.getQuoteDb(getContext());
         //make an Observer from arrays of QuoteDbModel Objects async
         Observable.fromArray(convertListQuoteToArray(quoteDb.quoteDao().getAll()))
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ArrayList<QuoteDbModel>>() {
                                @Override
                                public void onSubscribe(Disposable d) {

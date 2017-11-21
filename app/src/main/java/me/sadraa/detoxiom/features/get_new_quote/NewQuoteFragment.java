@@ -78,10 +78,9 @@ public class NewQuoteFragment extends Fragment {
         chanceFromPrefrence = MainActivity.loadBadgeCount(getContext());
         firstAttemptCounter = 0;
         //check if there is any chance and show the user how many time s/he can try.
+        //I don't like "else{}"s :)
         if(chanceFromPrefrence>0) chanceCounterTV.setText(" فرصت‌های باقی مانده: "+"\n"+chanceFromPrefrence);
         if(chanceFromPrefrence<=0) chanceCounterTV.setText("فرصت های شما تمام شده :(");
-
-
          //Adding an animation as a button with lottie
         lAnimation.setAnimation("refresh.json");
         //shitty setting for bad animation
@@ -95,20 +94,18 @@ public class NewQuoteFragment extends Fragment {
                 if(makeChance()){
                     view.setBackgroundColor(getResources().getColor(R.color.primary_dark));
                     vibrator.vibrate(500);
-                //using rx java for calling the server async
+                    //using rx java for calling the server async
                     // rxJava is a comprehensive topic and I can't explain what happened here
                     //but for more info you can watch this quick video tutorial: https://www.youtube.com/watch?v=7IEPrihz1-E
                   getQuoteObservable()
-                            .observeOn(AndroidSchedulers.mainThread())
                             .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(getQuoteObserver());
                 }else{
                     view.setBackgroundColor(getResources().getColor(R.color.about_youtube_color));
                     Toast.makeText(getContext(),"یه بار دیگه امتحان کن",Toast.LENGTH_SHORT).show();
                 }
             }
-
-
             @Override
             public void onAnimationEnd(Animator animation) {
                 //After animation finished set background color to white
@@ -218,7 +215,6 @@ public class NewQuoteFragment extends Fragment {
         QuoteClient QService = QProvider.getmQService();
                     /* Call method and run it asynchronously :) */
         final Call<QuoteModel> call = QService.getQuote(api_token);
-
         return Observable.fromCallable(new Callable<QuoteModel>() {
             @Override
             public QuoteModel call() throws Exception {
