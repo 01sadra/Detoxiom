@@ -11,7 +11,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -145,52 +144,46 @@ public class ArchiveFragment extends Fragment {
     }
    //we Just set On item click listener for adapter with RxJava/
     public void setOnItemClickListenerToAdapter(){
-        rvAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(final View view, final int position, Object data) {
-                popupMenu= new PopupMenu(view.getContext(),view);
-                popupMenu.getMenuInflater().inflate(R.menu.popup_menu,popupMenu.getMenu());
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        if (item.getItemId() == R.id.delete) {
-                            final QuoteDb quoteDb = QuoteDb.getQuoteDb(getContext());
-                            Observable.just(position)
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribeOn(Schedulers.io())
-                                    .subscribe(new Observer<Integer>() {
-                                        @Override
-                                        public void onSubscribe(Disposable d) {
-                                            compositeDisposable.add(d);
-                                        }
-                                        @Override
-                                        public void onNext(Integer integer) {
-                                            quoteDb.quoteDao().deleteOne(rvAdapter.quoteList.get(integer));
-                                            rvAdapter.quoteList.remove(integer);
-                                            rvAdapter.notifyItemRemoved(integer);
-                                        }
-                                        @Override
-                                        public void onError(Throwable e) {
-                                        }
-                                        @Override
-                                        public void onComplete() {
-                                        }
-                                    });
-                            return true;
-                        }
-                        if (item.getItemId() == R.id.share) {
-                            Intent intent = new Intent();
-                            intent.setAction(Intent.ACTION_SEND);
-                            intent.setType("text/plain");
-                            intent.putExtra(android.content.Intent.EXTRA_TEXT, rvAdapter.quoteList.get(position).getQuote());
-                            view.getContext().startActivity(Intent.createChooser(intent, " به اشتراک بگذارید "));
-                            return true;
-                        }
-                        return true;
-                    }
-                });
-                popupMenu.show();
-            }
+        rvAdapter.setOnItemClickListener((view, position, data) -> {
+            popupMenu= new PopupMenu(view.getContext(),view);
+            popupMenu.getMenuInflater().inflate(R.menu.popup_menu,popupMenu.getMenu());
+            popupMenu.setOnMenuItemClickListener(item -> {
+                if (item.getItemId() == R.id.delete) {
+                    final QuoteDb quoteDb = QuoteDb.getQuoteDb(getContext());
+                    Observable.just(position)
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribeOn(Schedulers.io())
+                            .subscribe(new Observer<Integer>() {
+                                @Override
+                                public void onSubscribe(Disposable d) {
+                                    compositeDisposable.add(d);
+                                }
+                                @Override
+                                public void onNext(Integer integer) {
+                                    quoteDb.quoteDao().deleteOne(rvAdapter.quoteList.get(integer));
+                                    rvAdapter.quoteList.remove(integer);
+                                    rvAdapter.notifyItemRemoved(integer);
+                                }
+                                @Override
+                                public void onError(Throwable e) {
+                                }
+                                @Override
+                                public void onComplete() {
+                                }
+                            });
+                    return true;
+                }
+                if (item.getItemId() == R.id.share) {
+                    Intent intent = new Intent();
+                    intent.setAction(Intent.ACTION_SEND);
+                    intent.setType("text/plain");
+                    intent.putExtra(Intent.EXTRA_TEXT, rvAdapter.quoteList.get(position).getQuote());
+                    view.getContext().startActivity(Intent.createChooser(intent, " به اشتراک بگذارید "));
+                    return true;
+                }
+                return true;
+            });
+            popupMenu.show();
         });
     }
 }
