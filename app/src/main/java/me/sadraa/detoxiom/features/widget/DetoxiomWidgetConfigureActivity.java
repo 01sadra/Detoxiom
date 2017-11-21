@@ -14,7 +14,6 @@ import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -22,8 +21,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.sadraa.detoxiom.features.widget.adapter.ListViewCostumAdapter;
 import me.sadraa.detoxiom.R;
+import me.sadraa.detoxiom.features.widget.adapter.ListViewCostumAdapter;
 
 /**
  * The configuration screen for the {@link DetoxiomWidget DetoxioWidget} AppWidget.
@@ -82,21 +81,18 @@ public class DetoxiomWidgetConfigureActivity extends AppCompatActivity {
         listView.setClickable(true);
         final DetoxiomWidget detoxiomWidget=new DetoxiomWidget();
         //define listener for listview
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-                //save posotion and app widget id in prefrence
-                savePref(context, mAppWidgetId,position);
-                //update app widget
-                detoxiomWidget.updateAppWidget(context, appWidgetManager, mAppWidgetId);
-                //add app widget id to intent
-                Intent resultValue = new Intent();
-                resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
-                setResult(RESULT_OK, resultValue);
-                //finish activity
-                finish();
-            }
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+            //save posotion and app widget id in prefrence
+            savePref(context, mAppWidgetId,position);
+            //update app widget
+            detoxiomWidget.updateAppWidget(context, appWidgetManager, mAppWidgetId);
+            //add app widget id to intent
+            Intent resultValue = new Intent();
+            resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
+            setResult(RESULT_OK, resultValue);
+            //finish activity
+            finish();
         });
 
 

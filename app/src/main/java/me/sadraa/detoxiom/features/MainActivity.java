@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentTransaction;
@@ -18,17 +17,16 @@ import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetView;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarTab;
-import com.roughike.bottombar.OnTabSelectListener;
 
 import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.sadraa.detoxiom.R;
+import me.sadraa.detoxiom.features.about_app.IntroActivity;
 import me.sadraa.detoxiom.features.about_app.TeachingFragment;
 import me.sadraa.detoxiom.features.archive_quotes.ArchiveFragment;
-import me.sadraa.detoxiom.features.about_app.IntroActivity;
 import me.sadraa.detoxiom.features.get_new_quote.NewQuoteFragment;
-import me.sadraa.detoxiom.R;
 import me.sadraa.detoxiom.features.time_save.SavedTimeFragment;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -102,34 +100,30 @@ public class MainActivity extends AppCompatActivity {
                     .targetRadius(60));
         }
         //Set click listener for bottombar tabs
-        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
-
-            @Override
-            public void onTabSelected(@IdRes int tabId) {
-              //using switch to woke fragments up
-                switch (tabId){
-                    case R.id.tab_archive :
-                        ft = getSupportFragmentManager().beginTransaction();
-                        ft.replace(R.id.contentContainer,new ArchiveFragment());
-                        break;
-                    case R.id.tab_time:
-                        ft = getSupportFragmentManager().beginTransaction();
-                        ft.replace(R.id.contentContainer,new SavedTimeFragment());
-                        break;
-                    case R.id.tab_new :
-                        ft = getSupportFragmentManager().beginTransaction();
-                        //if user click on tabnew remove the badges
-                        tabNew.removeBadge();
-                        ft.replace(R.id.contentContainer,new NewQuoteFragment());
-                        break;
-                    case R.id.tab_setting :
-                        ft = getSupportFragmentManager().beginTransaction();
-                        ft.replace(R.id.contentContainer,new TeachingFragment());
-                   //     tabSetting.removeBadge();
-                        break;
-                }
-                ft.commit();
+        bottomBar.setOnTabSelectListener(tabId -> {
+          //using switch to woke fragments up
+            switch (tabId){
+                case R.id.tab_archive :
+                    ft = getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.contentContainer,new ArchiveFragment());
+                    break;
+                case R.id.tab_time:
+                    ft = getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.contentContainer,new SavedTimeFragment());
+                    break;
+                case R.id.tab_new :
+                    ft = getSupportFragmentManager().beginTransaction();
+                    //if user click on tabnew remove the badges
+                    tabNew.removeBadge();
+                    ft.replace(R.id.contentContainer,new NewQuoteFragment());
+                    break;
+                case R.id.tab_setting :
+                    ft = getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.contentContainer,new TeachingFragment());
+               //     tabSetting.removeBadge();
+                    break;
             }
+            ft.commit();
         });
 
 
