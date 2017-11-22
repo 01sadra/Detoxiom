@@ -24,30 +24,45 @@ android {
 }
 
 dependencies {
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    //DI
+    implementation 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    implementation 'com.google.dagger:dagger:2.x'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.x'
+
+    //Network
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+
+    //data
+    implementation 'android.arch.persistence.room:runtime:1.0.0'
+    annotationProcessor 'android.arch.persistence.room:compiler:1.0.0'
+
+    //rxJava
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.5'
+    implementation 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
+
+    //support Libraries
     implementation 'com.android.support:support-v4:26.1.0'
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support:design:26.1.0'
     implementation 'com.android.support:recyclerview-v7:26.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    //libraries that added cause of laziness =)
     implementation 'com.github.medyo:android-about-page:1.2.1'
     implementation 'com.roughike:bottom-bar:2.3.1'
     implementation 'com.github.apl-devs:appintro:v4.2.2'
     implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-    implementation 'android.arch.persistence.room:runtime:1.0.0'
     implementation 'com.getkeepsafe.taptargetview:taptargetview:1.10.0'
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.8'
-    annotationProcessor 'android.arch.persistence.room:compiler:1.0.0'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.5'
     implementation 'com.airbnb.android:lottie:2.1.0'
+
     testCompile 'junit:junit:4.12'
-    implementation 'com.jakewharton:butterknife:8.8.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-    implementation 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
+
 }
