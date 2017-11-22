@@ -31,7 +31,7 @@ dependencies {
     //DI
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-    implementation 'com.google.dagger:dagger:2.6'
+    compile 'com.google.dagger:dagger:2.6'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.6'
 
     //Network

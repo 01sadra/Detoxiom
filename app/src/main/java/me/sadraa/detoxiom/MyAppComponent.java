@@ -14,7 +14,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
         NetworkModule.class,
         CalligraphyModule.class
 })
-public interface mAppComponent {
+public interface MyAppComponent {
 
     QuoteClient getQCService();
     CalligraphyConfig getCalligraphyConfig();

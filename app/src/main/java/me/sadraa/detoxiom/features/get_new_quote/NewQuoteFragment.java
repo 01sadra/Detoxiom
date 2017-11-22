@@ -34,8 +34,7 @@ import me.sadraa.detoxiom.R;
 import me.sadraa.detoxiom.db.Models.QuoteDbModel;
 import me.sadraa.detoxiom.db.QuoteDb;
 import me.sadraa.detoxiom.features.MainActivity;
-import me.sadraa.detoxiom.network.QuoteClient;
-import me.sadraa.detoxiom.network.QuoteProvider;
+import me.sadraa.detoxiom.MyApplication;
 import me.sadraa.detoxiom.network.models.QuoteModel;
 import me.sadraa.detoxiom.utils.ClientConfig;
 import retrofit2.Call;
@@ -43,6 +42,7 @@ import retrofit2.Call;
 public class NewQuoteFragment extends Fragment {
     int chanceFromPrefrence,firstAttemptCounter;
     BottomSheetBehavior mBottomSheetBehavior;
+
     QuoteDbModel quoteDbModel;
     Vibrator vibrator;
     private Unbinder unbinder;
@@ -171,11 +171,13 @@ public class NewQuoteFragment extends Fragment {
             insertQuoteToDb(quoteDbModel);
         }
     }
+
    //just ignore the quote and minimize the bottomsheet
     @OnClick(R.id.ignoreQuote)
     public void ignoreQuote(){
        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
    }
+
     public void insertQuoteToDb(final QuoteDbModel quoteDbModel){
      //Creating a new thread for Runnig Room Query.
         Runnable runnable = () -> {
@@ -184,6 +186,7 @@ public class NewQuoteFragment extends Fragment {
         };
         new Thread(runnable).start();
     }
+
     //this function just get a random number between  1 and 100 and if the number
     //divisible by 3 it return true.
     public boolean makeChance(){
@@ -196,6 +199,7 @@ public class NewQuoteFragment extends Fragment {
         }
         return mRandomNumber%3==0;
     }
+
     //check if internet is connected or not
      public boolean isInternetConnected(){
          ConnectivityManager connectivityManager
@@ -203,16 +207,14 @@ public class NewQuoteFragment extends Fragment {
          NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
          return activeNetworkInfo != null && activeNetworkInfo.isConnected();
      }
+
 //make call to the server with retrofit interface and return an observer object
     public Observable<QuoteModel> getQuoteObservable(){
-        //Creating object from provider class to get retrofit service
-        String api_token = ClientConfig.api_token;
-        QuoteProvider QProvider = new QuoteProvider();
-        QuoteClient QService = QProvider.getmQService();
-                    /* Call method and run it asynchronously :) */
-        final Call<QuoteModel> call = QService.getQuote(api_token);
+        /* Call method and run it asynchronously :) */
+        Call<QuoteModel> call = MyApplication.getQuoteClinet().getQuote(ClientConfig.api_token);
         return Observable.fromCallable(() -> call.execute().body());
     }
+
     //return an ovserver on quote and set the views in on next
     public Observer<QuoteModel> getQuoteObserver(){
         return new Observer<QuoteModel>() {
@@ -230,7 +232,6 @@ public class NewQuoteFragment extends Fragment {
                 authorTV.setText(quoteModel.getResult().getAuthor());
                 mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             }
-
             @Override
             public void onError(Throwable e) {
             }
