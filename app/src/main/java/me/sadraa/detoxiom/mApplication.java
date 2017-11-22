@@ -16,5 +16,6 @@ public class mApplication extends Application {
                 .setDefaultFontPath("fonts/Vazir-Medium.ttf")
                 .setFontAttrId(R.attr.fontPath)
                 .build());
+
     }
 }

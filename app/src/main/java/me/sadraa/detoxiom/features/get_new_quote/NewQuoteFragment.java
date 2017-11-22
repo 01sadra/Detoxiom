@@ -19,7 +19,6 @@ import android.widget.Toast;
 import com.airbnb.lottie.LottieAnimationView;
 
 import java.util.Random;
-import java.util.concurrent.Callable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -179,12 +178,9 @@ public class NewQuoteFragment extends Fragment {
    }
     public void insertQuoteToDb(final QuoteDbModel quoteDbModel){
      //Creating a new thread for Runnig Room Query.
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                QuoteDb quoteDb = QuoteDb.getQuoteDb(getContext());
-                quoteDb.quoteDao().insertOne(quoteDbModel);
-            }
+        Runnable runnable = () -> {
+            QuoteDb quoteDb = QuoteDb.getQuoteDb(getContext());
+            quoteDb.quoteDao().insertOne(quoteDbModel);
         };
         new Thread(runnable).start();
     }
@@ -215,12 +211,7 @@ public class NewQuoteFragment extends Fragment {
         QuoteClient QService = QProvider.getmQService();
                     /* Call method and run it asynchronously :) */
         final Call<QuoteModel> call = QService.getQuote(api_token);
-        return Observable.fromCallable(new Callable<QuoteModel>() {
-            @Override
-            public QuoteModel call() throws Exception {
-                return call.execute().body();
-            }
-        });
+        return Observable.fromCallable(() -> call.execute().body());
     }
     //return an ovserver on quote and set the views in on next
     public Observer<QuoteModel> getQuoteObserver(){

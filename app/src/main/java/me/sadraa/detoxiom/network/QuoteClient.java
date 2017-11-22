@@ -16,6 +16,6 @@ public interface QuoteClient {
     //and It doesn't work with hashMap or any key value object. Fortunately retrofit has a @Field method that do the job for us
     @FormUrlEncoded
     @POST("random_quote")
-    public Call<QuoteModel> getQuote(@Field("api_token") String api_token);
+    Call<QuoteModel> getQuote(@Field("api_token") String api_token);
 
 }
