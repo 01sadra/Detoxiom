@@ -10,7 +10,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
  */
 @Module
 public class CalligraphyModule {
-
+    @MyAppComponentScope
     @Provides
     CalligraphyConfig calligraphyConfig(){
         return new CalligraphyConfig.Builder()

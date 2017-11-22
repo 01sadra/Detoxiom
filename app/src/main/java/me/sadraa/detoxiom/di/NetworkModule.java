@@ -13,12 +13,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 @Module
 public class NetworkModule {
-
+    @MyAppComponentScope
     @Provides
     public QuoteClient quoteClient(Retrofit retrofit){
        return retrofit.create(QuoteClient.class);
     }
 
+    @MyAppComponentScope
     @Provides
     public Retrofit retrofit(OkHttpClient httpClient, GsonConverterFactory gsonConverterFactory){
         return new Retrofit.Builder()
@@ -28,10 +29,13 @@ public class NetworkModule {
                 .build();
     }
 
+    @MyAppComponentScope
     @Provides
     public OkHttpClient okHttpClient(){
         return new OkHttpClient();
     }
+
+    @MyAppComponentScope
     @Provides
     public GsonConverterFactory gsonConverterFactory(){
         return GsonConverterFactory.create();
