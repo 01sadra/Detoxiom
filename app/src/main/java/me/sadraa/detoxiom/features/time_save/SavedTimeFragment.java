@@ -7,7 +7,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.jakewharton.rxbinding2.view.RxView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,6 +28,7 @@ public class SavedTimeFragment extends Fragment {
     @BindView(R.id.instagramTV) TextView instagramTV;
     @BindView(R.id.twitterTV) TextView twitterTV;
     @BindView(R.id.telegramTV) TextView telegramTV;
+    @BindView(R.id.instagramIV) ImageView instagramIV;
     private Unbinder unbinder;
     int openedTimeInt;
     public SavedTimeFragment() {
@@ -50,6 +55,10 @@ public class SavedTimeFragment extends Fragment {
         telegramTV.setText(realTimeInSocialMedia(openedTimeInt,"telegram") + "\n دقیقه");
         twitterTV.setText(realTimeInSocialMedia(openedTimeInt,"twitter") + "\n دقیقه");
 
+        //I want add a fancy feature here! to just test how rxBinding library works
+        RxView.clicks(instagramIV)
+                .subscribe(aVoid ->
+                        Toast.makeText(getContext(),"چیزی برای کلیک نداریم :(",Toast.LENGTH_SHORT).show());
     }
 
     @Override
