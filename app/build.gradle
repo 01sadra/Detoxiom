@@ -1,5 +1,11 @@
 apply plugin: 'com.android.application'
 
+def supportLibraryVersion = '26.1.0'
+def daggerVersion = '2.6'
+def butterknifeVersion = '8.8.1'
+def retrofitVersion = '2.3.0'
+def googleComponent = '1.0.0'
+
 android {
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
@@ -29,18 +35,18 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     //DI
-    implementation 'com.jakewharton:butterknife:8.8.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-    compile 'com.google.dagger:dagger:2.6'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.6'
+    implementation "com.jakewharton:butterknife:$butterknifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$butterknifeVersion"
+    compile "com.google.dagger:dagger:$daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
 
     //Network
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
 
     //data
-    implementation 'android.arch.persistence.room:runtime:1.0.0'
-    annotationProcessor 'android.arch.persistence.room:compiler:1.0.0'
+    implementation "android.arch.persistence.room:runtime:$googleComponent"
+    annotationProcessor "android.arch.persistence.room:compiler:$googleComponent"
 
     //rxJava
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
@@ -48,10 +54,10 @@ dependencies {
     implementation 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
 
     //support Libraries
-    implementation 'com.android.support:support-v4:26.1.0'
-    implementation 'com.android.support:appcompat-v7:26.1.0'
-    implementation 'com.android.support:design:26.1.0'
-    implementation 'com.android.support:recyclerview-v7:26.1.0'
+    implementation "com.android.support:support-v4:$supportLibraryVersion"
+    implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
+    implementation "com.android.support:design:$supportLibraryVersion"
+    implementation "com.android.support:recyclerview-v7:$supportLibraryVersion"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
     //libraries that added cause of laziness =)
