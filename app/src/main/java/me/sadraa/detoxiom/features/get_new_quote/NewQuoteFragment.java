@@ -18,8 +18,6 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 
-import java.util.Random;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -30,13 +28,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import me.sadraa.detoxiom.MyApplication;
 import me.sadraa.detoxiom.R;
 import me.sadraa.detoxiom.db.Models.QuoteDbModel;
 import me.sadraa.detoxiom.db.QuoteDb;
-import me.sadraa.detoxiom.features.MainActivity;
-import me.sadraa.detoxiom.MyApplication;
 import me.sadraa.detoxiom.network.models.QuoteModel;
 import me.sadraa.detoxiom.utils.ClientConfig;
+import me.sadraa.detoxiom.utils.SharedprefrenceProvider;
 import retrofit2.Call;
 
 public class NewQuoteFragment extends Fragment {
@@ -54,7 +52,7 @@ public class NewQuoteFragment extends Fragment {
     @BindView(R.id.counter_show) TextView chanceCounterTV;
     @BindView(R.id.bottom_sheet) View bottomSheet;
     @BindView(R.id.animation_refresh) LottieAnimationView lAnimation;
-
+    SharedprefrenceProvider sharedprefrenceProvider = new SharedprefrenceProvider();
     public NewQuoteFragment() {
         // Required empty public constructor
     }
@@ -70,11 +68,11 @@ public class NewQuoteFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
         vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-        chanceFromPrefrence = MainActivity.loadBadgeCount(getContext());
+        chanceFromPrefrence = sharedprefrenceProvider.loadBadgeCount();
         firstAttemptCounter = 0;
         //check if there is any chance and show the user how many time s/he can try.
         //I don't like "else{}"s :)
@@ -85,6 +83,18 @@ public class NewQuoteFragment extends Fragment {
         //shitty setting for bad animation
         lAnimation.setProgress(1);
         //set listener for animation states. this methods call when animatin palys
+        setListenerForAnimation(view);
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+        compositeDisposable.dispose();
+    }
+
+    public void setListenerForAnimation(View view){
         lAnimation.addAnimatorListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
@@ -96,7 +106,7 @@ public class NewQuoteFragment extends Fragment {
                     //using rx java for calling the server async
                     // rxJava is a comprehensive topic and I can't explain what happened here
                     //but for more info you can watch this quick video tutorial: https://www.youtube.com/watch?v=7IEPrihz1-E
-                  getQuoteObservable()
+                    getQuoteObservable()
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(getQuoteObserver());
@@ -105,6 +115,7 @@ public class NewQuoteFragment extends Fragment {
                     Toast.makeText(getContext(),"یه بار دیگه امتحان کن",Toast.LENGTH_SHORT).show();
                 }
             }
+
             @Override
             public void onAnimationEnd(Animator animation) {
                 //After animation finished set background color to white
@@ -122,13 +133,6 @@ public class NewQuoteFragment extends Fragment {
             }
         });
     }
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-        compositeDisposable.dispose();
-    }
-
     //set onClick listener for animation. If internet be connected
     //and bottomsheet be collapsed  and we have chance to try animation will play
     @OnClick(R.id.animation_refresh)
@@ -144,9 +148,9 @@ public class NewQuoteFragment extends Fragment {
         if(chanceFromPrefrence > 0) {
             lAnimation.playAnimation();
             // minus 1 from badge counter and save it in prefrence
-            MainActivity.saveBadgeCounter(getContext(), chanceFromPrefrence - 1);
+            sharedprefrenceProvider.saveBadgeCounter(chanceFromPrefrence - 1);
             //Load chances from prefrence again
-            chanceFromPrefrence = MainActivity.loadBadgeCount(getContext());
+            chanceFromPrefrence = sharedprefrenceProvider.loadBadgeCount();
 
             //if chances is more than 0 show how many chance remain
             if (chanceFromPrefrence > 0) {
@@ -158,6 +162,7 @@ public class NewQuoteFragment extends Fragment {
 
         }
     }
+
     //save quote in archive and minimize the bottomsheet
     @OnClick(R.id.saveQuote)
     public void saveQuote(){
@@ -190,10 +195,10 @@ public class NewQuoteFragment extends Fragment {
     //this function just get a random number between  1 and 100 and if the number
     //divisible by 3 it return true.
     public boolean makeChance(){
-        Random r = new Random();
-        int mRandomNumber = r.nextInt(100) + 1;
+
+        int mRandomNumber = MyApplication.getAppComponent().getRandom().nextInt(100) + 1;
         //Just make sure the first attempt is successful. it is necessary for gamifation
-        if(MainActivity.loadOpenedTimes(getContext())<3 && firstAttemptCounter==0){
+        if(sharedprefrenceProvider.loadOpenedTimes()<3 && firstAttemptCounter==0){
             firstAttemptCounter = 1;
             return true;
         }
@@ -211,14 +216,13 @@ public class NewQuoteFragment extends Fragment {
 //make call to the server with retrofit interface and return an observer object
     public Observable<QuoteModel> getQuoteObservable(){
         /* Call method and run it asynchronously :) */
-        Call<QuoteModel> call = MyApplication.getQuoteClinet().getQuote(ClientConfig.api_token);
+        Call<QuoteModel> call = MyApplication.getAppComponent().getQCService().getQuote(ClientConfig.api_token);
         return Observable.fromCallable(() -> call.execute().body());
     }
 
     //return an ovserver on quote and set the views in on next
     public Observer<QuoteModel> getQuoteObserver(){
         return new Observer<QuoteModel>() {
-
             @Override
             public void onSubscribe(Disposable d) {
                //using Composite disposable for dispose subscription in onDestoy method
