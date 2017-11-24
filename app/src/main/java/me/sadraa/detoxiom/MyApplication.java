@@ -2,6 +2,7 @@ package me.sadraa.detoxiom;
 
 import android.app.Application;
 
+import me.sadraa.detoxiom.di.SharedPrefrencesModule;
 import me.sadraa.detoxiom.network.QuoteClient;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
@@ -15,19 +16,15 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        appComponent = DaggermAppComponent.builder()
+        appComponent = DaggerMyAppComponent.builder()
+                        .sharedPrefrencesModule(new SharedPrefrencesModule(getApplicationContext()))
                         .build();
-
-        quoteClient = appComponent.getQCService();
         CalligraphyConfig.initDefault(appComponent.getCalligraphyConfig());
 
     }
 
     public static MyAppComponent getAppComponent(){
         return appComponent;
-    }
-    public static QuoteClient getQuoteClinet(){
-        return quoteClient;
     }
 
 }
