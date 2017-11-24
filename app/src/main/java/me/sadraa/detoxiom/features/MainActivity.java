@@ -3,7 +3,6 @@ package me.sadraa.detoxiom.features;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,33 +17,29 @@ import com.getkeepsafe.taptargetview.TapTargetView;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarTab;
 
-import java.util.Random;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.sadraa.detoxiom.MyApplication;
 import me.sadraa.detoxiom.R;
 import me.sadraa.detoxiom.features.about_app.IntroActivity;
 import me.sadraa.detoxiom.features.about_app.TeachingFragment;
 import me.sadraa.detoxiom.features.archive_quotes.ArchiveFragment;
 import me.sadraa.detoxiom.features.get_new_quote.NewQuoteFragment;
 import me.sadraa.detoxiom.features.time_save.SavedTimeFragment;
+import me.sadraa.detoxiom.utils.SharedprefrenceProvider;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
 public class MainActivity extends AppCompatActivity {
+
     FragmentTransaction ft;
     int openedTimes;
     int badgeCount;
     @Nullable @BindView(R.id.toolbar_main) Toolbar mToolbar;
     @Nullable @BindView(R.id.bottomBar) BottomBar bottomBar;
     @Nullable @BindView(R.id.tab_new) BottomBarTab tabNew;
-
-    //We want to use shared prefrences for counting how many time application will open by use
-    //for this goal we define 2 String. 1 for prefrence name and one as a key for prefrence
-    public static final String PREFRENCE_NAME = "my pref";
-    private static final String PREFRENCE_KEY_OPENED_TIMES = "opened times key";
-    private static final String PREFRENCE_KEY_BADGE_COUNT = "badge count key";
-
+    //injecting the dependency using dagger an application class
+    SharedprefrenceProvider sharedprefrenceProvider = MyApplication.getAppComponent().getSharedPrefrenceProvider();
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -57,12 +52,12 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         //everyTime onCreate fire we +1 shared prefrences counter
-        openedTimes = loadOpenedTimes(getApplicationContext());
-        saveOpenedTimes(getApplicationContext(),++openedTimes);
+        openedTimes = sharedprefrenceProvider.loadOpenedTimes();
+        sharedprefrenceProvider.saveOpenedTimes(++openedTimes);
         //Get a random number between 1 and 5 for letting user try they chance
         //save it as a prefrence to new quote fragment can use it
         badgeCount=getMeRandomNumber();
-        saveBadgeCounter(this,badgeCount);
+        sharedprefrenceProvider.saveBadgeCounter(badgeCount);
 
         //If it's the first time user open the app, show him the intro.
         if(openedTimes<2){
@@ -84,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         //force the bottomBar use left to right direction.
         bottomBar.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         //set notification badge on new quote tab base on badge counter
-        tabNew.setBadgeCount(loadBadgeCount(this));
+        tabNew.setBadgeCount(sharedprefrenceProvider.loadBadgeCount());
         //if It's the first time user open the app show tap target view for teaching the user how use the app
         if(openedTimes<3){
             TapTargetView.showFor(this, TapTarget.forView(findViewById(R.id.tab_setting) , "آموزش", "روی این تب کلیک کنید تا نحوه‌ی اضافه کردن ویجت به صفحه رو ببینید")  // All options below are optional
@@ -125,8 +120,6 @@ public class MainActivity extends AppCompatActivity {
             }
             ft.commit();
         });
-
-
     }
 
     @Override
@@ -135,32 +128,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    //We save prefrence in this method.
-    public void saveOpenedTimes(Context context,int counterOpenedTimes){
-        SharedPreferences.Editor mPrefrences = context.getSharedPreferences(PREFRENCE_NAME,0).edit();
-        mPrefrences.putInt(PREFRENCE_KEY_OPENED_TIMES,counterOpenedTimes);
-        mPrefrences.apply();
-    }
-    public static void saveBadgeCounter(Context context,int badgeCount){
-        SharedPreferences.Editor mPrefrences = context.getSharedPreferences(PREFRENCE_NAME,0).edit();
-        mPrefrences.putInt(PREFRENCE_KEY_BADGE_COUNT,badgeCount);
-        mPrefrences.apply();
-    }
-    //we load saved prefrence by this method. It defined static because we want to call it in saved time fragment.
-    public static int loadOpenedTimes(Context context){
-        SharedPreferences loadpreferencesOpenTime = context.getSharedPreferences(PREFRENCE_NAME,0);
-        int openTimes = loadpreferencesOpenTime.getInt(PREFRENCE_KEY_OPENED_TIMES,0);
-        return openTimes;
-    }
-    public static int loadBadgeCount(Context context){
-        SharedPreferences loadpreferencesOpenTime = context.getSharedPreferences(PREFRENCE_NAME,0);
-        int badgeCoounter = loadpreferencesOpenTime.getInt(PREFRENCE_KEY_BADGE_COUNT,0);
-        return badgeCoounter;
-    }
+
     public int getMeRandomNumber(){
-        Random r = new Random();
-        return r.nextInt(5)+1;
+        return MyApplication.getAppComponent().getRandom().nextInt(5)+1;
     }
+    //Just following the matrial design guide
     @Override
     public void onBackPressed() {
         finish();
