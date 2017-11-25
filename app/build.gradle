@@ -5,7 +5,11 @@ def daggerVersion = '2.6'
 def butterknifeVersion = '8.8.1'
 def retrofitVersion = '2.3.0'
 def googleComponent = '1.0.0'
-
+def getDate() {
+    def date = new Date()
+    def formattedDate = date.format('yyyy-MM-dd-HH-mm')
+    return formattedDate
+}
 android {
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
@@ -14,12 +18,12 @@ android {
         minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
-        versionName "1.0"
+        versionName "Beta" + getDate()
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
