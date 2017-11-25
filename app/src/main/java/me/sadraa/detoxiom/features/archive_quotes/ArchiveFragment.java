@@ -170,27 +170,9 @@ public class ArchiveFragment extends Fragment {
             popupMenu.setOnMenuItemClickListener(item -> {
                 if (item.getItemId() == R.id.delete) {
                     final QuoteDb quoteDb = QuoteDb.getQuoteDb(getContext());
-                    Observable.just(position)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Observer<Integer>() {
-                                @Override
-                                public void onSubscribe(Disposable d) {
-                                    compositeDisposable.add(d);
-                                }
-                                @Override
-                                public void onNext(Integer integer) {
-                                    rvAdapter.quoteList.remove(integer);
-                                    rvAdapter.notifyItemRemoved(integer);
-                                    quoteDb.quoteDao().deleteOne(rvAdapter.quoteList.get(integer));
-                                }
-                                @Override
-                                public void onError(Throwable e) {
-                                }
-                                @Override
-                                public void onComplete() {
-                                }
-                            });
+                    rvAdapter.quoteList.remove(position);
+                    quoteDb.quoteDao().deleteOne(rvAdapter.quoteList.get(position));
+                    rvAdapter.notifyItemRemoved(position);
                     return true;
                 }
                 if (item.getItemId() == R.id.share) {
