@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,6 +18,8 @@ import com.airbnb.lottie.LottieAnimationView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,20 +33,39 @@ import io.reactivex.schedulers.Schedulers;
 import me.sadraa.detoxiom.R;
 import me.sadraa.detoxiom.db.Models.QuoteDbModel;
 import me.sadraa.detoxiom.db.QuoteDb;
+import me.sadraa.detoxiom.di.RVAdapterModule;
 
 public class ArchiveFragment extends Fragment {
     ArrayList<QuoteDbModel> quoteDbModelList;
     QuoteDb quoteDb;
-    CompositeDisposable compositeDisposable = new CompositeDisposable();
+
     @BindView(R.id.archive_rv) RecyclerView rv;
-    RVAdapter rvAdapter;
     @BindView(R.id.empty_view) TextView tv;
     @BindView(R.id.empty_status) LottieAnimationView emptyAnimation;
     private Unbinder unbinder;
     PopupMenu popupMenu;
+    @Inject
+    CompositeDisposable compositeDisposable;
+    @Inject
+    RVAdapter rvAdapter;
+    @Inject
+    DividerItemDecoration dividerItemDecoration;
+    @Inject
+    RecyclerView.LayoutManager mLayoutManager;
+
     public ArchiveFragment() {
         // Required empty public constructor
     }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+         DaggerArchiveFragmentComponent.builder()
+                .rVAdapterModule(new RVAdapterModule(getContext()))
+                .build().injectFragment(this);;
+
+        super.onCreate(savedInstanceState);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -53,6 +73,7 @@ public class ArchiveFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_archive, container, false);
         //binding the Butterknife
         unbinder = ButterKnife.bind(this,rootView);
+
         //Call mother method of Archive fragment (more info in comments of method)
         startQueryAndPopulate();
         return rootView;
@@ -102,7 +123,7 @@ public class ArchiveFragment extends Fragment {
     //The method called in startQueryAndPopulate( onUiThread )method and populate RV with data of data base
     public void populateRV(ArrayList<QuoteDbModel> quoteDbModelListRV){
         //Create adapter object with ArrayList
-        rvAdapter = new RVAdapter(quoteDbModelListRV);
+        rvAdapter.setQuoteList(quoteDbModelListRV);
         //Check if recycleView have data or not. if not then show a message.
         if(rvAdapter.getItemCount()==0){
             rv.setVisibility(View.GONE);
@@ -114,10 +135,9 @@ public class ArchiveFragment extends Fragment {
             rv.setVisibility(View.VISIBLE);
             tv.setVisibility(View.GONE);
             emptyAnimation.setVisibility(View.GONE);
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+           // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
             rv.setLayoutManager(mLayoutManager);
             //DividerDecoration is a new class in support library that help to draw a line between each row of recyvleview
-            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rv.getContext(),DividerItemDecoration.VERTICAL);
             rv.addItemDecoration(dividerItemDecoration);
             //It makes scrolling smooth
             rv.setNestedScrollingEnabled(false);
@@ -151,8 +171,8 @@ public class ArchiveFragment extends Fragment {
                 if (item.getItemId() == R.id.delete) {
                     final QuoteDb quoteDb = QuoteDb.getQuoteDb(getContext());
                     Observable.just(position)
-                            .observeOn(AndroidSchedulers.mainThread())
                             .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new Observer<Integer>() {
                                 @Override
                                 public void onSubscribe(Disposable d) {
@@ -160,9 +180,9 @@ public class ArchiveFragment extends Fragment {
                                 }
                                 @Override
                                 public void onNext(Integer integer) {
-                                    quoteDb.quoteDao().deleteOne(rvAdapter.quoteList.get(integer));
                                     rvAdapter.quoteList.remove(integer);
                                     rvAdapter.notifyItemRemoved(integer);
+                                    quoteDb.quoteDao().deleteOne(rvAdapter.quoteList.get(integer));
                                 }
                                 @Override
                                 public void onError(Throwable e) {

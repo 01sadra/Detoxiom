@@ -19,8 +19,16 @@ import me.sadraa.detoxiom.db.Models.QuoteDbModel;
  */
 
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.MyViewHolder> {
+
+
     ArrayList<QuoteDbModel> quoteList;
     private OnItemClickListener mItemClickListener;
+
+    public RVAdapter(){
+    }
+    public void setQuoteList(ArrayList<QuoteDbModel> quoteList) {
+        this.quoteList = quoteList;
+    }
     public RVAdapter(ArrayList<QuoteDbModel> quoteList){
         this.quoteList = quoteList;
     }
