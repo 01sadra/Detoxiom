@@ -61,7 +61,7 @@ public class ArchiveFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
          DaggerArchiveFragmentComponent.builder()
                 .rVAdapterModule(new RVAdapterModule(getContext()))
-                .build().injectFragment(this);;
+                .build().injectFragment(this);
 
         super.onCreate(savedInstanceState);
     }
@@ -170,8 +170,8 @@ public class ArchiveFragment extends Fragment {
             popupMenu.setOnMenuItemClickListener(item -> {
                 if (item.getItemId() == R.id.delete) {
                     final QuoteDb quoteDb = QuoteDb.getQuoteDb(getContext());
-                    rvAdapter.quoteList.remove(position);
                     quoteDb.quoteDao().deleteOne(rvAdapter.quoteList.get(position));
+                    rvAdapter.quoteList.remove(position);
                     rvAdapter.notifyItemRemoved(position);
                     return true;
                 }
