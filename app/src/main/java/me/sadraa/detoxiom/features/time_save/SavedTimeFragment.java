@@ -13,18 +13,18 @@ import android.widget.Toast;
 
 import com.jakewharton.rxbinding2.view.RxView;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import me.sadraa.detoxiom.MyApplication;
 import me.sadraa.detoxiom.R;
-import me.sadraa.detoxiom.data.SharedprefrenceProvider;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SavedTimeFragment extends Fragment {
+public class SavedTimeFragment extends Fragment implements SavedTimeContract.View{
     @BindView(R.id.opened_times) TextView openedTimesTV;
     @BindView(R.id.instagramTV) TextView instagramTV;
     @BindView(R.id.twitterTV) TextView twitterTV;
@@ -32,11 +32,19 @@ public class SavedTimeFragment extends Fragment {
     @BindView(R.id.instagramIV) ImageView instagramIV;
     private Unbinder unbinder;
     int openedTimeInt;
-    SharedprefrenceProvider sharedprefrenceProvider = MyApplication.getAppComponent().getSharedPrefrenceProvider();
+    @Inject
+    SavedTimeContract.presenter presenter;
     public SavedTimeFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        DaggerSavedTimeComponent.builder()
+                .savedTimeModule(new SavedTimeModule())
+                .build().inject(this);
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,20 +52,18 @@ public class SavedTimeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_saved_time, container, false);
         unbinder = ButterKnife.bind(this,view);
+        presenter.onViewAttached(this);
+        presenter.subscribe();
         return view;
     }
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //we call sharedprefrence for understanding how many time app was opened.
-        openedTimeInt = sharedprefrenceProvider.loadOpenedTimes();
-        openedTimesTV.setText("دفعاتی که دیتاکسیوم را باز کرده اید" + ":\n" + openedTimeInt +"");
-        instagramTV.setText(realTimeInSocialMedia(openedTimeInt,"instagram") + "\n دقیقه");
-        telegramTV.setText(realTimeInSocialMedia(openedTimeInt,"telegram") + "\n دقیقه");
-        twitterTV.setText(realTimeInSocialMedia(openedTimeInt,"twitter") + "\n دقیقه");
+       setTextForViews();
 
         //I want add a fancy feature here! to just test how rxBinding library works
+        //This probably Violate the MVP pattern but who cares man?
         RxView.clicks(instagramIV)
                 .subscribe(aVoid ->
                         Toast.makeText(getContext(),"چیزی برای کلیک نداریم :(",Toast.LENGTH_SHORT).show());
@@ -67,18 +73,17 @@ public class SavedTimeFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        presenter.unsubscribe();
     }
 
-    public int realTimeInSocialMedia(int openedTime, String socialMedia){
-        switch (socialMedia){
-            case "twitter":
-                return openedTime*5;
-            case "instagram":
-                return openedTime*6;
-            case "telegram":
-                return openedTime*4;
-        }
-        return openedTime;
-    }
 
+    @Override
+    public void setTextForViews() {
+        openedTimeInt = presenter.LoadOpenedTimeFromInteractor();
+        openedTimesTV.setText("دفعاتی که دیتاکسیوم را باز کرده اید" + ":\n" + openedTimeInt +"");
+        instagramTV.setText(presenter.LoadFromInteractorRealTimeInSocialMedia(openedTimeInt,"instagram") + "\n دقیقه");
+        telegramTV.setText(presenter.LoadFromInteractorRealTimeInSocialMedia(openedTimeInt,"telegram") + "\n دقیقه");
+        twitterTV.setText(presenter.LoadFromInteractorRealTimeInSocialMedia(openedTimeInt,"twitter") + "\n دقیقه");
+
+    }
 }
