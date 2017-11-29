@@ -31,8 +31,8 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import me.sadraa.detoxiom.R;
-import me.sadraa.detoxiom.db.Models.QuoteDbModel;
-import me.sadraa.detoxiom.db.QuoteDb;
+import me.sadraa.detoxiom.data.db.Models.QuoteDbModel;
+import me.sadraa.detoxiom.data.db.QuoteDb;
 import me.sadraa.detoxiom.di.RVAdapterModule;
 
 public class ArchiveFragment extends Fragment {

@@ -1,4 +1,4 @@
-package me.sadraa.detoxiom.db;
+package me.sadraa.detoxiom.data.db;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
@@ -7,7 +7,7 @@ import android.arch.persistence.room.Query;
 
 import java.util.List;
 
-import me.sadraa.detoxiom.db.Models.QuoteDbModel;
+import me.sadraa.detoxiom.data.db.Models.QuoteDbModel;
 
 /**
  * Created by sadra on 10/15/17.

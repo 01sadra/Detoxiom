@@ -1,4 +1,4 @@
-package me.sadraa.detoxiom.db.Models;
+package me.sadraa.detoxiom.data.db.Models;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;

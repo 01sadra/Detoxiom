@@ -3,7 +3,7 @@ package me.sadraa.detoxiom;
 import android.app.Application;
 
 import me.sadraa.detoxiom.di.SharedPrefrencesModule;
-import me.sadraa.detoxiom.network.QuoteClient;
+import me.sadraa.detoxiom.data.network.QuoteClient;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**

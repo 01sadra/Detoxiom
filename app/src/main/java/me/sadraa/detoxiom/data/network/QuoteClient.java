@@ -1,6 +1,6 @@
-package me.sadraa.detoxiom.network;
+package me.sadraa.detoxiom.data.network;
 
-import me.sadraa.detoxiom.network.models.QuoteModel;
+import me.sadraa.detoxiom.data.network.models.QuoteModel;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;

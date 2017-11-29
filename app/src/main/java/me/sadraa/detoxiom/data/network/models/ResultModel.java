@@ -1,4 +1,4 @@
-package me.sadraa.detoxiom.network.models;
+package me.sadraa.detoxiom.data.network.models;
 
 public class ResultModel {
     private String quote;

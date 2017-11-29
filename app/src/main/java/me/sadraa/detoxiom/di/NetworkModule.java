@@ -2,7 +2,7 @@ package me.sadraa.detoxiom.di;
 
 import dagger.Module;
 import dagger.Provides;
-import me.sadraa.detoxiom.network.QuoteClient;
+import me.sadraa.detoxiom.data.network.QuoteClient;
 import me.sadraa.detoxiom.utils.ClientConfig;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;

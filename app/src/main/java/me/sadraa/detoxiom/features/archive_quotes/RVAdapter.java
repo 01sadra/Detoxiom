@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.sadraa.detoxiom.R;
-import me.sadraa.detoxiom.db.Models.QuoteDbModel;
+import me.sadraa.detoxiom.data.db.Models.QuoteDbModel;
 
 /**
  * Created by sadra on 10/18/17.

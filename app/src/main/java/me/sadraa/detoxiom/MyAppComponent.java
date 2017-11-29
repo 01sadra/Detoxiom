@@ -11,7 +11,7 @@ import me.sadraa.detoxiom.di.NetworkModule;
 import me.sadraa.detoxiom.di.RandomModule;
 import me.sadraa.detoxiom.di.SharedPrefrencesModule;
 import me.sadraa.detoxiom.di.SharedPrefrencesProviderModule;
-import me.sadraa.detoxiom.network.QuoteClient;
+import me.sadraa.detoxiom.data.network.QuoteClient;
 import me.sadraa.detoxiom.utils.SharedprefrenceProvider;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
