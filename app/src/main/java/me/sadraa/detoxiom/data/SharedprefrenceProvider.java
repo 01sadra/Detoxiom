@@ -1,4 +1,4 @@
-package me.sadraa.detoxiom.utils;
+package me.sadraa.detoxiom.data;
 
 import android.content.SharedPreferences;
 

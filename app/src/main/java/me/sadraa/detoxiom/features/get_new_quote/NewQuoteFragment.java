@@ -34,7 +34,7 @@ import me.sadraa.detoxiom.data.db.Models.QuoteDbModel;
 import me.sadraa.detoxiom.data.db.QuoteDb;
 import me.sadraa.detoxiom.data.network.models.QuoteModel;
 import me.sadraa.detoxiom.utils.ClientConfig;
-import me.sadraa.detoxiom.utils.SharedprefrenceProvider;
+import me.sadraa.detoxiom.data.SharedprefrenceProvider;
 import retrofit2.Call;
 
 public class NewQuoteFragment extends Fragment {

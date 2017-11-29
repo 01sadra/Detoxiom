@@ -22,11 +22,11 @@ import butterknife.ButterKnife;
 import me.sadraa.detoxiom.MyApplication;
 import me.sadraa.detoxiom.R;
 import me.sadraa.detoxiom.features.about_app.IntroActivity;
-import me.sadraa.detoxiom.features.about_app.TeachingFragment;
+import me.sadraa.detoxiom.features.teaching.TeachingFragment;
 import me.sadraa.detoxiom.features.archive_quotes.ArchiveFragment;
 import me.sadraa.detoxiom.features.get_new_quote.NewQuoteFragment;
 import me.sadraa.detoxiom.features.time_save.SavedTimeFragment;
-import me.sadraa.detoxiom.utils.SharedprefrenceProvider;
+import me.sadraa.detoxiom.data.SharedprefrenceProvider;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 

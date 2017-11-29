@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.sadraa.detoxiom.MyApplication;
 import me.sadraa.detoxiom.R;
-import me.sadraa.detoxiom.utils.SharedprefrenceProvider;
+import me.sadraa.detoxiom.data.SharedprefrenceProvider;
 
 
 /**
@@ -51,7 +51,7 @@ public class SavedTimeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //we call sharedprefrence for understanding how many time app was opened.
-        openedTimeInt =sharedprefrenceProvider.loadOpenedTimes();
+        openedTimeInt = sharedprefrenceProvider.loadOpenedTimes();
         openedTimesTV.setText("دفعاتی که دیتاکسیوم را باز کرده اید" + ":\n" + openedTimeInt +"");
         instagramTV.setText(realTimeInSocialMedia(openedTimeInt,"instagram") + "\n دقیقه");
         telegramTV.setText(realTimeInSocialMedia(openedTimeInt,"telegram") + "\n دقیقه");
