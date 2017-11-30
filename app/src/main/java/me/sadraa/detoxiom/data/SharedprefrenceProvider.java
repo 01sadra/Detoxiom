@@ -2,6 +2,8 @@ package me.sadraa.detoxiom.data;
 
 import android.content.SharedPreferences;
 
+import javax.inject.Inject;
+
 import me.sadraa.detoxiom.MyApplication;
 
 /**
@@ -13,6 +15,9 @@ public class SharedprefrenceProvider {
     //for this goal we define 2 String. 1 for prefrence name and one as a key for prefrence
     private static final String PREFRENCE_KEY_OPENED_TIMES = "opened times key";
     private static final String PREFRENCE_KEY_BADGE_COUNT = "badge count key";
+    @Inject
+    public SharedprefrenceProvider() {
+    }
 
     //We save prefrence in this method.
     public void saveOpenedTimes(int counterOpenedTimes){

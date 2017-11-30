@@ -14,6 +14,8 @@ import android.view.View;
 
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetView;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarTab;
 
@@ -21,12 +23,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.sadraa.detoxiom.MyApplication;
 import me.sadraa.detoxiom.R;
+import me.sadraa.detoxiom.data.SharedprefrenceProvider;
 import me.sadraa.detoxiom.features.about_app.IntroActivity;
-import me.sadraa.detoxiom.features.teaching.TeachingFragment;
 import me.sadraa.detoxiom.features.archive_quotes.ArchiveFragment;
 import me.sadraa.detoxiom.features.get_new_quote.NewQuoteFragment;
+import me.sadraa.detoxiom.features.teaching.TeachingFragment;
 import me.sadraa.detoxiom.features.time_save.SavedTimeFragment;
-import me.sadraa.detoxiom.data.SharedprefrenceProvider;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
@@ -40,14 +42,16 @@ public class MainActivity extends AppCompatActivity {
     @Nullable @BindView(R.id.tab_new) BottomBarTab tabNew;
     //injecting the dependency using dagger an application class
     SharedprefrenceProvider sharedprefrenceProvider = MyApplication.getAppComponent().getSharedPrefrenceProvider();
-
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         setContentView(R.layout.activity_main);
-
+        //Send data to analytics
+        Tracker tracker= MyApplication.getAppComponent().getDefaultTracker();
+        tracker.setScreenName("MainActivity");
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
         //binding the butterknife
         ButterKnife.bind(this);
 
