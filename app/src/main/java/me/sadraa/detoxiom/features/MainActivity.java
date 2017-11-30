@@ -14,13 +14,12 @@ import android.view.View;
 
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetView;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarTab;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import co.ronash.pushe.Pushe;
 import me.sadraa.detoxiom.MyApplication;
 import me.sadraa.detoxiom.R;
 import me.sadraa.detoxiom.data.SharedprefrenceProvider;
@@ -48,10 +47,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         setContentView(R.layout.activity_main);
-        //Send data to analytics
-        Tracker tracker= MyApplication.getAppComponent().getDefaultTracker();
-        tracker.setScreenName("MainActivity");
-        tracker.send(new HitBuilders.ScreenViewBuilder().build());
+        Pushe.initialize(this,true);
         //binding the butterknife
         ButterKnife.bind(this);
 

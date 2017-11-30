@@ -2,10 +2,7 @@ package me.sadraa.detoxiom;
 
 import android.app.Application;
 
-import com.google.android.gms.analytics.Tracker;
-
 import me.sadraa.detoxiom.di.SharedPrefrencesModule;
-import me.sadraa.detoxiom.di.TrackerModule;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
@@ -20,12 +17,8 @@ public class MyApplication extends Application {
         super.onCreate();
         appComponent = DaggerMyAppComponent.builder()
                         .sharedPrefrencesModule(new SharedPrefrencesModule(getApplicationContext()))
-                        .trackerModule(new TrackerModule(getApplicationContext()))
                         .build();
-        //Send Data to google analytics
-        Tracker tracker = appComponent.getDefaultTracker();
-        tracker.enableAutoActivityTracking(true);
-        tracker.enableExceptionReporting(true);
+
 
         CalligraphyConfig.initDefault(appComponent.getCalligraphyConfig());
 

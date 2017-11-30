@@ -2,8 +2,6 @@ package me.sadraa.detoxiom;
 
 import android.content.SharedPreferences;
 
-import com.google.android.gms.analytics.Tracker;
-
 import java.util.Random;
 
 import dagger.Component;
@@ -15,7 +13,6 @@ import me.sadraa.detoxiom.di.NetworkModule;
 import me.sadraa.detoxiom.di.RandomModule;
 import me.sadraa.detoxiom.di.SharedPrefrencesModule;
 import me.sadraa.detoxiom.di.SharedPrefrencesProviderModule;
-import me.sadraa.detoxiom.di.TrackerModule;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
@@ -27,8 +24,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
         CalligraphyModule.class,
         SharedPrefrencesModule.class,
         RandomModule.class,
-        SharedPrefrencesProviderModule.class,
-        TrackerModule.class
+        SharedPrefrencesProviderModule.class
 })
 public interface MyAppComponent {
     QuoteClient getQCService();
@@ -36,5 +32,4 @@ public interface MyAppComponent {
     SharedPreferences getSharedPrefrence();
     Random getRandom();
     SharedprefrenceProvider getSharedPrefrenceProvider();
-    Tracker getDefaultTracker();
 }
