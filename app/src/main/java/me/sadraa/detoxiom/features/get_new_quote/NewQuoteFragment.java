@@ -37,11 +37,10 @@ import me.sadraa.detoxiom.data.network.models.QuoteModel;
 public class NewQuoteFragment extends Fragment implements NewQuoteContract.View{
     int chanceFromPreference;
     BottomSheetBehavior mBottomSheetBehavior;
-
     QuoteDbModel quoteDbModel;
     Vibrator vibrator;
     private Unbinder unbinder;
-    CompositeDisposable compositeDisposable = new CompositeDisposable();
+
     @BindView(R.id.saveQuote) Button mButtonSave;
     @BindView(R.id.ignoreQuote) Button mButtonIgonre;
     @BindView(R.id.quoteText) TextView quoteTV;
@@ -49,10 +48,8 @@ public class NewQuoteFragment extends Fragment implements NewQuoteContract.View{
     @BindView(R.id.counter_show) TextView chanceCounterTV;
     @BindView(R.id.bottom_sheet) View bottomSheet;
     @BindView(R.id.animation_refresh) LottieAnimationView lAnimation;
-
-    @Inject
-    NewQuoteContract.Presenter presenter;
-
+    @Inject NewQuoteContract.Presenter presenter;
+    @Inject CompositeDisposable compositeDisposable;
     public NewQuoteFragment() {
         // Required empty public constructor
     }
