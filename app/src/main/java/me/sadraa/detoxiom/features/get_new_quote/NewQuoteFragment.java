@@ -199,10 +199,16 @@ public class NewQuoteFragment extends Fragment implements NewQuoteContract.View{
 
             @Override
             public void onNext(QuoteModel quoteModel) {
-             //just set the views
+                String quote = quoteModel.getResult().getQuote();
+                //Ignore quotes with more than 224 letter and show another one
+                if(quote.length()>224){
+                    setQuoteToBottomSheet(getQuoteObservableFromPresenter());
+                }else{
+                //just set the views
                 quoteTV.setText(quoteModel.getResult().getQuote());
                 authorTV.setText(quoteModel.getResult().getAuthor());
                 mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            }
             }
             @Override
             public void onError(Throwable e) {
