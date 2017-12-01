@@ -7,6 +7,9 @@ import android.support.v7.widget.RecyclerView;
 
 import dagger.Module;
 import dagger.Provides;
+import me.sadraa.detoxiom.features.archive_quotes.ArchiveContract;
+import me.sadraa.detoxiom.features.archive_quotes.ArchiveIntractorImpl;
+import me.sadraa.detoxiom.features.archive_quotes.ArchivePresenterImpl;
 import me.sadraa.detoxiom.features.archive_quotes.RVAdapter;
 
 /**
@@ -33,6 +36,14 @@ public class RVAdapterModule {
     @Provides
     DividerItemDecoration dividerItemDecoration() {
        return new DividerItemDecoration(context,DividerItemDecoration.VERTICAL);
+    }
+    @Provides
+    ArchiveContract.Presenter presenter(ArchivePresenterImpl presenter){
+        return presenter;
+    }
+    @Provides
+    ArchiveContract.Interactor interactor(ArchiveIntractorImpl intractor){
+        return intractor;
     }
 
 

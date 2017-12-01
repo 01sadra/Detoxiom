@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.sadraa.detoxiom.data.db.Models.QuoteDbModel;
-import me.sadraa.detoxiom.data.network.models.QuoteModel;
 import me.sadraa.detoxiom.utils.IBasePresenter;
 import me.sadraa.detoxiom.utils.IView;
 
@@ -17,15 +16,14 @@ public interface ArchiveContract {
         void populateListView(ArrayList<QuoteDbModel> q);
         void showWhaleInsteadOfRView();
         void setAdapterAndShowRView();
+        void deleteQuote(int postion);
     }
     interface Presenter extends IBasePresenter<ArchiveContract.View>{
-        ArrayList<QuoteModel> returnAllQuotesFromIntractorInArrayList();
-        void deleteQuoteWithIntractor(int position);
+        ArrayList<QuoteDbModel> returnAllQuotesFromIntractorInArrayList();
     }
     interface Interactor{
-        List<QuoteModel> getAllQuotesFromDataBase();
-        ArrayList<QuoteModel> convertAllQuoteListToArrayListAndReturn();
-        void deleteQuoteFromDataBase(int position);
+        List<QuoteDbModel> getAllQuotesFromDataBase();
+        ArrayList<QuoteDbModel> convertAllQuoteListToArrayListAndReturn(List<QuoteDbModel> Q);
 
     }
 }
