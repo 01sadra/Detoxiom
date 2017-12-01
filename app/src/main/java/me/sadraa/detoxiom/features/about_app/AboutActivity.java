@@ -26,7 +26,7 @@ public class AboutActivity extends AppCompatActivity {
                 .addTwitter("01sadra")
                 .addGitHub("01sadra")
                 .addEmail("01sadra@gmail.com")
-                .addItem(new Element().setTitle("Version 1.2"))
+                .addItem(new Element().setTitle("Version 1.0.0"))
                 .create();
 
 

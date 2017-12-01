@@ -3,6 +3,7 @@ package me.sadraa.detoxiom.di;
 import dagger.Module;
 import dagger.Provides;
 import me.sadraa.detoxiom.R;
+import me.sadraa.detoxiom.di.scopes.MyAppComponentScope;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**

@@ -1,7 +1,7 @@
 package me.sadraa.detoxiom.features.archive_quotes;
 
 import dagger.Component;
-import me.sadraa.detoxiom.di.ArchiveFragmentComponentScope;
+import me.sadraa.detoxiom.di.scopes.ArchiveFragmentComponentScope;
 import me.sadraa.detoxiom.di.ArchivedependencyModule;
 import me.sadraa.detoxiom.di.CompositeDisposableModule;
 

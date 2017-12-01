@@ -9,7 +9,7 @@ import dagger.Component;
 import me.sadraa.detoxiom.data.SharedPreferencesProvider;
 import me.sadraa.detoxiom.data.network.QuoteClient;
 import me.sadraa.detoxiom.di.CalligraphyModule;
-import me.sadraa.detoxiom.di.MyAppComponentScope;
+import me.sadraa.detoxiom.di.scopes.MyAppComponentScope;
 import me.sadraa.detoxiom.di.NetworkModule;
 import me.sadraa.detoxiom.di.RandomModule;
 import me.sadraa.detoxiom.di.SharedPrefrencesModule;

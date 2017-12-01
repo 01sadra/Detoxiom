@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 
 import dagger.Module;
 import dagger.Provides;
+import me.sadraa.detoxiom.di.scopes.ArchiveFragmentComponentScope;
 import me.sadraa.detoxiom.features.archive_quotes.ArchiveContract;
 import me.sadraa.detoxiom.features.archive_quotes.ArchiveIntractorImpl;
 import me.sadraa.detoxiom.features.archive_quotes.ArchivePresenterImpl;

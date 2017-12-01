@@ -1,4 +1,4 @@
-package me.sadraa.detoxiom.di;
+package me.sadraa.detoxiom.di.scopes;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -15,3 +15,4 @@ import javax.inject.Scope;
 @Retention(RetentionPolicy.CLASS)
 public @interface MyAppComponentScope {
 }
+
