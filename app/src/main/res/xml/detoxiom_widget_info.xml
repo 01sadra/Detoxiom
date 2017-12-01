@@ -3,9 +3,9 @@
     android:configure="me.sadraa.detoxiom.features.widget.DetoxiomWidgetConfigureActivity"
     android:initialKeyguardLayout="@layout/detoxiom_widget"
     android:initialLayout="@layout/detoxiom_widget"
-    android:minHeight="70dp"
-    android:minWidth="70dp"
+    android:minHeight="90dp"
+    android:minWidth="90dp"
     android:previewImage="@mipmap/ic_launcher"
-    android:resizeMode="horizontal"
+    android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="0"
     android:widgetCategory="home_screen" />
