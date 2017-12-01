@@ -7,10 +7,10 @@ import javax.inject.Inject;
  * Created by sadra on 11/29/17.
  */
 
-public class TeachingPresenter implements TeachingContract.Presenter {
+public class TeachingPresenterImpl implements TeachingContract.Presenter {
     private TeachingContract.View viewLayer;
     @Inject
-    public TeachingPresenter() {
+    public TeachingPresenterImpl() {
     }
 
     @Override

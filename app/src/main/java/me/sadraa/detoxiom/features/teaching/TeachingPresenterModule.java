@@ -10,7 +10,7 @@ import dagger.Provides;
 class TeachingPresenterModule {
 
     @Provides
-    TeachingContract.Presenter teachingPresenter(TeachingPresenter presenter){
+    TeachingContract.Presenter teachingPresenter(TeachingPresenterImpl presenter){
         return presenter;
     }
 }
