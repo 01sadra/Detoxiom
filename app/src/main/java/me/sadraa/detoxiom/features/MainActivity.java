@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
 import co.ronash.pushe.Pushe;
 import me.sadraa.detoxiom.MyApplication;
 import me.sadraa.detoxiom.R;
-import me.sadraa.detoxiom.data.SharedprefrenceProvider;
+import me.sadraa.detoxiom.data.SharedPreferencesProvider;
 import me.sadraa.detoxiom.features.about_app.IntroActivity;
 import me.sadraa.detoxiom.features.archive_quotes.ArchiveFragment;
 import me.sadraa.detoxiom.features.get_new_quote.NewQuoteFragment;
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     @Nullable @BindView(R.id.bottomBar) BottomBar bottomBar;
     @Nullable @BindView(R.id.tab_new) BottomBarTab tabNew;
     //injecting the dependency using dagger an application class
-    SharedprefrenceProvider sharedprefrenceProvider = MyApplication.getAppComponent().getSharedPrefrenceProvider();
+    SharedPreferencesProvider sharedprefrenceProvider = MyApplication.getAppComponent().getSharedPrefrenceProvider();
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
