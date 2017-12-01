@@ -1,11 +1,12 @@
 package me.sadraa.detoxiom;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 
 import java.util.Random;
 
 import dagger.Component;
-import me.sadraa.detoxiom.data.SharedprefrenceProvider;
+import me.sadraa.detoxiom.data.SharedPreferencesProvider;
 import me.sadraa.detoxiom.data.network.QuoteClient;
 import me.sadraa.detoxiom.di.CalligraphyModule;
 import me.sadraa.detoxiom.di.MyAppComponentScope;
@@ -31,5 +32,6 @@ public interface MyAppComponent {
     CalligraphyConfig getCalligraphyConfig();
     SharedPreferences getSharedPrefrence();
     Random getRandom();
-    SharedprefrenceProvider getSharedPrefrenceProvider();
+    SharedPreferencesProvider getSharedPrefrenceProvider();
+    Context getContext();
 }
