@@ -2,11 +2,17 @@ package me.sadraa.detoxiom.data;
 
 import android.content.SharedPreferences;
 
+import javax.inject.Inject;
+
 import me.sadraa.detoxiom.MyApplication;
 
 public class SharedPreferencesProvider {
     //We want to use shared prefrences for counting how many time application will open by use
     //for this goal we define 2 String. 1 for prefrence name and one as a key for prefrence
+    @Inject
+    public SharedPreferencesProvider() {
+    }
+
     private static final String PREFRENCE_KEY_OPENED_TIMES = "opened times key";
     private static final String PREFRENCE_KEY_BADGE_COUNT = "badge count key";
 
