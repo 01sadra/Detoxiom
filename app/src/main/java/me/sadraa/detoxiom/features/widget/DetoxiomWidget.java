@@ -9,7 +9,7 @@ import android.graphics.Bitmap;
 import android.widget.RemoteViews;
 
 import me.sadraa.detoxiom.R;
-import me.sadraa.detoxiom.features.MainActivity;
+import me.sadraa.detoxiom.features.main_activity.MainActivity;
 
 /**
  * Implementation of App Widget functionality.

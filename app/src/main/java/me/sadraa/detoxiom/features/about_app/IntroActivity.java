@@ -11,7 +11,7 @@ import android.view.View;
 import com.github.paolorotolo.appintro.AppIntro;
 
 import me.sadraa.detoxiom.R;
-import me.sadraa.detoxiom.features.MainActivity;
+import me.sadraa.detoxiom.features.main_activity.MainActivity;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class IntroActivity extends AppIntro {

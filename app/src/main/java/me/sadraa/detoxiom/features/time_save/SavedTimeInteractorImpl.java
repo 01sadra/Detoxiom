@@ -2,6 +2,7 @@ package me.sadraa.detoxiom.features.time_save;
 
 import javax.inject.Inject;
 
+import me.sadraa.detoxiom.MyApplication;
 import me.sadraa.detoxiom.data.SharedPreferencesProvider;
 
 /**
@@ -9,11 +10,11 @@ import me.sadraa.detoxiom.data.SharedPreferencesProvider;
  */
 
 public class SavedTimeInteractorImpl implements SavedTimeContract.Interactor {
-    SharedPreferencesProvider sharedprefrenceProvider;
+    SharedPreferencesProvider sharedprefrenceProvider
+            = MyApplication.getAppComponent().getSharedPrefrenceProvider();
 
     @Inject
-    public SavedTimeInteractorImpl(SharedPreferencesProvider sharedprefrenceProvider) {
-        this.sharedprefrenceProvider =sharedprefrenceProvider;
+    public SavedTimeInteractorImpl() {
     }
 
     @Override

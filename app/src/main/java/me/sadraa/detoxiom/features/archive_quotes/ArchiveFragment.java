@@ -55,7 +55,7 @@ public class ArchiveFragment extends Fragment implements ArchiveContract.View{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
          DaggerArchiveFragmentComponent.builder()
-                .rVAdapterModule(new ArchivedependencyModule(getContext()))
+                .archivedependencyModule(new ArchivedependencyModule(getContext()))
                 .build().injectFragment(this);
         super.onCreate(savedInstanceState);
     }
