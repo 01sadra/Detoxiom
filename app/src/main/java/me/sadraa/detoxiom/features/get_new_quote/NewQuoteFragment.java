@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -28,17 +30,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import me.sadraa.detoxiom.MyApplication;
 import me.sadraa.detoxiom.R;
 import me.sadraa.detoxiom.data.db.Models.QuoteDbModel;
-import me.sadraa.detoxiom.data.db.QuoteDb;
 import me.sadraa.detoxiom.data.network.models.QuoteModel;
-import me.sadraa.detoxiom.utils.ClientConfig;
-import me.sadraa.detoxiom.data.SharedprefrenceProvider;
-import retrofit2.Call;
 
-public class NewQuoteFragment extends Fragment {
-    int chanceFromPrefrence,firstAttemptCounter;
+public class NewQuoteFragment extends Fragment implements NewQuoteContract.View{
+    int chanceFromPreference;
     BottomSheetBehavior mBottomSheetBehavior;
 
     QuoteDbModel quoteDbModel;
@@ -52,11 +49,22 @@ public class NewQuoteFragment extends Fragment {
     @BindView(R.id.counter_show) TextView chanceCounterTV;
     @BindView(R.id.bottom_sheet) View bottomSheet;
     @BindView(R.id.animation_refresh) LottieAnimationView lAnimation;
-    SharedprefrenceProvider sharedprefrenceProvider = new SharedprefrenceProvider();
+
+    @Inject
+    NewQuoteContract.Presenter presenter;
+
     public NewQuoteFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        DaggerNewQuoteComponent
+                .builder()
+                .build()
+                .inject(this);
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,21 +78,13 @@ public class NewQuoteFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
-        vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-        chanceFromPrefrence = sharedprefrenceProvider.loadBadgeCount();
-        firstAttemptCounter = 0;
-        //check if there is any chance and show the user how many time s/he can try.
-        //I don't like "else{}"s :)
-        if(chanceFromPrefrence>0) chanceCounterTV.setText(" فرصت‌های باقی مانده: "+"\n"+chanceFromPrefrence);
-        if(chanceFromPrefrence<=0) chanceCounterTV.setText("فرصت های شما تمام شده :(");
-         //Adding an animation as a button with lottie
-        lAnimation.setAnimation("refresh.json");
-        //shitty setting for bad animation
-        lAnimation.setProgress(1);
+
+        initiateTheScreenTextAndAnimation();
         //set listener for animation states. this methods call when animatin palys
         setListenerForAnimation(view);
     }
+
+
 
 
     @Override
@@ -94,22 +94,33 @@ public class NewQuoteFragment extends Fragment {
         compositeDisposable.dispose();
     }
 
+    @Override
+    public void initiateTheScreenTextAndAnimation() {
+        mBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
+        vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+        chanceFromPreference = presenter.LoadBadgeCountFromInteractor();
+        //check if there is any chance and show the user how many time s/he can try.
+        //I don't like "else{}"s :)
+        if(chanceFromPreference >0) chanceCounterTV.setText(" فرصت‌های باقی مانده: "+"\n"+ chanceFromPreference);
+        if(chanceFromPreference <=0) chanceCounterTV.setText("فرصت های شما تمام شده :(");
+        //Adding an animation as a button with lottie
+        lAnimation.setAnimation("refresh.json");
+        //shitty setting for bad animation
+        lAnimation.setProgress(1);
+    }
     public void setListenerForAnimation(View view){
         lAnimation.addAnimatorListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
                 //If you have chance new quote get triggered and you will have new quote
                 //with little vibrate and a lot of green color
-                if(makeChance()){
+                if(makeChanceFromPresenter()){
                     view.setBackgroundColor(getResources().getColor(R.color.primary_dark));
                     vibrator.vibrate(500);
                     //using rx java for calling the server async
                     // rxJava is a comprehensive topic and I can't explain what happened here
                     //but for more info you can watch this quick video tutorial: https://www.youtube.com/watch?v=7IEPrihz1-E
-                    getQuoteObservable()
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(getQuoteObserver());
+                    setQuoteToBottomSheet(getQuoteObservableFromPresenter());
                 }else{
                     view.setBackgroundColor(getResources().getColor(R.color.about_youtube_color));
                     Toast.makeText(getContext(),"یه بار دیگه امتحان کن",Toast.LENGTH_SHORT).show();
@@ -133,6 +144,7 @@ public class NewQuoteFragment extends Fragment {
             }
         });
     }
+
     //set onClick listener for animation. If internet be connected
     //and bottomsheet be collapsed  and we have chance to try animation will play
     @OnClick(R.id.animation_refresh)
@@ -144,22 +156,9 @@ public class NewQuoteFragment extends Fragment {
         if (lAnimation.isAnimating() || mBottomSheetBehavior.getState()==BottomSheetBehavior.STATE_EXPANDED){
             return;
         }
-
-        if(chanceFromPrefrence > 0) {
+        if(chanceFromPreference > 0) {
             lAnimation.playAnimation();
-            // minus 1 from badge counter and save it in prefrence
-            sharedprefrenceProvider.saveBadgeCounter(chanceFromPrefrence - 1);
-            //Load chances from prefrence again
-            chanceFromPrefrence = sharedprefrenceProvider.loadBadgeCount();
-
-            //if chances is more than 0 show how many chance remain
-            if (chanceFromPrefrence > 0) {
-                chanceCounterTV.setText(" فرصت‌های باقی مانده: " + "\n" + chanceFromPrefrence);
-                //If there is no chance then tell the user the truth:)
-            } else {
-                chanceCounterTV.setText("فرصت های شما تمام شده :(");
-            }
-
+            setChanceCounterText(chanceFromPreference);
         }
     }
 
@@ -173,7 +172,7 @@ public class NewQuoteFragment extends Fragment {
         if(quoteTV!=null||authorTV!=null){
             quoteDbModel.setAuthor(authorTV.getText().toString());
             quoteDbModel.setQuote(quoteTV.getText().toString());
-            insertQuoteToDb(quoteDbModel);
+            passQuoteToPresenter(quoteDbModel);
         }
     }
 
@@ -183,42 +182,14 @@ public class NewQuoteFragment extends Fragment {
        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
    }
 
-    public void insertQuoteToDb(final QuoteDbModel quoteDbModel){
-     //Creating a new thread for Runnig Room Query.
-        Runnable runnable = () -> {
-            QuoteDb quoteDb = QuoteDb.getQuoteDb(getContext());
-            quoteDb.quoteDao().insertOne(quoteDbModel);
-        };
-        new Thread(runnable).start();
-    }
-
-    //this function just get a random number between  1 and 100 and if the number
-    //divisible by 3 it return true.
-    public boolean makeChance(){
-
-        int mRandomNumber = MyApplication.getAppComponent().getRandom().nextInt(100) + 1;
-        //Just make sure the first attempt is successful. it is necessary for gamifation
-        if(sharedprefrenceProvider.loadOpenedTimes()<3 && firstAttemptCounter==0){
-            firstAttemptCounter = 1;
-            return true;
-        }
-        return mRandomNumber%3==0;
-    }
-
     //check if internet is connected or not
+    //it's violate the MVP .
      public boolean isInternetConnected(){
          ConnectivityManager connectivityManager
                  = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
          NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
          return activeNetworkInfo != null && activeNetworkInfo.isConnected();
      }
-
-//make call to the server with retrofit interface and return an observer object
-    public Observable<QuoteModel> getQuoteObservable(){
-        /* Call method and run it asynchronously :) */
-        Call<QuoteModel> call = MyApplication.getAppComponent().getQCService().getQuote(ClientConfig.api_token);
-        return Observable.fromCallable(() -> call.execute().body());
-    }
 
     //return an ovserver on quote and set the views in on next
     public Observer<QuoteModel> getQuoteObserver(){
@@ -244,5 +215,47 @@ public class NewQuoteFragment extends Fragment {
             public void onComplete() {
             }
         };
+    }
+
+    //this function just get a random number between  1 and 100 and if the number
+    //divisible by 3 it return true.
+    @Override
+    public boolean makeChanceFromPresenter() {
+        return presenter.makeChancefromInteractor();
+    }
+
+    @Override
+    public void passQuoteToPresenter(QuoteDbModel __) {
+        presenter.passQuotetoInteractorForSaving(__);
+    }
+
+    //make call to the server with retrofit interface and return an observer object
+    @Override
+    public Observable<QuoteModel> getQuoteObservableFromPresenter() {
+        return presenter.getQuoteObservableFromInteractor();
+    }
+
+    @Override
+    public void setQuoteToBottomSheet(Observable<QuoteModel> __) {
+                __
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(getQuoteObserver());
+    }
+
+    @Override
+    public void setChanceCounterText(int __) {
+        // minus 1 from badge counter and save it in prefrence
+        presenter.saveBadgeCounterWithInteractor(__ - 1);
+        //Load chances from prefrence again
+        chanceFromPreference = presenter.LoadBadgeCountFromInteractor();
+
+        //if chances is more than 0 show how many chance remain
+        if (chanceFromPreference > 0) {
+            chanceCounterTV.setText(" فرصت‌های باقی مانده: " + "\n" + chanceFromPreference);
+            //If there is no chance then tell the user the truth:)
+        } else {
+            chanceCounterTV.setText("فرصت های شما تمام شده :(");
+        }
     }
 }
