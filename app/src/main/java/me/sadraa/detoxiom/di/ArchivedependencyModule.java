@@ -16,10 +16,10 @@ import me.sadraa.detoxiom.features.archive_quotes.RVAdapter;
  * Created by sadra on 11/25/17.
  */
 @Module
-public class RVAdapterModule {
+public class ArchivedependencyModule {
     Context context;
 
-    public RVAdapterModule(Context context){
+    public ArchivedependencyModule(Context context){
         this.context=context;
     }
     @ArchiveFragmentComponentScope

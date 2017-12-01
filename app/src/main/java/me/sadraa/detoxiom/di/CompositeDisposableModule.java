@@ -9,7 +9,6 @@ import io.reactivex.disposables.CompositeDisposable;
  */
 @Module
 public class CompositeDisposableModule {
-    @ArchiveFragmentComponentScope
     @Provides
     CompositeDisposable compositeDisposable(){
         return new CompositeDisposable();
