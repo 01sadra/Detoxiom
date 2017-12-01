@@ -17,25 +17,19 @@ import android.widget.TextView;
 import com.airbnb.lottie.LottieAnimationView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 import me.sadraa.detoxiom.R;
 import me.sadraa.detoxiom.data.db.Models.QuoteDbModel;
 import me.sadraa.detoxiom.data.db.QuoteDb;
-import me.sadraa.detoxiom.di.RVAdapterModule;
+import me.sadraa.detoxiom.di.ArchivedependencyModule;
 
-public class ArchiveFragment extends Fragment {
+public class ArchiveFragment extends Fragment implements ArchiveContract.View{
     ArrayList<QuoteDbModel> quoteDbModelList;
     QuoteDb quoteDb;
 
@@ -52,7 +46,8 @@ public class ArchiveFragment extends Fragment {
     DividerItemDecoration dividerItemDecoration;
     @Inject
     RecyclerView.LayoutManager mLayoutManager;
-
+    @Inject
+    ArchiveContract.Presenter presenter;
     public ArchiveFragment() {
         // Required empty public constructor
     }
@@ -60,9 +55,8 @@ public class ArchiveFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
          DaggerArchiveFragmentComponent.builder()
-                .rVAdapterModule(new RVAdapterModule(getContext()))
+                .rVAdapterModule(new ArchivedependencyModule(getContext()))
                 .build().injectFragment(this);
-
         super.onCreate(savedInstanceState);
     }
 
@@ -74,8 +68,8 @@ public class ArchiveFragment extends Fragment {
         //binding the Butterknife
         unbinder = ButterKnife.bind(this,rootView);
 
-        //Call mother method of Archive fragment (more info in comments of method)
-        startQueryAndPopulate();
+        populateListView(presenter.returnAllQuotesFromIntractorInArrayList());
+
         return rootView;
     }
     @Override
@@ -88,80 +82,8 @@ public class ArchiveFragment extends Fragment {
         unbinder.unbind();
         compositeDisposable.dispose();
     }
-    //This method is mother method of this fragment. first create an object from DB and then execute query in
-    //rxJava and then populate RV
-    public void startQueryAndPopulate(){
-        //Create an object from QuoteDb Class
-        quoteDb = QuoteDb.getQuoteDb(getContext());
-        //make an Observer from arrays of QuoteDbModel Objects async
-        Observable.fromArray(convertListQuoteToArray(quoteDb.quoteDao().getAll()))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ArrayList<QuoteDbModel>>() {
-                               @Override
-                               public void onSubscribe(Disposable d) {
-                                   compositeDisposable.add(d);
-                               }
 
-                               @Override
-                               public void onNext(ArrayList<QuoteDbModel> quoteDbModels) {
-                                   populateRV(quoteDbModels);
-                               }
 
-                               @Override
-                               public void onError(Throwable e) {
-
-                               }
-
-                               @Override
-                               public void onComplete() {
-
-                               }
-                           });
-
-    }
-    //The method called in startQueryAndPopulate( onUiThread )method and populate RV with data of data base
-    public void populateRV(ArrayList<QuoteDbModel> quoteDbModelListRV){
-        //Create adapter object with ArrayList
-        rvAdapter.setQuoteList(quoteDbModelListRV);
-        //Check if recycleView have data or not. if not then show a message.
-        if(rvAdapter.getItemCount()==0){
-            rv.setVisibility(View.GONE);
-            tv.setVisibility(View.VISIBLE);
-            emptyAnimation.setVisibility(View.VISIBLE);
-        }
-
-        if(rvAdapter.getItemCount()!=0){
-            rv.setVisibility(View.VISIBLE);
-            tv.setVisibility(View.GONE);
-            emptyAnimation.setVisibility(View.GONE);
-           // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-            rv.setLayoutManager(mLayoutManager);
-            //DividerDecoration is a new class in support library that help to draw a line between each row of recyvleview
-            rv.addItemDecoration(dividerItemDecoration);
-            //It makes scrolling smooth
-            rv.setNestedScrollingEnabled(false);
-            rv.setItemAnimator(new DefaultItemAnimator());
-            //using a seprate method for set On Item click listener
-            setOnItemClickListenerToAdapter();
-            rv.setAdapter(rvAdapter);
-        }
-    }
-    //The method get list of quotes and return an Array list to populate list view
-    //This method called from startQueryAndPopulate() method not in OnCreate stage
-    public ArrayList<QuoteDbModel> convertListQuoteToArray(List<QuoteDbModel> mList){
-        if (mList != null) {
-            quoteDbModelList = new ArrayList<>(mList.size());
-            //We add object from list to arraylist, from the end to the start to put last quote in the top
-            for (int i=mList.size(); i>0 ;i--){
-                quoteDbModelList.add(mList.get(i-1));
-            }
-            return quoteDbModelList;
-        }else{
-            return null;
-        }
-
-    }
    //we Just set On item click listener for adapter with RxJava/
     public void setOnItemClickListenerToAdapter(){
         rvAdapter.setOnItemClickListener((view, position, data) -> {
@@ -169,10 +91,7 @@ public class ArchiveFragment extends Fragment {
             popupMenu.getMenuInflater().inflate(R.menu.popup_menu,popupMenu.getMenu());
             popupMenu.setOnMenuItemClickListener(item -> {
                 if (item.getItemId() == R.id.delete) {
-                    final QuoteDb quoteDb = QuoteDb.getQuoteDb(getContext());
-                    quoteDb.quoteDao().deleteOne(rvAdapter.quoteList.get(position));
-                    rvAdapter.quoteList.remove(position);
-                    rvAdapter.notifyItemRemoved(position);
+                    deleteQuote(position);
                     return true;
                 }
                 if (item.getItemId() == R.id.share) {
@@ -187,5 +106,50 @@ public class ArchiveFragment extends Fragment {
             });
             popupMenu.show();
         });
+    }
+
+    @Override
+    public void populateListView(ArrayList<QuoteDbModel> q) {
+        //Create adapter object with ArrayList
+        rvAdapter.setQuoteList(q);
+        //Check if recycleView have data or not. if not then show a message.
+        if(rvAdapter.getItemCount()==0){
+            showWhaleInsteadOfRView();
+        }
+        if(rvAdapter.getItemCount()!=0){
+            setAdapterAndShowRView();
+        }
+    }
+
+    @Override
+    public void showWhaleInsteadOfRView() {
+        rv.setVisibility(View.GONE);
+        tv.setVisibility(View.VISIBLE);
+        emptyAnimation.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void setAdapterAndShowRView() {
+        rv.setVisibility(View.VISIBLE);
+        tv.setVisibility(View.GONE);
+        emptyAnimation.setVisibility(View.GONE);
+        // RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        rv.setLayoutManager(mLayoutManager);
+        //DividerDecoration is a new class in support library that help to draw a line between each row of recyvleview
+        rv.addItemDecoration(dividerItemDecoration);
+        //It makes scrolling smooth
+        rv.setNestedScrollingEnabled(false);
+        rv.setItemAnimator(new DefaultItemAnimator());
+        //using a seprate method for set On Item click listener
+        setOnItemClickListenerToAdapter();
+        rv.setAdapter(rvAdapter);
+    }
+
+    @Override
+    public void deleteQuote(int position) {
+        final QuoteDb quoteDb = QuoteDb.getQuoteDb(getContext());
+        quoteDb.quoteDao().deleteOne(rvAdapter.quoteList.get(position));
+        rvAdapter.quoteList.remove(position);
+        rvAdapter.notifyItemRemoved(position);
     }
 }
