@@ -8,12 +8,15 @@ import me.sadraa.detoxiom.utils.IView;
  */
 
 public interface SavedTimeContract {
-    interface View extends IView<SavedTimeContract.presenter>{
+    interface View extends IView<Presenter>{
         void setTextForViews();
     }
-    interface presenter extends IBasePresenter<SavedTimeContract.View>{
+    interface Presenter extends IBasePresenter<SavedTimeContract.View>{
         int LoadOpenedTimeFromInteractor();
         int LoadFromInteractorRealTimeInSocialMedia(int openedTime, String socialMedia);
-
+    }
+    interface Interactor {
+        int LoadOpenedTimeFromProvider();
+        int RealTimeInSocialMedia(int time, String socialMediaName);
     }
 }

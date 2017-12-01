@@ -8,11 +8,11 @@ import me.sadraa.detoxiom.data.SharedprefrenceProvider;
  * Created by sadra on 11/29/17.
  */
 
-public class TimeSavedInteractorImpl implements TimeSavedInteractor {
+public class SavedTimeInteractorImpl implements SavedTimeContract.Interactor {
     SharedprefrenceProvider sharedprefrenceProvider;
 
     @Inject
-    public TimeSavedInteractorImpl(SharedprefrenceProvider sharedprefrenceProvider) {
+    public SavedTimeInteractorImpl(SharedprefrenceProvider sharedprefrenceProvider) {
         this.sharedprefrenceProvider =sharedprefrenceProvider;
     }
 

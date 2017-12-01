@@ -33,7 +33,7 @@ public class SavedTimeFragment extends Fragment implements SavedTimeContract.Vie
     private Unbinder unbinder;
     int openedTimeInt;
     @Inject
-    SavedTimeContract.presenter presenter;
+    SavedTimeContract.Presenter presenter;
     public SavedTimeFragment() {
         // Required empty public constructor
     }

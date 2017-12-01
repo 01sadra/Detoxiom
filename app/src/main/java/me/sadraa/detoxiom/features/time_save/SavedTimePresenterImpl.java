@@ -6,12 +6,12 @@ import javax.inject.Inject;
  * Created by sadra on 11/29/17.
  */
 
-public class SavedTimePresenter implements SavedTimeContract.presenter {
+public class SavedTimePresenterImpl implements SavedTimeContract.Presenter {
     private SavedTimeContract.View viewLayer;
-    TimeSavedInteractor timeSavedInteractor;
+    SavedTimeContract.Interactor timeSavedInteractor;
 
     @Inject
-    public SavedTimePresenter(TimeSavedInteractor timeSavedInteractor) {
+    public SavedTimePresenterImpl(SavedTimeContract.Interactor timeSavedInteractor) {
         this.timeSavedInteractor=timeSavedInteractor;
     }
 

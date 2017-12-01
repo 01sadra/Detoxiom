@@ -9,11 +9,11 @@ import dagger.Provides;
 @Module
 public class SavedTimeModule {
     @Provides
-    SavedTimeContract.presenter presenter(SavedTimePresenter presenter){
+    SavedTimeContract.Presenter presenter(SavedTimePresenterImpl presenter){
         return presenter;
     }
     @Provides
-    TimeSavedInteractor timeSavedInteractor(TimeSavedInteractorImpl timeSavedInteractor){
+    SavedTimeContract.Interactor timeSavedInteractor(SavedTimeInteractorImpl timeSavedInteractor){
         return timeSavedInteractor;
     }
 }
