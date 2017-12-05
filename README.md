@@ -12,7 +12,7 @@ Detoxiom is an Open source Android app that makes social media detox easy with s
 
 Language of the App is Farsi and if you look at this repo there is a high chance your first language is the same. 
 
-well, the good news is i writed a LONG blog post about the production [here](https://sadraa.me/detxiom/), in Farsi :).
+well, the good news is I wrote a LONG blog post about the production [here](https://sadraa.me/detxiom/), in Farsi :).
 
 ## Introduction
 Detoxiom can make a widget that seems look like any of your apps, and when you click on it, instead of those time waster apps Detoxiom will be open. 
@@ -20,7 +20,7 @@ Detoxiom can make a widget that seems look like any of your apps, and when you c
 <img src="https://github.com/01sadra/Detoxiom/blob/master/app/src/main/res/drawable/teaching_app.gif">
 </p>
 
-Then you can try your chance of achieving a quote. It's a mini-game and makes the detox easier. I wrote a lot about gamification in Detxiom in the above post but you can seek more info in this [life-changing](https://www.amazon.com/Power-Habit-What-Life-Business/dp/081298160X) and also [this one](https://www.amazon.ca/Hooked-How-Build-Habit-Forming...ebook/.../B00HJ4A43S).
+Then you can try your chance of achieving a quote. It's a mini-game and makes the detox easier. I wrote a lot about gamification in Detxiom in the above post but you can seek more info in this [life-changing book](https://www.amazon.com/Power-Habit-What-Life-Business/dp/081298160X) and also [this one](https://www.amazon.ca/Hooked-How-Build-Habit-Forming...ebook/.../B00HJ4A43S).
 
 ## Screenshots
 <p align="center"> 
@@ -29,7 +29,7 @@ Then you can try your chance of achieving a quote. It's a mini-game and makes th
 </p>
 
 ## Dependecies
-I used [Dagger 2](https://github.com/google/dagger) for dependency injection and butterknife for view injection. (@GodBless   JakeWharton)
+I used [Dagger 2](https://github.com/google/dagger) for dependency injection and Butterknife for view injection. (@GodBless   JakeWharton)
 
 and I used RxJava, RxAndroid and RxBinding libraries for "reactive programming".
 
