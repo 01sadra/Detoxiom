@@ -1,4 +1,8 @@
 # Detoxiom
+[![GitHub issues](https://img.shields.io/github/issues/01sadra/Detoxiom.svg?style=plastic)](https://github.com/01sadra/Detoxiom/issues)
+[![GitHub license](https://img.shields.io/github/license/01sadra/Detoxiom.svg?style=plastic)](https://github.com/01sadra/Detoxiom)
+[![Twitter](https://img.shields.io/twitter/url/https/github.com/01sadra/Detoxiom.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2F01sadra%2FDetoxiom)
+
 Detoxiom is an Open source Android app that makes social media detox easy with some simple gamification methods.
 
 Language of the App is Farsi and if you look at this repo there is a high chance your first language is the same, well the good news is i write a LONG blog post about the production [here](sadraa.me/detoxiom) in Farsi :).
