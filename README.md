@@ -10,12 +10,12 @@
 
 Detoxiom is an Open source Android app that makes social media detox easy with some simple gamification methods.
 
-Language of the App is Farsi and if you look at this repo there is a high chance your first language is the same. 
+Language of the App is Farsi and if you look at this repo there is a high chance that your first language is the same. 
 
-well, the good news is I wrote a LONG blog post about the production [here](https://sadraa.me/detxiom/), in Farsi :).
+Well, the good news is I wrote a LONG blog post about the production [here](https://sadraa.me/detxiom/), in Farsi :).
 
 ## Introduction
-Detoxiom can make a widget that seems look like any of your apps, and when you click on it, instead of those time waster apps Detoxiom will be open. 
+Detoxiom can make a widget that seems look like any of your apps, and when you click on it, instead of those time waster apps Detoxiom will open. 
 <p align="center"> 
 <img src="https://github.com/01sadra/Detoxiom/blob/master/app/src/main/res/drawable/teaching_app.gif">
 </p>
@@ -49,7 +49,7 @@ And:
 Also, I used MVP pattern for Detoxiom. Maybe you find it a little weird because I create a new Interactor for every fragment and it seems anti-pattern. Honestly, I'm feeling more comfortable in this way but I will try to find(or create) better solutions for MV* in Android.
 
 ## Contribution
-I'm a [lazy guy](https://sadraa.me/%D8%AA%DA%A9%D9%86%DB%8C%DA%A9-%D9%BE%D9%88%D9%85%D9%88%D8%AF%D8%B1%D9%88-%D9%88-%D8%B2%D9%86%D8%AC%DB%8C%D8%B1%D9%87-%D8%B9%D8%A7%D8%AF%D8%AA-%D8%B3%D8%A7%DB%8C%D9%86%D9%81%DB%8C%D9%84%D8%AF/), I didn't write tests for Detoxiom and there is no CI process. If you send a pull request Please make sure your patch will work correctly and  app will not crash at least. Any kind of contribution will appreciate. :heart: (specially typos :) ).
+I'm a [lazy guy](https://sadraa.me/%D8%AA%DA%A9%D9%86%DB%8C%DA%A9-%D9%BE%D9%88%D9%85%D9%88%D8%AF%D8%B1%D9%88-%D9%88-%D8%B2%D9%86%D8%AC%DB%8C%D8%B1%D9%87-%D8%B9%D8%A7%D8%AF%D8%AA-%D8%B3%D8%A7%DB%8C%D9%86%D9%81%DB%8C%D9%84%D8%AF/), I didn't write tests for Detoxiom and there is no CI process. If you send a pull request Please make sure your patch will work correctly and  app will not crash at least. Any kind of contribution will be appreciate. :heart: (specially typos :) ).
 
 ## Download 
 You can get it from [CoffeBazar](https://cafebazaar.ir/app/me.sadraa.detoxiom/?l=fa).
