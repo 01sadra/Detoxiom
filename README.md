@@ -7,7 +7,7 @@ Detoxiom is an Open source Android app that makes social media detox easy with s
 
 Language of the App is Farsi and if you look at this repo there is a high chance your first language is the same. 
 
-well, the good news is i writed a LONG blog post about the production [here](sadraa.me/detoxiom), in Farsi :).
+well, the good news is i writed a LONG blog post about the production [here](https://sadraa.me/detxiom/), in Farsi :).
 
 ## Introduction
 Detoxiom can make a widget that seems look like any of your apps, and when you click on it, instead of those time waster apps Detoxiom will be open. 
@@ -20,7 +20,7 @@ Then you can try your chance of achieving a quote. It's a mini-game and makes th
 ## Screenshots
 <p align="center"> 
 <img src="https://sadraa.me/wp-content/uploads/2017/12/Screenshot-from-2017-12-03-07-01-29.png">
-<img src="https://sadraa.me/wp-content/uploads/2017/12/Screenshot-from-2017-12-03-07-01-29.png">
+<img src="https://sadraa.me/wp-content/uploads/2017/12/Screenshot-from-2017-12-03-07-02-44.png">
 </p>
 
 ## Dependecies
