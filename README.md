@@ -20,7 +20,7 @@ Detoxiom can make a widget that seems look like any of your apps, and when you c
 <img src="https://github.com/01sadra/Detoxiom/blob/master/app/src/main/res/drawable/teaching_app.gif">
 </p>
 
-Then you can try your chance of achieving a quote. It's a mini-game and makes the detox easier. I wrote a lot about gamification in Detxiom in the above post but you can seek more info in this [life-changing book](https://www.amazon.com/Power-Habit-What-Life-Business/dp/081298160X) and also [this one](https://www.amazon.ca/Hooked-How-Build-Habit-Forming...ebook/.../B00HJ4A43S).
+Then you can try your chance of achieving a quote. It's a mini-game and makes the detox easier. I wrote a lot about gamification in Detxiom in the above post but you can seek more info in this [life-changing book](https://www.amazon.com/Power-Habit-What-Life-Business/dp/081298160X) and also [this one](https://www.amazon.ca/Hooked-How-Build-Habit-Forming-Products-ebook/dp/B00HJ4A43S).
 
 ## Screenshots
 <p align="center"> 
