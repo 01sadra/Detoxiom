@@ -10,7 +10,7 @@ Language of the App is Farsi and if you look at this repo there is a high chance
 well, the good news is i writed a LONG blog post about the production [here](sadraa.me/detoxiom), in Farsi :).
 
 ## Introduction
-Detoxiom can make a widget that seems look like any addictive social media app icon, and when you click on it, instead of those time waster apps Detoxiom will be open. 
+Detoxiom can make a widget that seems look like any of your apps, and when you click on it, instead of those time waster apps Detoxiom will be open. 
 <p align="center"> 
 <img src="https://github.com/01sadra/Detoxiom/blob/master/app/src/main/res/drawable/teaching_app.gif">
 </p>
