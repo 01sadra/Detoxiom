@@ -47,5 +47,5 @@ Also, I used MVP pattern for Detoxiom. Maybe you find it a little weird because 
 I'm a [lazy guy](https://sadraa.me/%D8%AA%DA%A9%D9%86%DB%8C%DA%A9-%D9%BE%D9%88%D9%85%D9%88%D8%AF%D8%B1%D9%88-%D9%88-%D8%B2%D9%86%D8%AC%DB%8C%D8%B1%D9%87-%D8%B9%D8%A7%D8%AF%D8%AA-%D8%B3%D8%A7%DB%8C%D9%86%D9%81%DB%8C%D9%84%D8%AF/), I didn't write tests for Detoxiom and there is no CI process. If you send a pull request Please make sure your patch will work correctly and  app will not crash at least. Any kind of contribution will appreciate. :heart: (specially typos :) ).
 
 ## Download 
-You can get it from [CoffeBazar]().
+You can get it from [CoffeBazar](https://cafebazaar.ir/app/me.sadraa.detoxiom/?l=fa).
 
