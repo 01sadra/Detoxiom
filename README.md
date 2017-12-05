@@ -4,7 +4,7 @@
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/01sadra/Detoxiom.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2F01sadra%2FDetoxiom)
 
 <p align="center"> 
-<img src="https://sadraa.me/wp-content/uploads/2017/12/quote.png">
+<img src="https://sadraa.me/wp-content/uploads/2017/12/quote.png" height="250" width="250">
 </p>
 
 
