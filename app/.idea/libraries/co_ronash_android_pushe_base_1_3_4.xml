@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="co.ronash.android:pushe-base-1.3.4">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/pushe-base-1.3.4.aar/c5da39e4bfee26653f7b4385766c8a10/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/pushe-base-1.3.4.aar/c5da39e4bfee26653f7b4385766c8a10/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/co.ronash.android/pushe-base/1.3.4/2d6328347d70f4f83132a8bc021a75e0ad7493ca/pushe-base-1.3.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

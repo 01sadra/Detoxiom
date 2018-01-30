@@ -4,18 +4,34 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="0px">
+
     <include
         layout="@layout/widget_conf_activity_toolbar"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     </include>
 
-    <ListView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/list_view_conf_activity"
-        >
+        android:layout_height="match_parent">
 
-    </ListView>
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:visibility="gone" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list_view_conf_activity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+        </android.support.v7.widget.RecyclerView>
+
+
+    </RelativeLayout>
 </LinearLayout>

@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="net.vrallev.android:cat-1.0.5">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/cat-1.0.5.aar/81bfeca5c5ad7b456757fa8f4b37e0e2/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/cat-1.0.5.aar/81bfeca5c5ad7b456757fa8f4b37e0e2/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.vrallev.android/cat/1.0.5/c91fa47a56eee678401abcac4ff602f063f905b9/cat-1.0.5-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
