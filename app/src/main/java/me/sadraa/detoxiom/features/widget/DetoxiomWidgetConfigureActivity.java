@@ -23,7 +23,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import me.sadraa.detoxiom.R;
-import me.sadraa.detoxiom.features.widget.adapter.ListViewCostumAdapter;
+import me.sadraa.detoxiom.features.widget.adapter.ListViewCostumeAdapter;
 
 /**
  * The configuration screen for the {@link DetoxiomWidget DetoxioWidget} AppWidget.
@@ -103,16 +103,16 @@ public class DetoxiomWidgetConfigureActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new GridLayoutManager(this,
                 3));
 
-        ListViewCostumAdapter listViewCostumAdapter =
-                new ListViewCostumAdapter(this, apps);
+        ListViewCostumeAdapter listViewCostumeAdapter =
+                new ListViewCostumeAdapter(this, apps);
         //set adapter for listView
-        recyclerView.setAdapter(listViewCostumAdapter);
+        recyclerView.setAdapter(listViewCostumeAdapter);
         //set listview clackable
         recyclerView.setClickable(true);
         final DetoxiomWidget detoxiomWidget = new DetoxiomWidget();
         //define listener for listview
 
-        listViewCostumAdapter.setClickListener((appModel, position) -> {
+        listViewCostumeAdapter.setClickListener((appModel, position) -> {
 
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             //save posotion and app widget id in prefrence
