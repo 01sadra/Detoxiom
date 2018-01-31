@@ -5,7 +5,8 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.widget.RemoteViews;
 
 import me.sadraa.detoxiom.R;
@@ -16,18 +17,22 @@ import me.sadraa.detoxiom.features.main_activity.MainActivity;
  * App Widget Configuration implemented in {@link DetoxiomWidgetConfigureActivity DetoxiomWidgetConfigureActivity}
  */
 public class DetoxiomWidget extends AppWidgetProvider {
-        AppNameAndLogoProvider appNameAndLogoProvider;
 
-        public void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                           int appWidgetId) {
+    public void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+                                int appWidgetId) {
 
-            appNameAndLogoProvider = new AppNameAndLogoProvider(context);
         //Load widget from prefrence that save on conf activity
-       int position = DetoxiomWidgetConfigureActivity.loadPref(context,appWidgetId);
+        String packageName = DetoxiomWidgetConfigureActivity.loadPref(context, appWidgetId);
         //load app logo
-       Bitmap appLogoBitmap = appNameAndLogoProvider.loadAppLogo(position);
+        InstalledAppsLoader installedAppsLoader = new InstalledAppsLoader(context);
+        Uri appLogo = null;
+        try {
+            appLogo = installedAppsLoader.getAppUriIcon(packageName);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
         //load app label
-       String appLabel = appNameAndLogoProvider.loadAppLabel(position);
+        String appLabel = installedAppsLoader.getAppLabel(packageName);
 
         //Creating remote view from widget layout
         RemoteViews views = new RemoteViews("me.sadraa.detoxiom", R.layout.detoxiom_widget);
@@ -35,17 +40,18 @@ public class DetoxiomWidget extends AppWidgetProvider {
         views.setTextViewText(R.id.widgetText, appLabel);
         //set image view
 
-            //Ok, ladies and Gentlemen there is a wired thing. All toturial across the Internet says we should write
-            //below codes in onUpdate method. I did it but it didn't work. It bother me badly because I just struggle with
-            //It for 2 days. finally I understand the problem. apparently If you use conf activity for creating a widget
-            // you should update it here not in onUpdate method.
-        views.setImageViewBitmap(R.id.ImageButton,appLogoBitmap);
+        //Ok, ladies and Gentlemen there is a wired thing. All toturial across the Internet says we should write
+        //below codes in onUpdate method. I did it but it didn't work. It bother me badly because I just struggle with
+        //It for 2 days. finally I understand the problem. apparently If you use conf activity for creating a widget
+        // you should update it here not in onUpdate method.
+        if (appLogo != null)
+            views.setImageViewUri(R.id.ImageButton, appLogo);
 
-        Intent mIntent = new Intent(context,MainActivity.class);
+        Intent mIntent = new Intent(context, MainActivity.class);
 
-        PendingIntent pIntent = PendingIntent.getActivity(context,1, mIntent,0);
+        PendingIntent pIntent = PendingIntent.getActivity(context, 1, mIntent, 0);
 
-        views.setOnClickPendingIntent(R.id.ImageButton,pIntent);
+        views.setOnClickPendingIntent(R.id.ImageButton, pIntent);
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
 
@@ -82,7 +88,7 @@ public class DetoxiomWidget extends AppWidgetProvider {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-            super.onReceive(context, intent);
+        super.onReceive(context, intent);
 
     }
 }
