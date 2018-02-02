@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Detoxiom.iml" filepath="$PROJECT_DIR$/Detoxiom.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Detoxiom.iml" filepath="$PROJECT_DIR$/Detoxiom.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
