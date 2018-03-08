@@ -21,7 +21,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import co.ronash.pushe.Pushe;
 import me.sadraa.detoxiom.MyApplication;
 import me.sadraa.detoxiom.R;
 import me.sadraa.detoxiom.data.SharedPreferencesProvider;
@@ -53,7 +52,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityContr
                 .build().inject(this);
         ButterKnife.bind(this);
         setContentView(R.layout.activity_main);
-        Pushe.initialize(this,true);
         //binding the butterknife
         ButterKnife.bind(this);
         setActionBarAndLayoutDirection();

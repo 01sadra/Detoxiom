@@ -6,12 +6,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
-
-    <uses-sdk tools:overrideLibrary="co.ronash.pushe" />
-    <permission android:name="me.sadraa.detoxiom.permission.C2D_MESSAGE"
-        android:protectionLevel="signature" />
-    <uses-permission android:name="me.sadraa.detoxiom.permission.C2D_MESSAGE" />
-
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -48,32 +42,6 @@
             android:name=".features.about_app.IntroActivity"
             android:label="@string/title_activity_intro"
             android:theme="@style/AppTheme"></activity>
-
-        <receiver android:name="co.ronash.pushe.receiver.UpdateReceiver" >
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REPLACED" />
-
-                <data
-                    android:path="me.sadraa.detoxiom"
-                    android:scheme="package" />
-            </intent-filter>
-        </receiver>
-
-        <receiver
-            android:name="co.ronash.pushe.receiver.PusheGcmReceiver"
-            android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND" >
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-
-                <category android:name="me.sadraa.detoxiom" />
-            </intent-filter>
-        </receiver>
-
-        <meta-data android:name="co.ronash.pushe.token" android:value="PUSHE_1081193882799"/>
-        <meta-data android:name="co.ronash.pushe.cr" android:value="Tm9uZQ=="/>
 
     </application>
 
