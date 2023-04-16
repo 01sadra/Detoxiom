@@ -9,3 +9,5 @@ android:
 
 script:
    - ./gradlew build connectedCheck
+
+# Added comment - 
